@@ -16,8 +16,8 @@ namespace TNE.Models
         public int TransformationRate { get; set; }
         public Guid ControlPointId { get; set; }
         public ControlPoint ControlPoint { get; set; }
-        [DefaultValue(false)]
-        public bool Deleted { get; set; }
+        [DefaultValue("Storage")]
+        public string Status { get; set; }
         public override string ToString()
         {
             return $"Transformer" +
@@ -27,7 +27,7 @@ namespace TNE.Models
                 $"VerificationDate:{VerificationDate}, " +
                 $"TransformationRate:{TransformationRate}, " +
                 $"ControlPointName:{ControlPoint.Name} " +
-                $"Deleted:{Deleted} ]";
+                $"Status:{Status} ]";
         }
     }
 }

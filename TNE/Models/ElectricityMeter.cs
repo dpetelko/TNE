@@ -14,8 +14,8 @@ namespace TNE.Models
         public DateTime VerificationDate { get; set; }
         public Guid ControlPointId { get; set; }
         public ControlPoint ControlPoint { get; set; }
-        [DefaultValue(false)]
-        public bool Deleted { get; set; }
+        [DefaultValue("Storage")]
+        public string Status { get; set; }
         public override string ToString()
         {
             return $"ElectricityMeter" +
@@ -24,7 +24,7 @@ namespace TNE.Models
                 $"Type:{Type}, " +
                 $"VerificationDate:{VerificationDate}, " +
                 $"ControlPointName:{ControlPoint.Name} " +
-                $"Deleted:{Deleted} ]";
+                $"Status:{Status} ]";
         }
     }
 }
