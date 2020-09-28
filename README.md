@@ -17,3 +17,5 @@ To check LeadDivision controller POST operation in Postman app, create POST requ
 
 A repeated POST request will throw an error validating the uniqueness of the NAME field.
 Validation of the uniqueness of the NAME field is implemented as a custom validator in the UniqueField.cs class
+
+To check LeadDivision controller GET ALL operation in Postman app, create GET request http://localhost:8050/api/v1/LeadDivisions
