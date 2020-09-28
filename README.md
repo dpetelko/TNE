@@ -1,6 +1,6 @@
 # TNE
 
-To check LeadDivision controller POST operation in Postman app, create request http://localhost:8050/api/v1/LeadDivisions with body:
+To check LeadDivision controller POST operation in Postman app, create POST request http://localhost:8050/api/v1/LeadDivisions with body:
 
 {
     "id": "00000000-0000-0000-0000-000000000000",
