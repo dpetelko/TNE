@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,6 +16,7 @@ namespace TNE.Models
         public ControlPoint ControlPoint { get; set; }
         public Guid? DeliveryPointId { get; set; }
         public DeliveryPoint DeliveryPoint { get; set; }
+        [DefaultValue(false)]
         public bool Deleted { get; set; }
         public override string ToString()
         {

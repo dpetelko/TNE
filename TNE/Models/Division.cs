@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,7 +14,7 @@ namespace TNE.Models
         public string Name { get; set; }
         public Guid? AddressId { get; set; }
         public Address Address { get; set; }
-        [Required]
+        [DefaultValue(false)]
         public bool Deleted { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace TNE.Models
         public int TransformationRate { get; set; }
         public Guid ControlPointId { get; set; }
         public ControlPoint ControlPoint { get; set; }
+        [DefaultValue(false)]
         public bool Deleted { get; set; }
         public override string ToString()
         {

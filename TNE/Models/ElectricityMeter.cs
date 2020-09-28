@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace TNE.Models
         public DateTime VerificationDate { get; set; }
         public Guid ControlPointId { get; set; }
         public ControlPoint ControlPoint { get; set; }
+        [DefaultValue(false)]
         public bool Deleted { get; set; }
         public override string ToString()
         {
