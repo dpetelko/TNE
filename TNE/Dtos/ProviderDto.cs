@@ -8,6 +8,8 @@ namespace TNE.Dto
         public Guid SubDivisionId { get; set; }
         public string SubDivisionName { get; set; }
 
+        public ProviderDto() { }
+
         public ProviderDto(Provider entity)
         {
             Id = entity.Id;

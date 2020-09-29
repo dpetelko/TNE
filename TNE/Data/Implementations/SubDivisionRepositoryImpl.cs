@@ -14,10 +14,7 @@ namespace TNE.Data.Implementations
     {
         private readonly DatabaseContext _context;
 
-        public SubDivisionRepositoryImpl(DatabaseContext context)
-        {
-            _context = context;
-        }
+        public SubDivisionRepositoryImpl(DatabaseContext context) {  _context = context; }
 
         public void CheckExistsById(Guid id)
         {
@@ -172,7 +169,9 @@ namespace TNE.Data.Implementations
                     City = s.Address.City,
                     Street = s.Address.Street,
                     Building = s.Address.Building,
-                    Deleted = s.Deleted
+                    Deleted = s.Deleted,
+                    LeadDivisionId = s.LeadDivision.Id,
+                    LeadDivisionName = s.LeadDivision.Name
                 }).ToListAsync();
             result.TrimExcess();
             return result;

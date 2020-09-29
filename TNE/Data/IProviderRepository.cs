@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using TNE.Dto;
+using TNE.Models;
+
+namespace TNE.Data
+{
+    interface IProviderRepository : IRepository<Provider>
+    {
+        Task<ProviderDto> GetDtoByIdAsync(Guid Id);
+        Task<List<ProviderDto>> GetAllDtoAsync();
+        Task<List<ProviderDto>> GetAllActiveDtoAsync();
+    }
+}
