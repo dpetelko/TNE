@@ -41,7 +41,9 @@ namespace TNE.Data.Implementations
         public async Task<List<LeadDivisionDto>> GetAllDtoAsync()
         {
             Log.Debug("GetAll LeadDivisionDto");
-            var result = await _context.LeadDivisions.AsNoTracking().Include(s => s.Address)
+            var result = await _context.LeadDivisions
+                .AsNoTracking()
+                .Include(s => s.Address)
                 .Select(s => new LeadDivisionDto
                 {
                     Id = s.Id,
@@ -62,7 +64,10 @@ namespace TNE.Data.Implementations
         public async Task<LeadDivision> GetByIdAsync(Guid id)
         {
             Log.Debug("Get LeadDivision by Id: '{Id}'", id);
-            var result = await _context.LeadDivisions.AsNoTracking().Include(b => b.Address).SingleOrDefaultAsync(b => b.Id == id);
+            var result = await _context.LeadDivisions
+                .AsNoTracking()
+                .Include(b => b.Address)
+                .SingleOrDefaultAsync(b => b.Id == id);
             return (result is null)
                 ? throw new EntityNotFoundException($"LeadDivision with Id='{id}' not found!")
                 : result;
@@ -71,7 +76,10 @@ namespace TNE.Data.Implementations
         public LeadDivision GetById(Guid id)
         {
             Log.Debug("Get LeadDivision by Id: '{Id}'", id);
-            var result = _context.LeadDivisions.AsNoTracking().Include(b => b.Address).SingleOrDefault(b => b.Id == id);
+            var result = _context.LeadDivisions
+                .AsNoTracking()
+                .Include(b => b.Address)
+                .SingleOrDefault(b => b.Id == id);
             return (result is null)
                 ? throw new EntityNotFoundException($"LeadDivision with Id='{id}' not found!")
                 : result;
@@ -80,21 +88,23 @@ namespace TNE.Data.Implementations
         public async Task<LeadDivisionDto> GetDtoByIdAsync(Guid Id)
         {
             Log.Debug("Get LeadDivisionDto by Id: '{Id}'", Id);
-            var result = await _context.LeadDivisions.AsNoTracking().Include(s => s.Address)
-                       .Where(s => s.Id == Id)
-                       .Select(s => new LeadDivisionDto
-                       {
-                           Id = s.Id,
-                           Name = s.Name,
-                           AddressId = s.Address.Id,
-                           PostCode = s.Address.PostCode,
-                           Country = s.Address.Country,
-                           Region = s.Address.Region,
-                           City = s.Address.City,
-                           Street = s.Address.Street,
-                           Building = s.Address.Building,
-                           Deleted = s.Deleted
-                       }).SingleOrDefaultAsync();
+            var result = await _context.LeadDivisions
+                .AsNoTracking()
+                .Include(s => s.Address)
+                .Where(s => s.Id == Id)
+                .Select(s => new LeadDivisionDto
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    AddressId = s.Address.Id,
+                    PostCode = s.Address.PostCode,
+                    Country = s.Address.Country,
+                    Region = s.Address.Region,
+                    City = s.Address.City,
+                    Street = s.Address.Street,
+                    Building = s.Address.Building,
+                    Deleted = s.Deleted
+                }).SingleOrDefaultAsync();
             if (result is null) throw new EntityNotFoundException($"LeadDivision with ID = '{Id}' not found!");
             return result;
         }
@@ -147,7 +157,10 @@ namespace TNE.Data.Implementations
         public async Task<List<LeadDivisionDto>> GetAllActiveDtoAsync()
         {
             Log.Debug("GetAllActive LeadDivisionDto");
-            var result = await _context.LeadDivisions.AsNoTracking().Include(s => s.Address).Where(s => s.Deleted == false)
+            var result = await _context.LeadDivisions
+                .AsNoTracking()
+                .Include(s => s.Address)
+                .Where(s => s.Deleted == false)
                 .Select(s => new LeadDivisionDto
                 {
                     Id = s.Id,

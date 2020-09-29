@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using TNE.Data.Exceptions;
 using TNE.Dto;
 using TNE.Models;
-using static System.String;
 
 namespace TNE.Data.Implementations
 {
@@ -77,7 +76,10 @@ namespace TNE.Data.Implementations
         public async Task<List<SubDivisionDto>> GetAllDtoAsync()
         {
             Log.Debug("GetAll SubDivisionDto");
-            var result = await _context.SubDivisions.AsNoTracking().Include(s => s.Address).Include(b => b.LeadDivision)
+            var result = await _context.SubDivisions
+                .AsNoTracking()
+                .Include(s => s.Address)
+                .Include(b => b.LeadDivision)
                 .Select(s => new SubDivisionDto
                 {
                     Id = s.Id,
@@ -100,7 +102,10 @@ namespace TNE.Data.Implementations
         public SubDivision GetById(Guid id)
         {
             Log.Debug("Get SubDivision by Id: '{Id}'", id);
-            var result = _context.SubDivisions.AsNoTracking().Include(b => b.Address).Include(b => b.LeadDivision).SingleOrDefault(b => b.Id == id);
+            var result = _context.SubDivisions.AsNoTracking()
+                .Include(b => b.Address)
+                .Include(b => b.LeadDivision)
+                .SingleOrDefault(b => b.Id == id);
             return (result is null)
                 ? throw new EntityNotFoundException($"SubDivision with Id='{id}' not found!")
                 : result;
@@ -118,23 +123,25 @@ namespace TNE.Data.Implementations
         public async Task<SubDivisionDto> GetDtoByIdAsync(Guid Id)
         {
             Log.Debug("Get SubDivisionDto by Id: '{Id}'", Id);
-            var result = await _context.SubDivisions.AsNoTracking().Include(s => s.Address).Include(b => b.LeadDivision)
-                       .Where(s => s.Id == Id)
-                       .Select(s => new SubDivisionDto
-                       {
-                           Id = s.Id,
-                           Name = s.Name,
-                           AddressId = s.Address.Id,
-                           PostCode = s.Address.PostCode,
-                           Country = s.Address.Country,
-                           Region = s.Address.Region,
-                           City = s.Address.City,
-                           Street = s.Address.Street,
-                           Building = s.Address.Building,
-                           Deleted = s.Deleted,
-                           LeadDivisionId = s.LeadDivision.Id,
-                           LeadDivisionName = s.LeadDivision.Name
-                       }).SingleOrDefaultAsync();
+            var result = await _context.SubDivisions.AsNoTracking()
+                .Include(s => s.Address)
+                .Include(b => b.LeadDivision)
+                .Where(s => s.Id == Id)
+                .Select(s => new SubDivisionDto
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    AddressId = s.Address.Id,
+                    PostCode = s.Address.PostCode,
+                    Country = s.Address.Country,
+                    Region = s.Address.Region,
+                    City = s.Address.City,
+                    Street = s.Address.Street,
+                    Building = s.Address.Building,
+                    Deleted = s.Deleted,
+                    LeadDivisionId = s.LeadDivision.Id,
+                    LeadDivisionName = s.LeadDivision.Name
+                }).SingleOrDefaultAsync();
             if (result is null) throw new EntityNotFoundException($"SubDivision with ID = '{Id}' not found!");
             return result;
         }
