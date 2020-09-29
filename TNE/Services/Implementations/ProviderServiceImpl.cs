@@ -30,15 +30,27 @@ namespace TNE.Services.Implementations
             return new ProviderDto(result);
         }
 
-        public async Task<bool> DeleteAsync(Guid id) { return await _repo.DeleteAsync(id); }
+        public async Task<bool> DeleteAsync(Guid id) 
+        {
+            CheckExistsById(id);
+            return await _repo.DeleteAsync(id);
+        }
 
         public async Task<List<ProviderDto>> GetAllActiveDtoAsync() { return await _repo.GetAllActiveDtoAsync(); }
 
         public async Task<List<ProviderDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
 
-        public Provider GetById(Guid id) { return _repo.GetById(id); }
+        public Provider GetById(Guid id) 
+        {
+            CheckExistsById(id);
+            return _repo.GetById(id); 
+        }
 
-        public async Task<Provider> GetByIdAsync(Guid id) { return await _repo.GetByIdAsync(id); }
+        public async Task<Provider> GetByIdAsync(Guid id) 
+        {
+            CheckExistsById(id);
+            return await _repo.GetByIdAsync(id); 
+        }
 
         public async Task<ProviderDto> GetDtoByIdAsync(Guid id)
         {
@@ -53,7 +65,11 @@ namespace TNE.Services.Implementations
                 : _repo.ExistsByFieldAndNotId(id, fieldName, fieldValue);
         }
 
-        public async Task<bool> UndeleteAsync(Guid id) { return await _repo.UndeleteAsync(id); }
+        public async Task<bool> UndeleteAsync(Guid id) 
+        {
+            CheckExistsById(id);
+            return await _repo.UndeleteAsync(id); 
+        }
 
         public async Task<ProviderDto> UpdateAsync(ProviderDto dto)
         {

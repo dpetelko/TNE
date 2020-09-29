@@ -40,9 +40,17 @@ namespace TNE.Services.Implementations
             return new LeadDivisionDto(await _repo.UpdateAsync(entity));
         }
 
-        public LeadDivision GetById(Guid id) { return _repo.GetById(id); }
+        public LeadDivision GetById(Guid id) 
+        {
+            CheckExistsById(id);
+            return _repo.GetById(id); 
+        }
 
-        public async Task<LeadDivision> GetByIdAsync(Guid id) { return await _repo.GetByIdAsync(id); }
+        public async Task<LeadDivision> GetByIdAsync(Guid id) 
+        {
+            CheckExistsById(id);
+            return await _repo.GetByIdAsync(id); 
+        }
 
         public bool IsFieldUnique(Guid id, string fieldName, object fieldValue)
         {
@@ -53,11 +61,13 @@ namespace TNE.Services.Implementations
 
         public async Task<bool> DeleteAsync(Guid id)
         {
+            CheckExistsById(id);
             return await _repo.DeleteAsync(id);
         }
 
         public async Task<bool> UndeleteAsync(Guid id)
         {
+            CheckExistsById(id);
             return await _repo.UndeleteAsync(id);
         }
 

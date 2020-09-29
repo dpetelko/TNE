@@ -30,15 +30,27 @@ namespace TNE.Services.Implementations
             return new SubDivisionDto(result);
         }
 
-        public async Task<bool> DeleteAsync(Guid id) { return await _repo.DeleteAsync(id); }
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            CheckExistsById(id);
+            return await _repo.DeleteAsync(id);
+        }
 
         public async Task<List<SubDivisionDto>> GetAllActiveDtoAsync() { return await _repo.GetAllActiveDtoAsync(); }
 
         public async Task<List<SubDivisionDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
 
-        public SubDivision GetById(Guid id) { return _repo.GetById(id); }
+        public SubDivision GetById(Guid id) 
+        {
+            CheckExistsById(id);
+            return _repo.GetById(id); 
+        }
 
-        public async Task<SubDivision> GetByIdAsync(Guid id) { return await _repo.GetByIdAsync(id); }
+        public async Task<SubDivision> GetByIdAsync(Guid id) 
+        {
+            CheckExistsById(id);
+            return await _repo.GetByIdAsync(id); 
+        }
 
         public async Task<SubDivisionDto> GetDtoByIdAsync(Guid id)
         {
@@ -53,7 +65,11 @@ namespace TNE.Services.Implementations
                 : _repo.ExistsByFieldAndNotId(id, fieldName, fieldValue);
         }
 
-        public async Task<bool> UndeleteAsync(Guid id) { return await _repo.UndeleteAsync(id); }
+        public async Task<bool> UndeleteAsync(Guid id) 
+        {
+            CheckExistsById(id);
+            return await _repo.UndeleteAsync(id); 
+        }
 
         public async Task<SubDivisionDto> UpdateAsync(SubDivisionDto dto)
         {

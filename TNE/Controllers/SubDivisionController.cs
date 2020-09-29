@@ -15,10 +15,7 @@ namespace TNE.Controllers
     {
         private readonly ISubDivisionService _service;
 
-        public SubDivisionController(ISubDivisionService service)
-        {
-            _service = service;
-        }
+        public SubDivisionController(ISubDivisionService service) {  _service = service; }
 
         [HttpGet]
         public async Task<List<SubDivisionDto>> GetAll() { return await _service.GetAllDtoAsync(); }

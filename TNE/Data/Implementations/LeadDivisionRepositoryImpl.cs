@@ -136,7 +136,6 @@ namespace TNE.Data.Implementations
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            CheckExistsById(id);
             var obj = new LeadDivision { Id = id, Deleted = true };
             _context.LeadDivisions.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
@@ -146,7 +145,6 @@ namespace TNE.Data.Implementations
 
         public async Task<bool> UndeleteAsync(Guid id)
         {
-            CheckExistsById(id);
             var obj = new LeadDivision { Id = id, Deleted = false };
             _context.LeadDivisions.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
@@ -179,21 +177,3 @@ namespace TNE.Data.Implementations
         }
     }
 }
-
-
-
-
-
-
-
-
-
-//public List<LeadDivision> GetAll()
-//{
-//    _logger.LogDebug("GetAll LeadDivisions");
-//    var result = _context.LeadDivisions.AsNoTracking().Include(b => b.SubDivisions).ToList();
-//    result.TrimExcess();
-//    return (result.Count == 0)
-//        ? throw new EntityNotFoundException("No LeadDivisions found!")
-//        : result;
-//}

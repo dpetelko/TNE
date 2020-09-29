@@ -33,7 +33,6 @@ namespace TNE.Data.Implementations
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            CheckExistsById(id);
             var obj = new Provider { Id = id };
             _context.Providers.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
@@ -158,7 +157,6 @@ namespace TNE.Data.Implementations
 
         public async Task<bool> UndeleteAsync(Guid id)
         {
-            CheckExistsById(id);
             var obj = new Provider { Id = id };
             _context.Providers.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = false;
