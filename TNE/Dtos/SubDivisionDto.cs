@@ -7,6 +7,9 @@ namespace TNE.Dto
     {
         public Guid LeadDivisionId { get; set; }
         public string LeadDivisionName { get; set; }
+
+        public SubDivisionDto() { }
+
         public SubDivisionDto(SubDivision entity)
         {
             Id = entity.Id;

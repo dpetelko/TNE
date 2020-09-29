@@ -72,7 +72,7 @@ namespace TNE.Data.Implementations
         public async Task<LeadDivision> GetByIdAsync(Guid id)
         {
             Log.Debug("Get LeadDivision by Id: '{Id}'", id);
-            var result = await _context.LeadDivisions.AsNoTracking().Include(b => b.Address).SingleAsync(b => b.Id == id);
+            var result = await _context.LeadDivisions.AsNoTracking().Include(b => b.Address).SingleOrDefaultAsync(b => b.Id == id);
             return (result is null)
                 ? throw new EntityNotFoundException($"LeadDivision with Id='{id}' not found!")
                 : result;
@@ -81,7 +81,7 @@ namespace TNE.Data.Implementations
         public LeadDivision GetById(Guid id)
         {
             Log.Debug("Get LeadDivision by Id: '{Id}'", id);
-            var result = _context.LeadDivisions.AsNoTracking().Include(b => b.Address).Single(b => b.Id == id);
+            var result = _context.LeadDivisions.AsNoTracking().Include(b => b.Address).SingleOrDefault(b => b.Id == id);
             return (result is null)
                 ? throw new EntityNotFoundException($"LeadDivision with Id='{id}' not found!")
                 : result;
