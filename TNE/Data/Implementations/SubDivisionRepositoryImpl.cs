@@ -20,10 +20,10 @@ namespace TNE.Data.Implementations
             _context = context;
         }
 
-        public async void CheckExistsByIdAsync(Guid id)
+        public void CheckExistsById(Guid id)
         {
             Log.Debug("Check exists SubDivision by Id: '{Id}'", id);
-            bool result = await _context.SubDivisions.AnyAsync(b => b.Id == id);
+            bool result = _context.SubDivisions.Any(b => b.Id == id);
             if (!result)
             {
                 throw new EntityNotFoundException($"SubDivision with Id='{id}' not exist!");
@@ -40,7 +40,7 @@ namespace TNE.Data.Implementations
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            CheckExistsByIdAsync(id);
+            CheckExistsById(id);
             var obj = new SubDivision { Id = id };
             _context.SubDivisions.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
@@ -48,9 +48,9 @@ namespace TNE.Data.Implementations
             return true;
         }
 
-        public async Task<bool> UnDeleteAsync(Guid id)
+        public async Task<bool> UndeleteAsync(Guid id)
         {
-            CheckExistsByIdAsync(id);
+            CheckExistsById(id);
             var obj = new SubDivision { Id = id };
             _context.SubDivisions.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = false;
@@ -89,6 +89,7 @@ namespace TNE.Data.Implementations
                     City = s.Address.City,
                     Street = s.Address.Street,
                     Building = s.Address.Building,
+                    Deleted = s.Deleted,
                     LeadDivisionId = s.LeadDivision.Id,
                     LeadDivisionName = s.LeadDivision.Name
                 }).ToListAsync();
@@ -130,6 +131,7 @@ namespace TNE.Data.Implementations
                            City = s.Address.City,
                            Street = s.Address.Street,
                            Building = s.Address.Building,
+                           Deleted = s.Deleted,
                            LeadDivisionId = s.LeadDivision.Id,
                            LeadDivisionName = s.LeadDivision.Name
                        }).SingleOrDefaultAsync();

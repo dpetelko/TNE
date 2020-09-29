@@ -28,10 +28,10 @@ namespace TNE.Data.Implementations
             return entity;
         }
 
-        public async void CheckExistsByIdAsync(Guid Id)
+        public void CheckExistsById(Guid Id)
         {
             Log.Debug("Check exists LeadDivision by Id: '{Id}'", Id);
-            bool result = await _context.LeadDivisions.AnyAsync(b => b.Id == Id);
+            bool result = _context.LeadDivisions.Any(b => b.Id == Id);
             if (!result)
             {
                 throw new EntityNotFoundException($"LeadDivision with Id='{Id}' not exist!");
@@ -52,7 +52,8 @@ namespace TNE.Data.Implementations
                     Region = s.Address.Region,
                     City = s.Address.City,
                     Street = s.Address.Street,
-                    Building = s.Address.Building
+                    Building = s.Address.Building,
+                    Deleted = s.Deleted
                 }).ToListAsync();
             result.TrimExcess();
             return result;
@@ -91,7 +92,8 @@ namespace TNE.Data.Implementations
                            Region = s.Address.Region,
                            City = s.Address.City,
                            Street = s.Address.Street,
-                           Building = s.Address.Building
+                           Building = s.Address.Building,
+                           Deleted = s.Deleted
                        }).SingleOrDefaultAsync();
             if (result is null) throw new EntityNotFoundException($"LeadDivision with ID = '{Id}' not found!");
             return result;
@@ -124,8 +126,8 @@ namespace TNE.Data.Implementations
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            CheckExistsByIdAsync(id);
-            var obj = new LeadDivision { Id = id };
+            CheckExistsById(id);
+            var obj = new LeadDivision { Id = id, Deleted = true };
             _context.LeadDivisions.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
             await _context.SaveChangesAsync();
@@ -134,10 +136,10 @@ namespace TNE.Data.Implementations
 
         public async Task<bool> UndeleteAsync(Guid id)
         {
-            CheckExistsByIdAsync(id);
-            var obj = new LeadDivision { Id = id };
+            CheckExistsById(id);
+            var obj = new LeadDivision { Id = id, Deleted = false };
             _context.LeadDivisions.Attach(obj);
-            _context.Entry(obj).Property(x => x.Deleted).IsModified = false;
+            _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
             await _context.SaveChangesAsync();
             return true;
         }

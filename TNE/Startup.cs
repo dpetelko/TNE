@@ -33,15 +33,15 @@ namespace TNE
             //services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContextPool<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            //services.AddDbContext<DatabaseContext>(options =>
+            //            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),
+            // ServiceLifetime.Transient);
+
             services.AddScoped<ILeadDivisionService, LeadDivisionServiceImpl>();
             //services.AddScoped<ISubDivisionService, SubDivisionServiceImpl>();
 
             services.AddScoped<ILeadDivisionRepository, LeadDivisionRepositoryImpl>();
-            // services.AddScoped<ISubDivisionRepository, SubDivisionRepositoryImpl>();
-
-            //services.AddScoped<IService, ServiceA>();
-            //services.AddScoped<IService, ServiceB>();
-            //services.AddScoped<IService, ServiceC>();
+             services.AddScoped<ISubDivisionRepository, SubDivisionRepositoryImpl>();
 
             services.AddControllersWithViews();
             services.AddMvc();

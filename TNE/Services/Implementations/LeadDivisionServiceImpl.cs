@@ -22,7 +22,7 @@ namespace TNE.Services.Implementations
             return new LeadDivisionDto(result);
         }
 
-        public void CheckExistsById(Guid id) { _repo.CheckExistsByIdAsync(id); }
+        public void CheckExistsById(Guid id) { _repo.CheckExistsById(id); }
 
         public async Task<List<LeadDivisionDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
 
@@ -45,22 +45,21 @@ namespace TNE.Services.Implementations
         public async Task<LeadDivision> GetByIdAsync(Guid id) { return await _repo.GetByIdAsync(id); }
         private LeadDivision ConvertToEntity(LeadDivisionDto dto)
         {
-            return new LeadDivision
+            var entity = new LeadDivision();
+            if (!dto.Id.Equals(Guid.Empty))
             {
-                Id = dto.Id,
-                Name = dto.Name,
-                AddressId = dto.AddressId,
-                Address = new Address
-                {
-                    Id = dto.AddressId,
-                    PostCode = dto.PostCode,
-                    Country = dto.Country,
-                    Region = dto.Region,
-                    City = dto.City,
-                    Street = dto.Street,
-                    Building = dto.Building
-                }
-            };
+                entity = _repo.GetById(dto.Id);
+            }
+            entity.Name = dto.Name;
+            entity.Address.PostCode = dto.PostCode;
+            entity.Address.Country = dto.Country;
+            entity.Address.Region = dto.Region;
+            entity.Address.City = dto.City;
+            entity.Address.Street = dto.Street;
+            entity.Address.Building = dto.Building;
+            entity.Deleted = dto.Deleted;
+            return entity;
+
         }
 
         public bool IsFieldUnique(Guid id, string fieldName, object fieldValue)
@@ -68,6 +67,16 @@ namespace TNE.Services.Implementations
             return (id.Equals(Guid.Empty))
                 ? _repo.ExistsByField(fieldName, fieldValue)
                 : _repo.ExistsByFieldAndNotId(id, fieldName, fieldValue);
+        }
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            return await _repo.DeleteAsync(id);
+        }
+
+        public async Task<bool> UndeleteAsync(Guid id)
+        {
+            return await _repo.UndeleteAsync(id);
         }
     }
 }

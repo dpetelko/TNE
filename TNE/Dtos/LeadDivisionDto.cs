@@ -19,6 +19,7 @@ namespace TNE.Dto.LeadDivisions
             City = entity.Address.City;
             Street = entity.Address.Street;
             Building = entity.Address.Building;
+            Deleted = entity.Deleted;
         }
 
         public override string ToString()

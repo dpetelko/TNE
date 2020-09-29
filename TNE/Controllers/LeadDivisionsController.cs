@@ -20,6 +20,9 @@ namespace TNE.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<LeadDivisionDto>> GetById(Guid id) { return Ok(await _service.GetDtoByIdAsync(id)); }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<LeadDivisionDto>> DeleteById(Guid id) { return Ok(await _service.DeleteAsync(id)); }
+
         [HttpPost]
         public async Task<ActionResult<LeadDivisionDto>> Create([FromBody] LeadDivisionDto dto)
         {
