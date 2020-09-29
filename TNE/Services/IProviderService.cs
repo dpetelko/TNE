@@ -6,7 +6,7 @@ using TNE.Models;
 
 namespace TNE.Services
 {
-    interface IProviderService : IService<Provider>
+    public interface IProviderService : IService<Provider>
     {
         Task<ProviderDto> GetDtoByIdAsync(Guid id);
         Task<List<ProviderDto>> GetAllDtoAsync();
