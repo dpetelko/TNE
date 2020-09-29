@@ -118,10 +118,10 @@ namespace TNE.Data.Implementations
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByFieldAndNotId LeadDivision: Id - 'id', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
+            Log.Debug("ExistsByFieldAndNotId LeadDivision: Id - '{id}', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
             return fieldName.Equals("Name")
-            ? _context.LeadDivisions.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}' AND Id != {id}").Count() == 0
-            : _context.Addresses.FromSqlRaw($"SELECT * FROM dbo.Addresses WHERE {fieldName}='{fieldValue}' AND Id != {id}").Count() == 0;
+            ? _context.LeadDivisions.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}' AND Id <> '{id}'").Count() == 0
+            : _context.Addresses.FromSqlRaw($"SELECT * FROM dbo.Addresses WHERE {fieldName}='{fieldValue}' AND Id <> '{id}'").Count() == 0;
         }
 
         public async Task<bool> DeleteAsync(Guid id)

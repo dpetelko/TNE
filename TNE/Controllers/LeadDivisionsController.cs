@@ -40,6 +40,7 @@ namespace TNE.Controllers
         [HttpPut]
         public async Task<ActionResult<LeadDivisionDto>> Update([FromBody] LeadDivisionDto value)
         {
+            Serilog.Log.Error("DTO = {value}", value);
             return ModelState.IsValid
                 ? (ActionResult<LeadDivisionDto>)Ok(await _service.UpdateAsync(value))
                 : BadRequest(ModelState);

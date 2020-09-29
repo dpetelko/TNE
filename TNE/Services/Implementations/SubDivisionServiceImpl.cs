@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TNE.Data;
 using TNE.Data.Exceptions;
 using TNE.Dto;
@@ -8,64 +9,91 @@ using TNE.Models;
 
 namespace TNE.Services.Implementations
 {
-    public class SubDivisionServiceImpl //: ISubDivisionService
+    public class SubDivisionServiceImpl : ISubDivisionService
     {
-        //private readonly ISubDivisionRepository _repo;
-        //private readonly ILeadDivisionService _leadDivisionService;
-        //private readonly ILogger<SubDivisionServiceImpl> _logger;
+        private readonly ISubDivisionRepository _repo;
+        private readonly ILeadDivisionService _leadDivisionService;
 
-        //public SubDivisionServiceImpl(ISubDivisionRepository repo, ILeadDivisionService leadDivisionService, ILogger<SubDivisionServiceImpl> logger)
-        //{
-        //    _repo = repo;
-        //    _leadDivisionService = leadDivisionService;
-        //    _logger = logger;
-        //}
+        public SubDivisionServiceImpl(ISubDivisionRepository repo, ILeadDivisionService leadDivisionService, ILogger<SubDivisionServiceImpl> logger)
+        {
+            _repo = repo;
+            _leadDivisionService = leadDivisionService;
+        }
 
-        //public SubDivision Create(SubDivision model) { return _repo.Create(model); }
+        public void CheckExistsById(Guid id)
+        {
+            _repo.CheckExistsById(id);
+        }
 
-        //public SubDivisionDto Create(SubDivisionDto dto)
-        //{
-        //    if (dto.Id != Guid.Empty)
-        //    {
-        //        _logger.LogWarning("Id must be empty for CREATE operation!");
-        //        throw new InvalidEntityException("Id must be empty for CREATE operation!");
-        //    }
-        //    var entity = ConvertToEntity(dto);
-        //    return new SubDivisionDto(Create(entity));
-        //}
+        public Task<SubDivisionDto> CreateAsync(SubDivisionDto dto)
+        {
+            //if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
+            //var entity = ConvertToEntity(dto);
+            //var result = await _repo.CreateAsync(entity);
+            return null;// new SubDivisionDto(result);
+        }
 
-        //public void CheckExistsById(Guid id) { _repo.CheckExistsById(id); }
+        public Task<bool> DeleteAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
 
-        //public List<SubDivisionListViewModel> GetAllViewModels() { return _repo.GetAllViewModels(); }
+        public Task<List<SubDivisionDto>> GetAllActiveDtoAsync()
+        {
+            throw new NotImplementedException();
+        }
 
-        //public SubDivisionElementViewModel GetViewModelById(Guid id) { return _repo.GetViewModelById(id); }
+        public Task<List<SubDivisionDto>> GetAllDtoAsync()
+        {
+            throw new NotImplementedException();
+        }
 
-        //public SubDivision Update(SubDivision model) { return _repo.Update(model); }
+        public SubDivision GetById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
 
-        //public SubDivisionDto Update(SubDivisionDto dto)
-        //{
-        //    CheckExistsById(dto.Id);
-        //    var entity = ConvertToEntity(dto);
-        //    return new SubDivisionDto(Update(entity));
-        //}
+        public Task<SubDivision> GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
 
-        //public SubDivision GetById(Guid id) { return _repo.GetById(id); }
+        public Task<SubDivisionDto> GetDtoByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
 
-        //private SubDivision ConvertToEntity(SubDivisionDto dto)
-        //{
-        //    var result = new SubDivision();
-        //    result.Id = dto.Id;
-        //    result.Name = dto.Name;
-        //    result.AddressId = dto.AddressId;
-        //    result.Address.Id = dto.AddressId;
-        //    result.Address.PostCode = dto.PostCode;
-        //    result.Address.Country = dto.Country;
-        //    result.Address.Region = dto.Region;
-        //    result.Address.City = dto.City;
-        //    result.Address.Street = dto.Street;
-        //    result.Address.Building = dto.Building;
-        //    result.LeadDivision = _leadDivisionService.GetById(dto.LeadDivisionId);
-        //    return result;
-        //}
+        public bool IsFieldUnique(Guid id, string fieldName, object fieldValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UndeleteAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SubDivisionDto> UpdateAsync(SubDivisionDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        private SubDivision ConvertToEntity(SubDivisionDto dto)
+        {
+            var entity = new SubDivision();
+            if (!dto.Id.Equals(Guid.Empty))
+            {
+                entity = _repo.GetById(dto.Id);
+            }
+            entity.Name = dto.Name;
+            entity.Address.PostCode = dto.PostCode;
+            entity.Address.Country = dto.Country;
+            entity.Address.Region = dto.Region;
+            entity.Address.City = dto.City;
+            entity.Address.Street = dto.Street;
+            entity.Address.Building = dto.Building;
+            entity.Deleted = dto.Deleted;
+            return entity;
+        }
     }
 }
