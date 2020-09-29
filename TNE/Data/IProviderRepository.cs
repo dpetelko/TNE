@@ -6,7 +6,7 @@ using TNE.Models;
 
 namespace TNE.Data
 {
-    interface IProviderRepository : IRepository<Provider>
+    public interface IProviderRepository : IRepository<Provider>
     {
         Task<ProviderDto> GetDtoByIdAsync(Guid Id);
         Task<List<ProviderDto>> GetAllDtoAsync();

@@ -74,6 +74,7 @@ namespace TNE.Services.Implementations
                 entity = _repo.GetById(dto.Id);
             }
             entity.Name = dto.Name;
+            entity.AddressId = dto.AddressId;
             entity.Address.PostCode = dto.PostCode;
             entity.Address.Country = dto.Country;
             entity.Address.Region = dto.Region;

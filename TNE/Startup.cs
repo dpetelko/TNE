@@ -38,10 +38,12 @@ namespace TNE
             // ServiceLifetime.Transient);
 
             services.AddScoped<ILeadDivisionService, LeadDivisionServiceImpl>();
-            //services.AddScoped<ISubDivisionService, SubDivisionServiceImpl>();
+            services.AddScoped<ISubDivisionService, SubDivisionServiceImpl>();
+            services.AddScoped<IProviderService, ProviderServiceImpl>();
 
             services.AddScoped<ILeadDivisionRepository, LeadDivisionRepositoryImpl>();
-             services.AddScoped<ISubDivisionRepository, SubDivisionRepositoryImpl>();
+            services.AddScoped<ISubDivisionRepository, SubDivisionRepositoryImpl>();
+            services.AddScoped<IProviderRepository, ProviderRepositoryImpl>();
 
             services.AddControllersWithViews();
             services.AddMvc();

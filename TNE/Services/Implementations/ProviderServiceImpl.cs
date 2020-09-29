@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TNE.Data;
 using TNE.Data.Exceptions;
@@ -9,38 +9,38 @@ using TNE.Models;
 
 namespace TNE.Services.Implementations
 {
-    public class SubDivisionServiceImpl : ISubDivisionService
+    public class ProviderServiceImpl : IProviderService
     {
-        private readonly ISubDivisionRepository _repo;
-        private readonly ILeadDivisionService _leadDivisionService;
+        private readonly IProviderRepository _repo;
+        private readonly ISubDivisionService _subDivisionService;
 
-        public SubDivisionServiceImpl(ISubDivisionRepository repo, ILeadDivisionService leadDivisionService, ILogger<SubDivisionServiceImpl> logger)
+        public ProviderServiceImpl(IProviderRepository repo, ISubDivisionService subDivisionService)
         {
             _repo = repo;
-            _leadDivisionService = leadDivisionService;
+            _subDivisionService = subDivisionService;
         }
 
         public void CheckExistsById(Guid id) { _repo.CheckExistsById(id); }
 
-        public async Task<SubDivisionDto> CreateAsync(SubDivisionDto dto)
+        public async Task<ProviderDto> CreateAsync(ProviderDto dto)
         {
             if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
             var entity = ConvertToEntity(dto);
             var result = await _repo.CreateAsync(entity);
-            return new SubDivisionDto(result);
+            return new ProviderDto(result);
         }
 
         public async Task<bool> DeleteAsync(Guid id) { return await _repo.DeleteAsync(id); }
 
-        public async Task<List<SubDivisionDto>> GetAllActiveDtoAsync() { return await _repo.GetAllActiveDtoAsync(); }
+        public async Task<List<ProviderDto>> GetAllActiveDtoAsync() { return await _repo.GetAllActiveDtoAsync(); }
 
-        public async Task<List<SubDivisionDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
+        public async Task<List<ProviderDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
 
-        public SubDivision GetById(Guid id) { return _repo.GetById(id); }
+        public Provider GetById(Guid id) { return _repo.GetById(id); }
 
-        public async Task<SubDivision> GetByIdAsync(Guid id) { return await _repo.GetByIdAsync(id); }
+        public async Task<Provider> GetByIdAsync(Guid id) { return await _repo.GetByIdAsync(id); }
 
-        public async Task<SubDivisionDto> GetDtoByIdAsync(Guid id)
+        public async Task<ProviderDto> GetDtoByIdAsync(Guid id)
         {
             CheckExistsById(id);
             return await _repo.GetDtoByIdAsync(id);
@@ -55,17 +55,17 @@ namespace TNE.Services.Implementations
 
         public async Task<bool> UndeleteAsync(Guid id) { return await _repo.UndeleteAsync(id); }
 
-        public async Task<SubDivisionDto> UpdateAsync(SubDivisionDto dto)
+        public async Task<ProviderDto> UpdateAsync(ProviderDto dto)
         {
             if (dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must can't be empty for UPDATE!");
             CheckExistsById(dto.Id);
             var entity = ConvertToEntity(dto);
-            return new SubDivisionDto(await _repo.UpdateAsync(entity));
+            return new ProviderDto(await _repo.UpdateAsync(entity));
         }
 
-        private SubDivision ConvertToEntity(SubDivisionDto dto)
+        private Provider ConvertToEntity(ProviderDto dto)
         {
-            var entity = new SubDivision();
+            var entity = new Provider();
             if (!dto.Id.Equals(Guid.Empty))
             {
                 entity = _repo.GetById(dto.Id);
@@ -79,9 +79,9 @@ namespace TNE.Services.Implementations
             entity.Address.Street = dto.Street;
             entity.Address.Building = dto.Building;
             entity.Deleted = dto.Deleted;
-            if (!entity.LeadDivisionId.Equals(dto.LeadDivisionId))
+            if (!entity.SubDivisionId.Equals(dto.SubDivisionId))
             {
-                entity.LeadDivision = _leadDivisionService.GetById(dto.LeadDivisionId);
+                entity.SubDivision = _subDivisionService.GetById(dto.SubDivisionId);
             }
             return entity;
         }
