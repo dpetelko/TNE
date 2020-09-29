@@ -10,6 +10,7 @@ namespace TNE.Data
     {
         Task<LeadDivisionDto> GetDtoByIdAsync(Guid Id);
         Task<List<LeadDivisionDto>> GetAllDtoAsync();
-        
+        Task<List<LeadDivisionDto>> GetAllActiveDtoAsync();
+
     }
 }

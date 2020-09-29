@@ -143,6 +143,27 @@ namespace TNE.Data.Implementations
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<List<LeadDivisionDto>> GetAllActiveDtoAsync()
+        {
+            Log.Debug("GetAllActive LeadDivisionDto");
+            var result = await _context.LeadDivisions.AsNoTracking().Include(s => s.Address).Where(s => s.Deleted == false)
+                .Select(s => new LeadDivisionDto
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    AddressId = s.Address.Id,
+                    PostCode = s.Address.PostCode,
+                    Country = s.Address.Country,
+                    Region = s.Address.Region,
+                    City = s.Address.City,
+                    Street = s.Address.Street,
+                    Building = s.Address.Building,
+                    Deleted = s.Deleted
+                }).ToListAsync();
+            result.TrimExcess();
+            return result;
+        }
     }
 }
 

@@ -43,24 +43,6 @@ namespace TNE.Services.Implementations
         public LeadDivision GetById(Guid id) { return _repo.GetById(id); }
 
         public async Task<LeadDivision> GetByIdAsync(Guid id) { return await _repo.GetByIdAsync(id); }
-        private LeadDivision ConvertToEntity(LeadDivisionDto dto)
-        {
-            var entity = new LeadDivision();
-            if (!dto.Id.Equals(Guid.Empty))
-            {
-                entity = _repo.GetById(dto.Id);
-            }
-            entity.Name = dto.Name;
-            entity.Address.PostCode = dto.PostCode;
-            entity.Address.Country = dto.Country;
-            entity.Address.Region = dto.Region;
-            entity.Address.City = dto.City;
-            entity.Address.Street = dto.Street;
-            entity.Address.Building = dto.Building;
-            entity.Deleted = dto.Deleted;
-            return entity;
-
-        }
 
         public bool IsFieldUnique(Guid id, string fieldName, object fieldValue)
         {
@@ -77,6 +59,29 @@ namespace TNE.Services.Implementations
         public async Task<bool> UndeleteAsync(Guid id)
         {
             return await _repo.UndeleteAsync(id);
+        }
+
+        public async Task<List<LeadDivisionDto>> GetAllActiveDtoAsync()
+        {
+            return await _repo.GetAllActiveDtoAsync();
+        }
+
+        private LeadDivision ConvertToEntity(LeadDivisionDto dto)
+        {
+            var entity = new LeadDivision();
+            if (!dto.Id.Equals(Guid.Empty))
+            {
+                entity = _repo.GetById(dto.Id);
+            }
+            entity.Name = dto.Name;
+            entity.Address.PostCode = dto.PostCode;
+            entity.Address.Country = dto.Country;
+            entity.Address.Region = dto.Region;
+            entity.Address.City = dto.City;
+            entity.Address.Street = dto.Street;
+            entity.Address.Building = dto.Building;
+            entity.Deleted = dto.Deleted;
+            return entity;
         }
     }
 }

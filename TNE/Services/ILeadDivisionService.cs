@@ -12,5 +12,6 @@ namespace TNE.Services
         Task<List<LeadDivisionDto>> GetAllDtoAsync();
         Task<LeadDivisionDto> CreateAsync(LeadDivisionDto dto);
         Task<LeadDivisionDto> UpdateAsync(LeadDivisionDto dto);
+        Task<List<LeadDivisionDto>> GetAllActiveDtoAsync();
     }
 }
