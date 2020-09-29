@@ -70,8 +70,8 @@ namespace TNE.Data.Implementations
         {
             Log.Debug("ExistsByFieldAndNotId SubDivision: Id - 'id', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
             return fieldName.Equals("Name")
-            ? _context.SubDivisions.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}' AND Id != {id}").Count() == 0
-            : _context.Addresses.FromSqlRaw($"SELECT * FROM dbo.Addresses WHERE {fieldName}='{fieldValue}' AND Id != {id}").Count() == 0;
+            ? _context.SubDivisions.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}' AND Id <> '{id}'").Count() == 0
+            : _context.Addresses.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}' AND Id <> '{id}'").Count() == 0;
         }
 
         public async Task<List<SubDivisionDto>> GetAllDtoAsync()
