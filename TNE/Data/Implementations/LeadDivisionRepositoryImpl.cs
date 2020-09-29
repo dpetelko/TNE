@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -20,17 +19,7 @@ namespace TNE.Data.Implementations
         {
             _context = context;
         }
-        //public LeadDivisionRepositoryImpl()
-        //{
-        //    IConfigurationRoot configuration = new ConfigurationBuilder()
-        //    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-        //    .AddJsonFile("appsettings.json")
-        //    .Build();
-        //    var connectionString = configuration.GetConnectionString("DefaultConnection");
-        //    var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
-        //    optionsBuilder.UseSqlServer(connectionString);
-        //    _context = new DatabaseContext(optionsBuilder.Options);
-        //}
+
         public async Task<LeadDivision> CreateAsync(LeadDivision entity)
         {
             Log.Debug("Creating LeadDivision: {entity}", entity);
@@ -119,7 +108,6 @@ namespace TNE.Data.Implementations
         public bool ExistsByField(string fieldName, object fieldValue)
         {
             Log.Debug("ExistsByField LeadDivision: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
-
             return fieldName.Equals("Name")
                 ? _context.LeadDivisions.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}'").Count() == 0
                 : _context.Addresses.FromSqlRaw($"SELECT * FROM dbo.Addresses WHERE {fieldName}='{fieldValue}'").Count() == 0;
@@ -129,24 +117,36 @@ namespace TNE.Data.Implementations
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
         {
             Log.Debug("ExistsByFieldAndNotId LeadDivision: Id - 'id', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
-            var result = _context.LeadDivisions.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}' AND Id != {id}");
-            return result.Count() == 0;
+            return fieldName.Equals("Name")
+            ? _context.LeadDivisions.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}' AND Id != {id}").Count() == 0
+            : _context.Addresses.FromSqlRaw($"SELECT * FROM dbo.Addresses WHERE {fieldName}='{fieldValue}' AND Id != {id}").Count() == 0;
+        }
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            CheckExistsByIdAsync(id);
+            var obj = new LeadDivision { Id = id };
+            _context.LeadDivisions.Attach(obj);
+            _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UndeleteAsync(Guid id)
+        {
+            CheckExistsByIdAsync(id);
+            var obj = new LeadDivision { Id = id };
+            _context.LeadDivisions.Attach(obj);
+            _context.Entry(obj).Property(x => x.Deleted).IsModified = false;
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }
 
 
 
-//public bool Delete(Guid Id)
-//{
-//    if (ExistsById(Id))
-//    {
-//        LeadDivision obj = new LeadDivision { Id = Id };
-//        _context.LeadDivisions.Remove(obj);
-//        _context.SaveChanges();
-//    }
-//    return true;
-//}
+
 
 
 

@@ -38,19 +38,62 @@ namespace TNE.Data.Implementations
             return entity;
         }
 
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            CheckExistsByIdAsync(id);
+            var obj = new SubDivision { Id = id };
+            _context.SubDivisions.Attach(obj);
+            _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UnDeleteAsync(Guid id)
+        {
+            CheckExistsByIdAsync(id);
+            var obj = new SubDivision { Id = id };
+            _context.SubDivisions.Attach(obj);
+            _context.Entry(obj).Property(x => x.Deleted).IsModified = false;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public bool ExistsByField(string fieldName, object fieldValue)
         {
-            throw new NotImplementedException();
+            Log.Debug("ExistsByField SubDivision: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
+            return fieldName.Equals("Name")
+                ? _context.SubDivisions.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}'").Count() == 0
+                : _context.Addresses.FromSqlRaw($"SELECT * FROM dbo.Addresses WHERE {fieldName}='{fieldValue}'").Count() == 0;
         }
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
         {
-            throw new NotImplementedException();
+            Log.Debug("ExistsByFieldAndNotId SubDivision: Id - 'id', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
+            return fieldName.Equals("Name")
+            ? _context.SubDivisions.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}' AND Id != {id}").Count() == 0
+            : _context.Addresses.FromSqlRaw($"SELECT * FROM dbo.Addresses WHERE {fieldName}='{fieldValue}' AND Id != {id}").Count() == 0;
         }
 
-        public Task<List<SubDivisionDto>> GetAllDtoAsync()
+        public async Task<List<SubDivisionDto>> GetAllDtoAsync()
         {
-            throw new NotImplementedException();
+            Log.Debug("GetAll SubDivisionDto");
+            var result = await _context.SubDivisions.AsNoTracking().Include(s => s.Address).Include(b => b.LeadDivision)
+                .Select(s => new SubDivisionDto
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    AddressId = s.Address.Id,
+                    PostCode = s.Address.PostCode,
+                    Country = s.Address.Country,
+                    Region = s.Address.Region,
+                    City = s.Address.City,
+                    Street = s.Address.Street,
+                    Building = s.Address.Building,
+                    LeadDivisionId = s.LeadDivision.Id,
+                    LeadDivisionName = s.LeadDivision.Name
+                }).ToListAsync();
+            result.TrimExcess();
+            return result;
         }
 
         public SubDivision GetById(Guid id)
