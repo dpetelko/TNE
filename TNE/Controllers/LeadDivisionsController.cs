@@ -26,6 +26,9 @@ namespace TNE.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<LeadDivisionDto>> DeleteById(Guid id) { return Ok(await _service.DeleteAsync(id)); }
 
+        [HttpDelete("undelete/{id}")]
+        public async Task<ActionResult<LeadDivisionDto>> UndeleteById(Guid id) { return Ok(await _service.UndeleteAsync(id)); }
+
         [HttpPost]
         public async Task<ActionResult<LeadDivisionDto>> Create([FromBody] LeadDivisionDto dto)
         {
@@ -41,11 +44,5 @@ namespace TNE.Controllers
                 ? (ActionResult<LeadDivisionDto>)Ok(await _service.UpdateAsync(value))
                 : BadRequest(ModelState);
         }
-
-        //// DELETE api/<ValuesController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
