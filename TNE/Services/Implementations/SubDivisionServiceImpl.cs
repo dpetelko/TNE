@@ -20,62 +20,47 @@ namespace TNE.Services.Implementations
             _leadDivisionService = leadDivisionService;
         }
 
-        public void CheckExistsById(Guid id)
+        public void CheckExistsById(Guid id) { _repo.CheckExistsById(id); }
+
+        public async Task<SubDivisionDto> CreateAsync(SubDivisionDto dto)
         {
-            _repo.CheckExistsById(id);
+            if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
+            var entity = ConvertToEntity(dto);
+            var result = await _repo.CreateAsync(entity);
+            return new SubDivisionDto(result);
         }
 
-        public Task<SubDivisionDto> CreateAsync(SubDivisionDto dto)
-        {
-            //if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
-            //var entity = ConvertToEntity(dto);
-            //var result = await _repo.CreateAsync(entity);
-            return null;// new SubDivisionDto(result);
-        }
+        public async Task<bool> DeleteAsync(Guid id) { return await _repo.DeleteAsync(id); }
 
-        public Task<bool> DeleteAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<SubDivisionDto>> GetAllActiveDtoAsync() { return await _repo.GetAllActiveDtoAsync(); }
 
-        public Task<List<SubDivisionDto>> GetAllActiveDtoAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<SubDivisionDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
 
-        public Task<List<SubDivisionDto>> GetAllDtoAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public SubDivision GetById(Guid id) { return _repo.GetById(id); }
 
-        public SubDivision GetById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<SubDivision> GetByIdAsync(Guid id) { return await _repo.GetByIdAsync(id); }
 
-        public Task<SubDivision> GetByIdAsync(Guid id)
+        public async Task<SubDivisionDto> GetDtoByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<SubDivisionDto> GetDtoByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
+            CheckExistsById(id);
+            return await _repo.GetDtoByIdAsync(id);
         }
 
         public bool IsFieldUnique(Guid id, string fieldName, object fieldValue)
         {
-            throw new NotImplementedException();
+            return (id.Equals(Guid.Empty))
+                ? _repo.ExistsByField(fieldName, fieldValue)
+                : _repo.ExistsByFieldAndNotId(id, fieldName, fieldValue);
         }
 
-        public Task<bool> UndeleteAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<bool> UndeleteAsync(Guid id) { return await _repo.UndeleteAsync(id); }
 
-        public Task<SubDivisionDto> UpdateAsync(SubDivisionDto dto)
+        public async Task<SubDivisionDto> UpdateAsync(SubDivisionDto dto)
         {
-            throw new NotImplementedException();
+            if (dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must can't be empty for UPDATE!");
+            CheckExistsById(dto.Id);
+            var entity = ConvertToEntity(dto);
+            return new SubDivisionDto(await _repo.UpdateAsync(entity));
         }
 
         private SubDivision ConvertToEntity(SubDivisionDto dto)
@@ -93,6 +78,10 @@ namespace TNE.Services.Implementations
             entity.Address.Street = dto.Street;
             entity.Address.Building = dto.Building;
             entity.Deleted = dto.Deleted;
+            if (!entity.LeadDivisionId.Equals(dto.LeadDivisionId))
+            {
+                entity.LeadDivision = _leadDivisionService.GetById(dto.LeadDivisionId);
+            }
             return entity;
         }
     }
