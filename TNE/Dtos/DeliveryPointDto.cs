@@ -1,4 +1,6 @@
 ﻿using System;
+using TNE.Models;
+
 namespace TNE.Dtos
 {
     public class DeliveryPointDto : IEquatable<DeliveryPointDto>
@@ -11,6 +13,16 @@ namespace TNE.Dtos
         public bool Deleted { get; set; }
 
         public DeliveryPointDto() { }
+
+        public DeliveryPointDto(DeliveryPoint entity)
+        {
+            Id = entity.Id;
+            Name = entity.Name;
+            MaxPower = entity.MaxPower;
+            Deleted = entity.Deleted;
+            ProviderId = entity.Provider.Id;
+            ProviderName = entity.Provider.Name;
+        }
 
         public override bool Equals(object obj)
         {
