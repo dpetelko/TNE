@@ -20,10 +20,7 @@ namespace TNE.Data.Implementations
         {
             Log.Debug("Check exists SubDivision by Id: '{Id}'", id);
             bool result = _context.SubDivisions.Any(b => b.Id == id);
-            if (!result)
-            {
-                throw new EntityNotFoundException($"SubDivision with Id='{id}' not exist!");
-            }
+            if (!result) { throw new EntityNotFoundException($"SubDivision with Id='{id}' not exist!"); }
         }
 
         public async Task<SubDivision> CreateAsync(SubDivision entity)

@@ -10,8 +10,8 @@ namespace TNE.Data
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
         : base(options)
         {
-            //Database.EnsureDeleted();
-            //Database.EnsureCreated();
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
         }
 
         public DbSet<Address> Addresses { get; set; }
