@@ -1,4 +1,5 @@
 ﻿using System;
+using TNE.Models;
 
 namespace TNE.Dtos
 {
@@ -11,7 +12,7 @@ namespace TNE.Dtos
         public int TransformationRate { get; set; }
         public Guid ControlPointId { get; set; }
         public string ControlPointName { get; set; }
-        public string Status { get; set; }
+        public Status Status { get; set; }
 
         public TransformerDto() { }
 

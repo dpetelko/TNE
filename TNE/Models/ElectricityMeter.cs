@@ -14,8 +14,8 @@ namespace TNE.Models
         public DateTime VerificationDate { get; set; }
         public Guid ControlPointId { get; set; }
         public ControlPoint ControlPoint { get; set; }
-        [DefaultValue("Storage")]
-        public string Status { get; set; }
+        [DefaultValue(Status.InStorage)]
+        public Status Status { get; set; }
         public override string ToString()
         {
             return $"ElectricityMeter" +

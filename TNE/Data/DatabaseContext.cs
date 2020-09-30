@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using TNE.Models;
 
@@ -30,12 +31,26 @@ namespace TNE.Data
             modelBuilder.Entity<LeadDivision>()
                 .HasIndex(b => b.Name)
                 .IsUnique();
+
             modelBuilder.Entity<SubDivision>()
                 .HasIndex(b => b.Name)
                 .IsUnique();
+
             modelBuilder.Entity<Provider>()
                 .HasIndex(b => b.Name)
                 .IsUnique();
+
+            var converter = new EnumToNumberConverter<Status, int>();
+
+            modelBuilder
+                .Entity<Transformer>()
+                .Property(e => e.Status)
+                .HasConversion(converter);
+            modelBuilder
+                .Entity<ElectricityMeter>()
+                .Property(e => e.Status)
+                .HasConversion(converter);
+
         }
     }
 }
