@@ -1,4 +1,7 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using TNE.Services.Validators;
+
 namespace TNE.Dtos
 {
     public class ControlPointDto
@@ -6,6 +9,9 @@ namespace TNE.Dtos
         public ControlPointDto() { }
 
         public Guid Id { get; set; }
+        [Required(ErrorMessage = "Please, enter name")]
+        [StringLength(10, MinimumLength = 3, ErrorMessage = "The {0} length must be between {2} and {1} characters")]
+        [UniqueField]
         public string Name { get; set; }
         public Guid ProviderId { get; set; }
         public string ProviderName { get; set; }
