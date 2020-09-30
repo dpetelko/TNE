@@ -46,6 +46,7 @@ namespace TNE.Data
                 .Entity<Transformer>()
                 .Property(e => e.Status)
                 .HasConversion(converter);
+
             modelBuilder
                 .Entity<ElectricityMeter>()
                 .Property(e => e.Status)
