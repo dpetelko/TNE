@@ -31,11 +31,6 @@ namespace TNE.Data.Implementations
             return entity;
         }
 
-        public Task<bool> DeleteAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool ExistsByField(string fieldName, object fieldValue)
         {
             Log.Debug("ExistsByField Transformer: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
@@ -117,9 +112,14 @@ namespace TNE.Data.Implementations
             return result;
         }
 
-        public Task<bool> UndeleteAsync(Guid id)
+        public async Task<bool> SetStatus(Guid id, Status newStatus)
         {
-            throw new NotImplementedException();
+            Log.Debug("Setting new Status= '{newStatus}' for Transformer ID= '{id}'", newStatus, id);
+            var obj = new Transformer { Id = id, Status = newStatus };
+            _context.Transformers.Attach(obj);
+            _context.Entry(obj).Property(x => x.Status).IsModified = true;
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<Transformer> UpdateAsync(Transformer entity)
