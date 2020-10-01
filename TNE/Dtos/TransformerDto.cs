@@ -16,6 +16,18 @@ namespace TNE.Dtos
 
         public TransformerDto() { }
 
+        public TransformerDto(Transformer entity) 
+        {
+            Id = entity.Id;
+            Number = entity.Number;
+            Type = entity.Type;
+            VerificationDate = entity.VerificationDate;
+            TransformationRate = entity.TransformationRate;
+            ControlPointId = entity.ControlPoint.Id;
+            ControlPointName = entity.ControlPoint.Name;
+            Status = entity.Status;
+        }
+
         public override bool Equals(object obj)
         {
             return Equals(obj as TransformerDto);

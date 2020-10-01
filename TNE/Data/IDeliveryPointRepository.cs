@@ -9,6 +9,8 @@ namespace TNE.Data
 {
     public interface IDeliveryPointRepository : IRepository<DeliveryPoint>
     {
+        Task<bool> DeleteAsync(Guid id);
+        Task<bool> UndeleteAsync(Guid id);
         Task<DeliveryPointDto> GetDtoByIdAsync(Guid Id);
         Task<List<DeliveryPointDto>> GetAllDtoAsync();
         Task<List<DeliveryPointDto>> GetAllActiveDtoAsync();

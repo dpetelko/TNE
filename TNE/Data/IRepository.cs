@@ -10,8 +10,7 @@ namespace TNE.Data
         T GetById(Guid id);
         Task<T> CreateAsync(T entity);
         Task<T> UpdateAsync(T entity);
-        Task<bool> DeleteAsync(Guid id);
-        Task<bool> UndeleteAsync(Guid id);
+        
         void CheckExistsById(Guid id);
         bool ExistsByField(string fieldName, object fieldValue);
         bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue);
