@@ -3,7 +3,6 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
-using TNE.Services;
 
 namespace TNE.Services.Validators
 {
@@ -22,10 +21,10 @@ namespace TNE.Services.Validators
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             _validationContext = validationContext;
-            if (_message is null) _message = $"{GetValidatedFieldName()} is exists.";
             var fieldName = GetValidatedFieldName();
             var id = GetIdValue("Id");
             var result = Validate(id, fieldName, value);
+            if (_message is null) _message = $"{fieldName} is exists.";
             return (result)
                 ? ValidationResult.Success
                 : new ValidationResult(_message);
