@@ -24,6 +24,8 @@ namespace TNE.Data
         public DbSet<ControlPoint> ControlPoints { get; set; }
         public DbSet<DeliveryPoint> DeliveryPoints { get; set; }
         public DbSet<ElectricityMeter> ElectricityMeters { get; set; }
+        public DbSet<CurrentTransformer> CurrentTransformers { get; set; }
+        public DbSet<VoltageTransformer> VoltageTransformers { get; set; }
         public DbSet<Transformer> Transformers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,7 +48,7 @@ namespace TNE.Data
                 .Entity<Transformer>()
                 .Property(e => e.Status)
                 .HasConversion(converter);
-
+            
             modelBuilder
                 .Entity<ElectricityMeter>()
                 .Property(e => e.Status)

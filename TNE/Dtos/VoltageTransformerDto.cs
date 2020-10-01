@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading.Tasks;
 using TNE.Models;
 
 namespace TNE.Dtos
 {
-    public class TransformerDto : IEquatable<TransformerDto>
+    public class VoltageTransformerDto : IEquatable<VoltageTransformerDto>
     {
         public Guid Id { get; set; }
         [Required]
@@ -20,9 +24,9 @@ namespace TNE.Dtos
         [EnumDataType(typeof(Status), ErrorMessage = "Invalid Status value")]
         public Status Status { get; set; }
 
-        public TransformerDto() { }
+        public VoltageTransformerDto() { }
 
-        public TransformerDto(Transformer entity) 
+        public VoltageTransformerDto(VoltageTransformer entity)
         {
             if (entity is null) throw new ArgumentNullException(nameof(entity));
             Id = entity.Id;
@@ -30,17 +34,16 @@ namespace TNE.Dtos
             Type = entity.Type;
             VerificationDate = entity.VerificationDate;
             TransformationRate = entity.TransformationRate;
-            //ControlPointId = entity.ControlPoint.Id;
-            //ControlPointName = entity.ControlPoint.Name;
+            ControlPointName = entity.ControlPoint.Name;
             Status = entity.Status;
         }
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as TransformerDto);
+            return Equals(obj as VoltageTransformerDto);
         }
 
-        public bool Equals(TransformerDto other)
+        public bool Equals(VoltageTransformerDto other)
         {
             return other != null &&
                    Id.Equals(other.Id) &&
@@ -54,7 +57,7 @@ namespace TNE.Dtos
 
         public override string ToString()
         {
-            return $"TransformerDto" +
+            return $"VoltageTransformerDto" +
                 $"[ Id:{Id}, " +
                 $"Number:{Number}, " +
                 $"Type:{Type}, " +

@@ -16,8 +16,6 @@ namespace TNE
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,24 +28,22 @@ namespace TNE
             services.AddSingleton(Log.Logger);
             services.Configure<KestrelServerOptions>(Configuration.GetSection("Kestrel"));
             services.AddLogging();
-            //services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContextPool<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //services.AddDbContext<DatabaseContext>(options =>
-            //            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),
-            // ServiceLifetime.Transient);
 
             services.AddScoped<ILeadDivisionService, LeadDivisionServiceImpl>();
             services.AddScoped<ISubDivisionService, SubDivisionServiceImpl>();
             services.AddScoped<IProviderService, ProviderServiceImpl>();
             services.AddScoped<IDeliveryPointService, DeliveryPointServiceImpl>();
-            services.AddScoped<ITransformerService, TransformerServiceImpl>();
+            services.AddScoped<ICurrentTransformerService, CurrentTransformerServiceImpl>();
+            services.AddScoped<IVoltageTransformerService, VoltageTransformerServiceImpl>();
+            services.AddScoped<IControlPointService, ControlPointServiceImpl>();
 
             services.AddScoped<ILeadDivisionRepository, LeadDivisionRepositoryImpl>();
             services.AddScoped<ISubDivisionRepository, SubDivisionRepositoryImpl>();
             services.AddScoped<IProviderRepository, ProviderRepositoryImpl>();
             services.AddScoped<IDeliveryPointRepository, DeliveryPointRepositoryImpl>();
-            services.AddScoped<ITransformerRepository, TransformerRepositoryImpl>();
+            services.AddScoped<ICurrentTransformerRepository, CurrentTransformerRepositoryImpl>();
+            services.AddScoped<IVoltageTransformerRepository, VoltageTransformerRepositoryImpl>();
 
             services.AddControllersWithViews();
             services.AddMvc();

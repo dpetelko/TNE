@@ -46,6 +46,4 @@ namespace TNE.Dtos
                 $"Status:{Status} ]";
         }
     }
-
-    
 }

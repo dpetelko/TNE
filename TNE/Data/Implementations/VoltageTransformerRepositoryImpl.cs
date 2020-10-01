@@ -10,48 +10,48 @@ using TNE.Models;
 
 namespace TNE.Data.Implementations
 {
-    public class TransformerRepositoryImpl : ITransformerRepository
+    public class VoltageTransformerRepositoryImpl : IVoltageTransformerRepository
     {
         private readonly DatabaseContext _context;
 
-        public TransformerRepositoryImpl(DatabaseContext context) { _context = context; }
+        public VoltageTransformerRepositoryImpl(DatabaseContext context) { _context = context; }
 
         public void CheckExistsById(Guid id)
         {
-            Log.Debug("Check exists Transformer by Id: '{Id}'", id);
-            bool result = _context.SubDivisions.Any(b => b.Id == id);
-            if (!result) { throw new EntityNotFoundException($"SubDivision with Id='{id}' not exist!"); }
+            Log.Debug("Check exists VoltageTransformer by Id: '{Id}'", id);
+            bool result = _context.VoltageTransformers.Any(b => b.Id == id);
+            if (!result) { throw new EntityNotFoundException($"VoltageTransformer with Id='{id}' not exist!"); }
         }
 
-        public async Task<Transformer> CreateAsync(Transformer entity)
+        public async Task<VoltageTransformer> CreateAsync(VoltageTransformer entity)
         {
-            Log.Debug("Creating Transformer: {entity}", entity);
-            _context.Transformers.Add(entity);
+            Log.Debug("Creating VoltageTransformer: {entity}", entity);
+            _context.VoltageTransformers.Add(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
 
         public bool ExistsByField(string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByField Transformer: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
-            return _context.Transformers.FromSqlRaw($"SELECT * FROM dbo.Transformers WHERE {fieldName}='{fieldValue}'").Count() == 0;
+            Log.Debug("ExistsByField VoltageTransformer: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
+            return _context.VoltageTransformers.FromSqlRaw($"SELECT * FROM dbo.Transformers WHERE {fieldName}='{fieldValue}'").Count() == 0;
         }
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByFieldAndNotId Transformer: Id - 'id', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
-            return _context.Transformers.FromSqlRaw($"SELECT * FROM dbo.Transformers WHERE {fieldName}='{fieldValue}' AND Id <> '{id}'").Count() == 0;
+            Log.Debug("ExistsByFieldAndNotId VoltageTransformer: Id - 'id', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
+            return _context.VoltageTransformers.FromSqlRaw($"SELECT * FROM dbo.Transformers WHERE {fieldName}='{fieldValue}' AND Id <> '{id}'").Count() == 0;
 
 
         }
 
-        public async Task<List<TransformerDto>> GetAllDtoAsync()
+        public async Task<List<VoltageTransformerDto>> GetAllDtoAsync()
         {
-            Log.Debug("GetAll TransformerDto");
-            var result = await _context.Transformers
+            Log.Debug("GetAll VoltageTransformerDto");
+            var result = await _context.VoltageTransformers
                 .AsNoTracking()
                 .Include(s => s.ControlPoint)
-                .Select(s => new TransformerDto
+                .Select(s => new VoltageTransformerDto
                 {
                     Id = s.Id,
                     Number = s.Number,
@@ -66,14 +66,14 @@ namespace TNE.Data.Implementations
             return result;
         }
 
-        public async Task<List<TransformerDto>> GetAllDtoByStatusAsync(Status status)
+        public async Task<List<VoltageTransformerDto>> GetAllDtoByStatusAsync(Status status)
         {
-            Log.Debug("GetAll TransformerDto");
-            var result = await _context.Transformers
+            Log.Debug("GetAll VoltageTransformerDto");
+            var result = await _context.VoltageTransformers
                 .AsNoTracking()
                 .Include(s => s.ControlPoint)
                 .Where(s => s.Status == status)
-                .Select(s => new TransformerDto
+                .Select(s => new VoltageTransformerDto
                 {
                     Id = s.Id,
                     Number = s.Number,
@@ -88,38 +88,38 @@ namespace TNE.Data.Implementations
             return result;
         }
 
-        public Transformer GetById(Guid id)
+        public VoltageTransformer GetById(Guid id)
         {
-            Log.Debug("Get Transformer by Id: '{Id}'", id);
-            var result = _context.Transformers
+            Log.Debug("Get VoltageTransformer by Id: '{Id}'", id);
+            var result = _context.VoltageTransformers
                 .AsNoTracking()
                 .Include(b => b.ControlPoint)
                 .SingleOrDefault(b => b.Id == id);
             return (result is null)
-                ? throw new EntityNotFoundException($"Transformer with Id='{id}' not found!")
+                ? throw new EntityNotFoundException($"VoltageTransformer with Id='{id}' not found!")
                 : result;
         }
 
-        public async Task<Transformer> GetByIdAsync(Guid id)
+        public async Task<VoltageTransformer> GetByIdAsync(Guid id)
         {
-            Log.Debug("Get Transformer by Id: '{Id}'", id);
-            var result = await _context.Transformers
+            Log.Debug("Get VoltageTransformer by Id: '{Id}'", id);
+            var result = await _context.VoltageTransformers
                 .AsNoTracking()
                 .Include(b => b.ControlPoint)
                 .SingleOrDefaultAsync(b => b.Id == id);
             return (result is null)
-                ? throw new EntityNotFoundException($"Transformer with Id='{id}' not found!")
+                ? throw new EntityNotFoundException($"VoltageTransformer with Id='{id}' not found!")
                 : result;
         }
 
-        public async Task<TransformerDto> GetDtoByIdAsync(Guid Id)
+        public async Task<VoltageTransformerDto> GetDtoByIdAsync(Guid Id)
         {
-            Log.Debug("Get TransformerDto by Id: '{Id}'", Id);
-            var result = await _context.Transformers
+            Log.Debug("Get VoltageTransformerDto by Id: '{Id}'", Id);
+            var result = await _context.VoltageTransformers
                 .AsNoTracking()
                 .Include(b => b.ControlPoint)
                 .Where(s => s.Id == Id)
-                .Select(s => new TransformerDto
+                .Select(s => new VoltageTransformerDto
                 {
                     Id = s.Id,
                     Number = s.Number,
@@ -130,24 +130,24 @@ namespace TNE.Data.Implementations
                     ControlPointId = s.ControlPoint.Id,
                     ControlPointName = s.ControlPoint.Name
                 }).SingleOrDefaultAsync();
-            if (result is null) throw new EntityNotFoundException($"TransformerDto with ID = '{Id}' not found!");
+            if (result is null) throw new EntityNotFoundException($"VoltageTransformer with ID = '{Id}' not found!");
             return result;
         }
 
         public async Task<bool> SetStatus(Guid id, Status newStatus)
         {
-            Log.Debug("Setting new Status= '{newStatus}' for Transformer ID= '{id}'", newStatus, id);
-            var obj = new Transformer { Id = id, Status = newStatus };
-            _context.Transformers.Attach(obj);
+            Log.Debug("Setting new Status= '{newStatus}' for VoltageTransformer ID= '{id}'", newStatus, id);
+            var obj = new VoltageTransformer { Id = id, Status = newStatus };
+            _context.VoltageTransformers.Attach(obj);
             _context.Entry(obj).Property(x => x.Status).IsModified = true;
             await _context.SaveChangesAsync();
             return true;
         }
 
-        public async Task<Transformer> UpdateAsync(Transformer entity)
+        public async Task<VoltageTransformer> UpdateAsync(VoltageTransformer entity)
         {
-            Log.Debug("Updating Transformer: '{entity}'", entity);
-            _context.Transformers.Update(entity);
+            Log.Debug("Updating VoltageTransformer: '{entity}'", entity);
+            _context.VoltageTransformers.Update(entity);
             await _context.SaveChangesAsync();
             return entity;
         }

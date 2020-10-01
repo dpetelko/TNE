@@ -9,47 +9,51 @@ using TNE.Models;
 
 namespace TNE.Services.Implementations
 {
-    public class TransformerServiceImpl : ITransformerService
+    public class CurrentTransformerServiceImpl : ICurrentTransformerService
     {
-        private readonly ITransformerRepository _repo;
-        //private readonly IControlPointService _controlPointService;
+        private readonly ICurrentTransformerRepository _repo;
+        private readonly IControlPointService _controlPointService;
 
-        public TransformerServiceImpl(ITransformerRepository repo) { _repo = repo; }
+        public CurrentTransformerServiceImpl(ICurrentTransformerRepository repo, IControlPointService controlPointService)
+        {
+            _repo = repo;
+            _controlPointService = controlPointService;
+        }
 
         public void CheckExistsById(Guid id)
         {
             _repo.CheckExistsById(id);
         }
 
-        public async Task<TransformerDto> CreateAsync(TransformerDto dto)
+        public async Task<CurrentTransformerDto> CreateAsync(CurrentTransformerDto dto)
         {
             if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
             var entity = ConvertToEntity(dto);
             var result = await _repo.CreateAsync(entity);
-            return new TransformerDto(result);
+            return new CurrentTransformerDto(result);
         }
 
-        public async Task<List<TransformerDto>> GetAllDtoAsync()
+        public async Task<List<CurrentTransformerDto>> GetAllDtoAsync()
         {
             return await _repo.GetAllDtoAsync();
         }
 
-        public async Task<List<TransformerDto>> GetAllDtoByStatusAsync(Status status)
+        public async Task<List<CurrentTransformerDto>> GetAllDtoByStatusAsync(Status status)
         {
             return await _repo.GetAllDtoByStatusAsync(status);
         }
 
-        public Transformer GetById(Guid id)
+        public CurrentTransformer GetById(Guid id)
         {
             return _repo.GetById(id);
         }
 
-        public async Task<Transformer> GetByIdAsync(Guid id)
+        public async Task<CurrentTransformer> GetByIdAsync(Guid id)
         {
             return await _repo.GetByIdAsync(id);
         }
 
-        public async Task<TransformerDto> GetDtoByIdAsync(Guid id)
+        public async Task<CurrentTransformerDto> GetDtoByIdAsync(Guid id)
         {
             return await _repo.GetDtoByIdAsync(id);
         }
@@ -66,17 +70,17 @@ namespace TNE.Services.Implementations
             return await _repo.SetStatus(id, newStatus);
         }
 
-        public async Task<TransformerDto> UpdateAsync(TransformerDto dto)
+        public async Task<CurrentTransformerDto> UpdateAsync(CurrentTransformerDto dto)
         {
             if (dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must can't be empty for UPDATE!");
             CheckExistsById(dto.Id);
             var entity = ConvertToEntity(dto);
-            return new TransformerDto(await _repo.UpdateAsync(entity));
+            return new CurrentTransformerDto(await _repo.UpdateAsync(entity));
         }
 
-        private Transformer ConvertToEntity(TransformerDto dto)
+        private CurrentTransformer ConvertToEntity(CurrentTransformerDto dto)
         {
-            var entity = new Transformer();
+            var entity = new CurrentTransformer();
             if (!dto.Id.Equals(Guid.Empty))
             {
                 entity = _repo.GetById(dto.Id);
@@ -86,10 +90,10 @@ namespace TNE.Services.Implementations
             entity.VerificationDate = dto.VerificationDate;
             entity.Status = dto.Status;
             entity.TransformationRate = dto.TransformationRate;
-            //if (!entity.ControlPointId.Equals(dto.ControlPointId))
-            //{
-            //    entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
-            //}
+            if (!entity.ControlPoint.Id.Equals(dto.ControlPointId))
+            {
+                //entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
+            }
             return entity;
         }
     }
