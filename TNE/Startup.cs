@@ -41,11 +41,13 @@ namespace TNE
             services.AddScoped<ISubDivisionService, SubDivisionServiceImpl>();
             services.AddScoped<IProviderService, ProviderServiceImpl>();
             services.AddScoped<IDeliveryPointService, DeliveryPointServiceImpl>();
+            services.AddScoped<ITransformerService, TransformerServiceImpl>();
 
             services.AddScoped<ILeadDivisionRepository, LeadDivisionRepositoryImpl>();
             services.AddScoped<ISubDivisionRepository, SubDivisionRepositoryImpl>();
             services.AddScoped<IProviderRepository, ProviderRepositoryImpl>();
             services.AddScoped<IDeliveryPointRepository, DeliveryPointRepositoryImpl>();
+            services.AddScoped<ITransformerRepository, TransformerRepositoryImpl>();
 
             services.AddControllersWithViews();
             services.AddMvc();

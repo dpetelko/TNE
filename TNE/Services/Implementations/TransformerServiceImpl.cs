@@ -12,7 +12,7 @@ namespace TNE.Services.Implementations
     public class TransformerServiceImpl : ITransformerService
     {
         private readonly ITransformerRepository _repo;
-        private readonly IControlPointService _controlPointService;
+        //private readonly IControlPointService _controlPointService;
 
         public TransformerServiceImpl(ITransformerRepository repo) { _repo = repo; }
 
@@ -86,10 +86,10 @@ namespace TNE.Services.Implementations
             entity.VerificationDate = dto.VerificationDate;
             entity.Status = dto.Status;
             entity.TransformationRate = dto.TransformationRate;
-            if (!entity.ControlPointId.Equals(dto.ControlPointId))
-            {
-                entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
-            }
+            //if (!entity.ControlPointId.Equals(dto.ControlPointId))
+            //{
+            //    entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
+            //}
             return entity;
         }
     }

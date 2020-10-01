@@ -9,7 +9,7 @@ using TNE.Services;
 
 namespace TNE.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class DeliveryPointController : ControllerBase
     {

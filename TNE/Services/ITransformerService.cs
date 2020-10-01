@@ -7,7 +7,7 @@ using TNE.Models;
 
 namespace TNE.Services
 {
-    interface ITransformerService : IService<Transformer>
+    public interface ITransformerService : IService<Transformer>
     {
         Task<bool> SetStatus(Guid id, Status newStatus);
         Task<TransformerDto> GetDtoByIdAsync(Guid id);

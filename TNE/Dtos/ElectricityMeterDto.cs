@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using TNE.Models;
 
 namespace TNE.Dtos
@@ -11,6 +12,7 @@ namespace TNE.Dtos
         public DateTime VerificationDate { get; set; }
         public Guid ControlPointId { get; set; }
         public string ControlPointName { get; set; }
+        [EnumDataType(typeof(Status), ErrorMessage = "Invalid Status value")]
         public Status Status { get; set; }
 
         public ElectricityMeterDto() { }

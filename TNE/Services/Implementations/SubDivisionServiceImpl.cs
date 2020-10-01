@@ -14,7 +14,7 @@ namespace TNE.Services.Implementations
         private readonly ISubDivisionRepository _repo;
         private readonly ILeadDivisionService _leadDivisionService;
 
-        public SubDivisionServiceImpl(ISubDivisionRepository repo, ILeadDivisionService leadDivisionService, ILogger<SubDivisionServiceImpl> logger)
+        public SubDivisionServiceImpl(ISubDivisionRepository repo, ILeadDivisionService leadDivisionService)
         {
             _repo = repo;
             _leadDivisionService = leadDivisionService;
