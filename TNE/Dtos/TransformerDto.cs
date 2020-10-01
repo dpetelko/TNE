@@ -24,6 +24,7 @@ namespace TNE.Dtos
 
         public TransformerDto(Transformer entity) 
         {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
             Id = entity.Id;
             Number = entity.Number;
             Type = entity.Type;

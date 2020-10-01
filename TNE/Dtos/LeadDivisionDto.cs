@@ -9,6 +9,7 @@ namespace TNE.Dto.LeadDivisions
 
         public LeadDivisionDto(LeadDivision entity)
         {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
             Id = entity.Id;
             Name = entity.Name;
             Deleted = entity.Deleted;

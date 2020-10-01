@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using TNE.Models;
 using TNE.Services.Validators;
 
@@ -8,7 +9,7 @@ namespace TNE.Dtos
     public class DeliveryPointDto : IEquatable<DeliveryPointDto>
     {
         public Guid Id { get; set; }
-        [Required(ErrorMessage = "Please, enter name")]
+        [Required]
         [StringLength(10, MinimumLength = 3, ErrorMessage = "The {0} length must be between {2} and {1} characters")]
         [UniqueField]
         public string Name { get; set; }
@@ -21,6 +22,7 @@ namespace TNE.Dtos
 
         public DeliveryPointDto(DeliveryPoint entity)
         {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
             Id = entity.Id;
             Name = entity.Name;
             MaxPower = entity.MaxPower;
