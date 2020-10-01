@@ -19,15 +19,12 @@ namespace TNE.Models
         public Guid? ElectricityMeterId { get; set; }
         [ForeignKey("ElectricityMeterId")]
         public virtual ElectricityMeter ElectricityMeter { get; set; }// = new ElectricityMeter();
-        [ForeignKey("CurrentTransformer")]
         public Guid? CurrentTransformerId { get; set; }
-        
-        
+        [ForeignKey("CurrentTransformerId"), CascadingParameter]
+        [InverseProperty("ControlPoint")]
         public virtual Transformer CurrentTransformer { get; set; }// = new Transformer();
-        [ForeignKey("VoltageTransformer")]
         public Guid? VoltageTransformerId { get; set; }
-        
-        //[InverseProperty("ControlPoint")]
+        [ForeignKey("VoltageTransformerId")]
         public virtual Transformer VoltageTransformer { get; set; }// = new Transformer();
         public Guid? ProviderId { get; set; }
         public virtual Provider Provider { get; set; }// = new Provider();
