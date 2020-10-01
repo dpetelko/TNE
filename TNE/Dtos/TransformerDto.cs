@@ -7,9 +7,13 @@ namespace TNE.Dtos
     public class TransformerDto : IEquatable<TransformerDto>
     {
         public Guid Id { get; set; }
+        [Required(ErrorMessage = "Please, enter Number")]
         public string Number { get; set; }
+        [Required(ErrorMessage = "Please, enter name")]
         public string Type { get; set; }
+        [Required(ErrorMessage = "Please, enter name")]
         public DateTime VerificationDate { get; set; }
+        [Required(ErrorMessage = "Please, enter name")]
         public int TransformationRate { get; set; }
         public Guid ControlPointId { get; set; }
         public string ControlPointName { get; set; }

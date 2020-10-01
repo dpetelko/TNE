@@ -16,5 +16,10 @@ namespace TNE.Models
         public Address Address { get; set; }
         [DefaultValue(false)]
         public bool Deleted { get; set; }
+
+        public Division()
+        {
+            Address = new Address();
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace TNE.Services.Validators
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             _validationContext = validationContext;
-            if (_message is null) _message = $"{GetValidatedFieldName()} is exists";
+            if (_message is null) _message = $"{GetValidatedFieldName()} is exists.";
             var fieldName = GetValidatedFieldName();
             var id = GetIdValue("Id");
             var result = Validate(id, fieldName, value);
