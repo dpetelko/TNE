@@ -13,13 +13,10 @@ namespace TNE.Models
         [Required]
         public string Name { get; set; }
         public Guid? AddressId { get; set; }
-        public Address Address { get; set; }
+        public Address Address { get; set; } = new Address();
         [DefaultValue(false)]
         public bool Deleted { get; set; }
 
-        public Division()
-        {
-            Address = new Address();
-        }
+        public Division() { }
     }
 }

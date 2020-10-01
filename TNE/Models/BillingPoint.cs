@@ -13,9 +13,9 @@ namespace TNE.Models
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public Guid? ControlPointId { get; set; }
-        public ControlPoint ControlPoint { get; set; }
+        public ControlPoint ControlPoint { get; set; } = new ControlPoint();
         public Guid? DeliveryPointId { get; set; }
-        public DeliveryPoint DeliveryPoint { get; set; }
+        public DeliveryPoint DeliveryPoint { get; set; } = new DeliveryPoint();
         [DefaultValue(false)]
         public bool Deleted { get; set; }
         public override string ToString()

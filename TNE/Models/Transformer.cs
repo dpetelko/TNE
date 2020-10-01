@@ -15,7 +15,7 @@ namespace TNE.Models
         public DateTime VerificationDate { get; set; }
         public int TransformationRate { get; set; }
         public Guid ControlPointId { get; set; }
-        public ControlPoint ControlPoint { get; set; }
+        public ControlPoint ControlPoint { get; set; } = new ControlPoint();
         [DefaultValue(Status.InStorage)]
         public Status Status { get; set; }
         public override string ToString()
