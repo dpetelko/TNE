@@ -16,10 +16,15 @@ namespace TNE.Models
         [Required]
         public int MaxPower { get; set; }
         public Guid? ProviderId { get; set; }
-        public Provider Provider { get; set; } = new Provider();
+        public virtual Provider Provider { get; set; }// = new Provider();
         public List<BillingPoint> BillingPoints { get; set; }
         [DefaultValue(false)]
         public bool Deleted { get; set; }
+
+        public DeliveryPoint()
+        {
+            //Provider = new Provider();
+        }
 
         public override string ToString()
         {
@@ -27,7 +32,7 @@ namespace TNE.Models
                 $"[ Id:{Id}, " +
                 $"Name:{Name}, " +
                 $"MaxPower:{MaxPower}, " +
-                $"ProviderName:{Provider.Name} " +
+                $"Provider:{Provider} " +
                 $"Deleted:{Deleted} ]";
         }
     }

@@ -20,7 +20,7 @@ namespace TNE.Models
                 $"[ Id:{Id}, " +
                 $"Name:{Name}, " +
                 $"Address:{Address}, " +
-                $"SubDivisionName:{SubDivision.Name} " +
+                $"SubDivision:{SubDivision} " +
                 $"Deleted:{Deleted} ]";
         }
     }

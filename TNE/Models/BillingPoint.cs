@@ -13,11 +13,18 @@ namespace TNE.Models
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public Guid? ControlPointId { get; set; }
-        public ControlPoint ControlPoint { get; set; } = new ControlPoint();
+        public virtual ControlPoint ControlPoint { get; set; }
         public Guid? DeliveryPointId { get; set; }
-        public DeliveryPoint DeliveryPoint { get; set; } = new DeliveryPoint();
+        public virtual DeliveryPoint DeliveryPoint { get; set; }
         [DefaultValue(false)]
         public bool Deleted { get; set; }
+
+        public BillingPoint()
+        {
+            //ControlPoint = new ControlPoint();
+            //DeliveryPoint = new DeliveryPoint();
+        }
+
         public override string ToString()
         {
             //return JsonConvert.SerializeObject(this);
@@ -25,8 +32,8 @@ namespace TNE.Models
                 $"[ Id:{Id}, " +
                 $"StartTime:{StartTime}, " +
                 $"EndTime:{EndTime}, " +
-                $"ControlPointName:{ControlPoint.Name}, " +
-                $"DeliveryPointName:{DeliveryPoint.Name} " +
+                $"ControlPoint:{ControlPoint}, " +
+                $"DeliveryPoint:{DeliveryPoint} " +
                 $"Deleted:{Deleted} ]";
         }
     }

@@ -18,28 +18,40 @@ namespace TNE.Models
         public string Name { get; set; }
         public Guid? ElectricityMeterId { get; set; }
         [ForeignKey("ElectricityMeterId")]
-        public virtual ElectricityMeter ElectricityMeter { get; set; } = new ElectricityMeter();
+        public virtual ElectricityMeter ElectricityMeter { get; set; }// = new ElectricityMeter();
+        [ForeignKey("CurrentTransformer")]
         public Guid? CurrentTransformerId { get; set; }
-        [ForeignKey("CurrentTransformerId"), CascadingParameter]
-        [InverseProperty("ControlPoint")]
-        public virtual Transformer CurrentTransformer { get; set; } = new Transformer();
+        
+        
+        public virtual Transformer CurrentTransformer { get; set; }// = new Transformer();
+        [ForeignKey("VoltageTransformer")]
         public Guid? VoltageTransformerId { get; set; }
-        [ForeignKey("VoltageTransformerId")]
-        public virtual Transformer VoltageTransformer { get; set; } = new Transformer();
+        
+        //[InverseProperty("ControlPoint")]
+        public virtual Transformer VoltageTransformer { get; set; }// = new Transformer();
         public Guid? ProviderId { get; set; }
-        public virtual Provider Provider { get; set; } = new Provider();
+        public virtual Provider Provider { get; set; }// = new Provider();
         public List<BillingPoint> BillingPoints { get; set; }
         [DefaultValue(false)]
         public bool Deleted { get; set; }
+
+        public ControlPoint()
+        {
+            //ElectricityMeter = new ElectricityMeter();
+            //CurrentTransformer = new Transformer();
+            //VoltageTransformer = new Transformer();
+            //Provider = new Provider();
+        }
+
         public override string ToString()
         {
             return $"ControlPoint" +
                 $"[ Id:{Id}, " +
                 $"Name:{Name}, " +
-                $"ElectricityMeterNumber:{ElectricityMeter.Number}, " +
-                $"CurrentTransformerNumber:{CurrentTransformer.Number}, " +
-                $"VoltageTransformerNumber:{VoltageTransformer.Number}, " +
-                $"ProviderName:{Provider.Name} " +
+                $"ElectricityMeter:{ElectricityMeter}, " +
+                $"CurrentTransformer:{CurrentTransformer}, " +
+                $"VoltageTransformer:{VoltageTransformer}, " +
+                $"Provider:{Provider.Name} " +
                 $"Deleted:{Deleted} ]";
         }
     }

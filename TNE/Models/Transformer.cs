@@ -15,9 +15,15 @@ namespace TNE.Models
         public DateTime VerificationDate { get; set; }
         public int TransformationRate { get; set; }
         public Guid ControlPointId { get; set; }
-        public ControlPoint ControlPoint { get; set; } = new ControlPoint();
+        public virtual ControlPoint ControlPoint { get; set; }
         [DefaultValue(Status.InStorage)]
         public Status Status { get; set; }
+
+        public Transformer()
+        {
+            // ControlPoint = new ControlPoint();
+        }
+
         public override string ToString()
         {
             return $"Transformer" +
@@ -26,7 +32,7 @@ namespace TNE.Models
                 $"Type:{Type}, " +
                 $"VerificationDate:{VerificationDate}, " +
                 $"TransformationRate:{TransformationRate}, " +
-                $"ControlPointName:{ControlPoint.Name} " +
+                $"ControlPoint:{ControlPoint} " +
                 $"Status:{Status} ]";
         }
     }
