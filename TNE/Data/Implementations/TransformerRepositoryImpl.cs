@@ -66,6 +66,28 @@ namespace TNE.Data.Implementations
             return result;
         }
 
+        public async Task<List<TransformerDto>> GetAllDtoByStatusAsync(Status status)
+        {
+            Log.Debug("GetAll TransformerDto");
+            var result = await _context.Transformers
+                .AsNoTracking()
+                .Include(s => s.ControlPoint)
+                .Where(s => s.Status == status)
+                .Select(s => new TransformerDto
+                {
+                    Id = s.Id,
+                    Number = s.Number,
+                    Type = s.Type,
+                    VerificationDate = s.VerificationDate,
+                    TransformationRate = s.TransformationRate,
+                    Status = s.Status,
+                    ControlPointId = s.ControlPoint.Id,
+                    ControlPointName = s.ControlPoint.Name
+                }).ToListAsync();
+            result.TrimExcess();
+            return result;
+        }
+
         public Transformer GetById(Guid id)
         {
             Log.Debug("Get Transformer by Id: '{Id}'", id);

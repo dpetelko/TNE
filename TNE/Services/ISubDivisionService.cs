@@ -13,5 +13,7 @@ namespace TNE.Services
         Task<SubDivisionDto> CreateAsync(SubDivisionDto dto);
         Task<SubDivisionDto> UpdateAsync(SubDivisionDto dto);
         Task<List<SubDivisionDto>> GetAllActiveDtoAsync();
+        Task<bool> DeleteAsync(Guid id);
+        Task<bool> UndeleteAsync(Guid id);
     }
 }

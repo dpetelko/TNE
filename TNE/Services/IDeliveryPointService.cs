@@ -14,5 +14,7 @@ namespace TNE.Services
         Task<DeliveryPointDto> CreateAsync(DeliveryPointDto dto);
         Task<DeliveryPointDto> UpdateAsync(DeliveryPointDto dto);
         Task<List<DeliveryPointDto>> GetAllActiveDtoAsync();
+        Task<bool> DeleteAsync(Guid id);
+        Task<bool> UndeleteAsync(Guid id);
     }
 }

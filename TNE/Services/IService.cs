@@ -11,7 +11,5 @@ namespace TNE.Services
         T GetById(Guid id);
         void CheckExistsById(Guid id);
         bool IsFieldUnique(Guid id, string fieldName, object fieldValue);
-        Task<bool> DeleteAsync(Guid id);
-        Task<bool> UndeleteAsync(Guid id);
     }
 }

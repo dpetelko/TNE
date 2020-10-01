@@ -13,5 +13,7 @@ namespace TNE.Services
         Task<ProviderDto> CreateAsync(ProviderDto dto);
         Task<ProviderDto> UpdateAsync(ProviderDto dto);
         Task<List<ProviderDto>> GetAllActiveDtoAsync();
+        Task<bool> DeleteAsync(Guid id);
+        Task<bool> UndeleteAsync(Guid id);
     }
 }
