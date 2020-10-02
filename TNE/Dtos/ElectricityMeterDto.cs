@@ -19,7 +19,14 @@ namespace TNE.Dtos
 
         public ElectricityMeterDto(ElectricityMeter entity) 
         {
-            //TODO Implementing this
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+            Id = entity.Id;
+            Number = entity.Number;
+            Type = entity.Type;
+            VerificationDate = entity.VerificationDate;
+            ControlPointId = entity.ControlPoint.Id;
+            ControlPointName = entity.ControlPoint.Name;
+            Status = entity.Status;
         }
 
         public override bool Equals(object obj)
