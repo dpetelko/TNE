@@ -51,17 +51,8 @@ namespace TNE.Data.Implementations
             var result = await _context.CurrentTransformers
                 .AsNoTracking()
                 .Include(s => s.ControlPoint)
-                .Select(s => new CurrentTransformerDto
-                {
-                    Id = s.Id,
-                    Number = s.Number,
-                    Type = s.Type,
-                    VerificationDate = s.VerificationDate,
-                    TransformationRate = s.TransformationRate,
-                    Status = s.Status,
-                    ControlPointId = s.ControlPoint.Id,
-                    ControlPointName = s.ControlPoint.Name
-                }).ToListAsync();
+                .Select(s => new CurrentTransformerDto(s))
+                .ToListAsync();
             result.TrimExcess();
             return result;
         }
@@ -73,17 +64,8 @@ namespace TNE.Data.Implementations
                 .AsNoTracking()
                 .Include(s => s.ControlPoint)
                 .Where(s => s.Status == status)
-                .Select(s => new CurrentTransformerDto
-                {
-                    Id = s.Id,
-                    Number = s.Number,
-                    Type = s.Type,
-                    VerificationDate = s.VerificationDate,
-                    TransformationRate = s.TransformationRate,
-                    Status = s.Status,
-                    ControlPointId = s.ControlPoint.Id,
-                    ControlPointName = s.ControlPoint.Name
-                }).ToListAsync();
+                .Select(s => new CurrentTransformerDto(s))
+                .ToListAsync();
             result.TrimExcess();
             return result;
         }
@@ -119,17 +101,8 @@ namespace TNE.Data.Implementations
                 .AsNoTracking()
                 .Include(b => b.ControlPoint)
                 .Where(s => s.Id == Id)
-                .Select(s => new CurrentTransformerDto
-                {
-                    Id = s.Id,
-                    Number = s.Number,
-                    Type = s.Type,
-                    VerificationDate = s.VerificationDate,
-                    TransformationRate = s.TransformationRate,
-                    Status = s.Status,
-                    ControlPointId = s.ControlPoint.Id,
-                    ControlPointName = s.ControlPoint.Name
-                }).SingleOrDefaultAsync();
+                .Select(s => new CurrentTransformerDto(s))
+                .SingleOrDefaultAsync();
             if (result is null) throw new EntityNotFoundException($"CurrentTransformer with ID = '{Id}' not found!");
             return result;
         }

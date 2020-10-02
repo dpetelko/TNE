@@ -60,15 +60,8 @@ namespace TNE.Data.Implementations
                 .AsNoTracking()
                 .Include(s => s.Provider)
                 .Where(s => s.Deleted == false)
-                .Select(s => new DeliveryPointDto
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    MaxPower = s.MaxPower,
-                    ProviderId = s.Provider.Id,
-                    ProviderName = s.Provider.Name,
-                    Deleted = s.Deleted
-                }).ToListAsync();
+                .Select(s => new DeliveryPointDto(s))
+                .ToListAsync();
             result.TrimExcess();
             return result;
         }
@@ -79,15 +72,8 @@ namespace TNE.Data.Implementations
             var result = await _context.DeliveryPoints
                 .AsNoTracking()
                 .Include(s => s.Provider)
-                .Select(s => new DeliveryPointDto
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    MaxPower = s.MaxPower,
-                    ProviderId = s.Provider.Id,
-                    ProviderName = s.Provider.Name,
-                    Deleted = s.Deleted
-                }).ToListAsync();
+                .Select(s => new DeliveryPointDto(s))
+                .ToListAsync();
             result.TrimExcess();
             return result;
         }
@@ -123,15 +109,8 @@ namespace TNE.Data.Implementations
                 .AsNoTracking()
                 .Include(s => s.Provider)
                 .Where(s => s.Id == Id)
-                .Select(s => new DeliveryPointDto
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    MaxPower = s.MaxPower,
-                    ProviderId = s.Provider.Id,
-                    ProviderName = s.Provider.Name,
-                    Deleted = s.Deleted
-                }).SingleOrDefaultAsync();
+                .Select(s => new DeliveryPointDto(s))
+                .SingleOrDefaultAsync();
             if (result is null) throw new EntityNotFoundException($"DeliveryPoint with ID = '{Id}' not found!");
             return result;
         }

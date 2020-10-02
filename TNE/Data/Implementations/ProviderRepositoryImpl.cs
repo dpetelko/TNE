@@ -64,21 +64,8 @@ namespace TNE.Data.Implementations
                 .AsNoTracking()
                 .Include(s => s.Address)
                 .Where(s => s.Deleted == false)
-                .Select(s => new ProviderDto
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    AddressId = s.Address.Id,
-                    PostCode = s.Address.PostCode,
-                    Country = s.Address.Country,
-                    Region = s.Address.Region,
-                    City = s.Address.City,
-                    Street = s.Address.Street,
-                    Building = s.Address.Building,
-                    Deleted = s.Deleted,
-                    SubDivisionId = s.SubDivision.Id,
-                    SubDivisionName = s.SubDivision.Name
-                }).ToListAsync();
+                .Select(s => new ProviderDto(s))
+                .ToListAsync();
             result.TrimExcess();
             return result;
         }
@@ -90,21 +77,8 @@ namespace TNE.Data.Implementations
                 .AsNoTracking()
                 .Include(s => s.Address)
                 .Include(b => b.SubDivision)
-                .Select(s => new ProviderDto
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    AddressId = s.Address.Id,
-                    PostCode = s.Address.PostCode,
-                    Country = s.Address.Country,
-                    Region = s.Address.Region,
-                    City = s.Address.City,
-                    Street = s.Address.Street,
-                    Building = s.Address.Building,
-                    Deleted = s.Deleted,
-                    SubDivisionId = s.SubDivision.Id,
-                    SubDivisionName = s.SubDivision.Name
-                }).ToListAsync();
+                .Select(s => new ProviderDto(s))
+                .ToListAsync();
             result.TrimExcess();
             return result;
         }
@@ -141,21 +115,8 @@ namespace TNE.Data.Implementations
                 .Include(s => s.Address)
                 .Include(b => b.SubDivision)
                 .Where(s => s.Id == Id)
-                .Select(s => new ProviderDto
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    AddressId = s.Address.Id,
-                    PostCode = s.Address.PostCode,
-                    Country = s.Address.Country,
-                    Region = s.Address.Region,
-                    City = s.Address.City,
-                    Street = s.Address.Street,
-                    Building = s.Address.Building,
-                    Deleted = s.Deleted,
-                    SubDivisionId = s.SubDivision.Id,
-                    SubDivisionName = s.SubDivision.Name
-                }).SingleOrDefaultAsync();
+                .Select(s => new ProviderDto(s))
+                .SingleOrDefaultAsync();
             if (result is null) throw new EntityNotFoundException($"Provider with ID = '{Id}' not found!");
             return result;
         }

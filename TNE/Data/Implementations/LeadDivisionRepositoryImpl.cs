@@ -44,19 +44,8 @@ namespace TNE.Data.Implementations
             var result = await _context.LeadDivisions
                 .AsNoTracking()
                 .Include(s => s.Address)
-                .Select(s => new LeadDivisionDto
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    AddressId = s.Address.Id,
-                    PostCode = s.Address.PostCode,
-                    Country = s.Address.Country,
-                    Region = s.Address.Region,
-                    City = s.Address.City,
-                    Street = s.Address.Street,
-                    Building = s.Address.Building,
-                    Deleted = s.Deleted
-                }).ToListAsync();
+                .Select(s => new LeadDivisionDto(s))
+                .ToListAsync();
             result.TrimExcess();
             return result;
         }
@@ -92,19 +81,8 @@ namespace TNE.Data.Implementations
                 .AsNoTracking()
                 .Include(s => s.Address)
                 .Where(s => s.Id == Id)
-                .Select(s => new LeadDivisionDto
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    AddressId = s.Address.Id,
-                    PostCode = s.Address.PostCode,
-                    Country = s.Address.Country,
-                    Region = s.Address.Region,
-                    City = s.Address.City,
-                    Street = s.Address.Street,
-                    Building = s.Address.Building,
-                    Deleted = s.Deleted
-                }).SingleOrDefaultAsync();
+                .Select(s => new LeadDivisionDto(s))
+                .SingleOrDefaultAsync();
             if (result is null) throw new EntityNotFoundException($"LeadDivision with ID = '{Id}' not found!");
             return result;
         }
@@ -161,19 +139,8 @@ namespace TNE.Data.Implementations
                 .AsNoTracking()
                 .Include(s => s.Address)
                 .Where(s => s.Deleted == false)
-                .Select(s => new LeadDivisionDto
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    AddressId = s.Address.Id,
-                    PostCode = s.Address.PostCode,
-                    Country = s.Address.Country,
-                    Region = s.Address.Region,
-                    City = s.Address.City,
-                    Street = s.Address.Street,
-                    Building = s.Address.Building,
-                    Deleted = s.Deleted
-                }).ToListAsync();
+                .Select(s => new LeadDivisionDto(s))
+                .ToListAsync();
             result.TrimExcess();
             return result;
         }
