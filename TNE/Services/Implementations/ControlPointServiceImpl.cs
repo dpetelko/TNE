@@ -79,9 +79,25 @@ namespace TNE.Services.Implementations
                 CurrentTransformer = new CurrentTransformer(),
                 ElectricityMeter = new ElectricityMeter()
             };
-
-            // TODO доделать
-                return entity;
+            if (!dto.Id.Equals(Guid.Empty))
+            {
+                entity = _repo.GetById(dto.Id);
+            }
+            entity.Name = dto.Name;
+            entity.Deleted = dto.Deleted;
+            if (!Equals(dto.CurrentTransformer.Id, entity.CurrentTransformerId))
+            {
+                entity.CurrentTransformer = _currentTransformerService.GetById(dto.CurrentTransformer.Id);
+            }
+            if (!Equals(entity.VoltageTransformerId,dto.VoltageTransformer.Id))
+            {
+                entity.VoltageTransformer = _voltageTransformerService.GetById(dto.VoltageTransformer.Id);
+            }
+            if (!Equals(entity.ElectricityMeterId, dto.ElectricityMeter.Id))
+            {
+                entity.ElectricityMeter = _electricityMeterService.GetById(dto.VoltageTransformer.Id);
+            }
+            return entity;
         }
     }
 }
