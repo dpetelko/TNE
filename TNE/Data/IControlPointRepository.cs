@@ -7,7 +7,7 @@ using TNE.Models;
 
 namespace TNE.Data
 {
-    interface IControlPointRepository : IRepository<ControlPoint>
+    public interface IControlPointRepository : IRepository<ControlPoint>
     {
         Task<bool> DeleteAsync(Guid id);
         Task<bool> UndeleteAsync(Guid id);
