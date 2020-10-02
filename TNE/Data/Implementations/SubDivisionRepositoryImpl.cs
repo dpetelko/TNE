@@ -33,6 +33,7 @@ namespace TNE.Data.Implementations
 
         public async Task<bool> DeleteAsync(Guid id)
         {
+            Log.Debug("Deleting SubDivision ID = {id}", id);
             var obj = new SubDivision { Id = id, Deleted = true };
             _context.SubDivisions.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
@@ -42,6 +43,7 @@ namespace TNE.Data.Implementations
 
         public async Task<bool> UndeleteAsync(Guid id)
         {
+            Log.Debug("Undeleting SubDivision ID = {id}", id);
             var obj = new SubDivision { Id = id, Deleted = false };
             _context.SubDivisions.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
