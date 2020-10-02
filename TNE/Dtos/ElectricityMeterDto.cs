@@ -17,6 +17,11 @@ namespace TNE.Dtos
 
         public ElectricityMeterDto() { }
 
+        public ElectricityMeterDto(ElectricityMeter entity) 
+        {
+            //TODO Implementing this
+        }
+
         public override bool Equals(object obj)
         {
             return Equals(obj as ElectricityMeterDto);

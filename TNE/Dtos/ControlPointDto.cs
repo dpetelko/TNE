@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using TNE.Models;
 using TNE.Services.Validators;
 
 namespace TNE.Dtos
@@ -7,6 +8,17 @@ namespace TNE.Dtos
     public class ControlPointDto
     {
         public ControlPointDto() { }
+
+        public ControlPointDto(ControlPoint entity)
+        {
+            Id = entity.Id;
+            Name = entity.Name;
+            ProviderId = entity.Provider.Id;
+            ProviderName = entity.Provider.Name;
+            CurrentTransformer = new CurrentTransformerDto(entity.CurrentTransformer);
+            VoltageTranformer = new VoltageTransformerDto(entity.VoltageTransformer);
+            ElectricityMeter = new ElectricityMeterDto(entity.ElectricityMeter);
+        }
 
         public Guid Id { get; set; }
         [Required]

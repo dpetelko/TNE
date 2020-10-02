@@ -92,7 +92,7 @@ namespace TNE.Services.Implementations
             entity.TransformationRate = dto.TransformationRate;
             if (!entity.ControlPoint.Id.Equals(dto.ControlPointId))
             {
-                //entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
+                entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
             }
             return entity;
         }

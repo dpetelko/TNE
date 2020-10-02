@@ -124,7 +124,11 @@ namespace TNE.Data.Implementations
         public async Task<Provider> GetByIdAsync(Guid id)
         {
             Log.Debug("Get Provider by Id: '{Id}'", id);
-            var result = await _context.Providers.AsNoTracking().Include(b => b.Address).Include(b => b.SubDivision).SingleOrDefaultAsync(b => b.Id == id);
+            var result = await _context.Providers
+                .AsNoTracking()
+                .Include(b => b.Address)
+                .Include(b => b.SubDivision)
+                .SingleOrDefaultAsync(b => b.Id == id);
             return (result is null)
                 ? throw new EntityNotFoundException($"Provider with Id='{id}' not found!")
                 : result;
