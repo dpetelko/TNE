@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TNE.Dtos;
 using TNE.Models;
-using TNE.Services;
 
 namespace TNE.Data
 {
-    public interface IElectricityMeterRepository : IService<ElectricityMeter>
+    public interface IElectricityMeterRepository : IRepository<ElectricityMeter>
     {
         Task<bool> SetStatus(Guid id, Status newStatus);
         Task<ElectricityMeterDto> GetDtoByIdAsync(Guid Id);

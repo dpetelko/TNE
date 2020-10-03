@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TNE.Data;
 using TNE.Data.Exceptions;
@@ -12,9 +11,9 @@ namespace TNE.Services.Implementations
     public class CurrentTransformerServiceImpl : ICurrentTransformerService
     {
         private readonly ICurrentTransformerRepository _repo;
-        private readonly IControlPointService _controlPointService;
+        private readonly IControlPointRepository _controlPointService;
 
-        public CurrentTransformerServiceImpl(ICurrentTransformerRepository repo, IControlPointService controlPointService)
+        public CurrentTransformerServiceImpl(ICurrentTransformerRepository repo, IControlPointRepository controlPointService)
         {
             _repo = repo;
             _controlPointService = controlPointService;
@@ -90,9 +89,13 @@ namespace TNE.Services.Implementations
             entity.VerificationDate = dto.VerificationDate;
             entity.Status = dto.Status;
             entity.TransformationRate = dto.TransformationRate;
-            if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPoint.Id, dto.ControlPointId))
+            if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPointId, dto.ControlPointId))
             {
                 entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
+            }
+            else
+            {
+                entity.ControlPointId = dto.ControlPointId;
             }
             return entity;
         }

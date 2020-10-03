@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TNE.Data;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
 using TNE.Models;
@@ -11,9 +12,9 @@ namespace TNE.Services.Implementations
     public class ElectricityMeterServiceImpl : IElectricityMeterService
     {
         private readonly IElectricityMeterRepository _repo;
-        private readonly IControlPointService _controlPointService;
+        private readonly IControlPointRepository _controlPointService;
 
-        public ElectricityMeterServiceImpl(IElectricityMeterRepository repo, IControlPointService controlPointService)
+        public ElectricityMeterServiceImpl(IElectricityMeterRepository repo, IControlPointRepository controlPointService)
         {
             _repo = repo;
             _controlPointService = controlPointService;
@@ -88,9 +89,13 @@ namespace TNE.Services.Implementations
             entity.Type = dto.Type;
             entity.VerificationDate = dto.VerificationDate;
             entity.Status = dto.Status;
-            if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPoint.Id, dto.ControlPointId))
+            if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPointId, dto.ControlPointId))
             {
                 entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
+            }
+            else
+            {
+                entity.ControlPointId = dto.ControlPointId;
             }
             return entity;
         }

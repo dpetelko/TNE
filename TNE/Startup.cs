@@ -37,6 +37,7 @@ namespace TNE
             services.AddScoped<ICurrentTransformerService, CurrentTransformerServiceImpl>();
             services.AddScoped<IVoltageTransformerService, VoltageTransformerServiceImpl>();
             services.AddScoped<IControlPointService, ControlPointServiceImpl>();
+            services.AddScoped<IElectricityMeterService, ElectricityMeterServiceImpl>();
 
             services.AddScoped<ILeadDivisionRepository, LeadDivisionRepositoryImpl>();
             services.AddScoped<ISubDivisionRepository, SubDivisionRepositoryImpl>();
@@ -44,9 +45,10 @@ namespace TNE
             services.AddScoped<IDeliveryPointRepository, DeliveryPointRepositoryImpl>();
             services.AddScoped<ICurrentTransformerRepository, CurrentTransformerRepositoryImpl>();
             services.AddScoped<IVoltageTransformerRepository, VoltageTransformerRepositoryImpl>();
+            services.AddScoped<IControlPointRepository, ControlPointRepositoryImpl>();
+            services.AddScoped<IElectricityMeterRepository, ElectricityMeterRepositoryImpl>();
 
-            services.AddControllersWithViews();
-            services.AddMvc();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,9 +12,9 @@ namespace TNE.Services.Implementations
     public class VoltageTransformerServiceImpl : IVoltageTransformerService
     {
         private readonly IVoltageTransformerRepository _repo;
-        private readonly IControlPointService _controlPointService;
+        private readonly IControlPointRepository _controlPointService;
 
-        public VoltageTransformerServiceImpl(IVoltageTransformerRepository repo, IControlPointService controlPointService)
+        public VoltageTransformerServiceImpl(IVoltageTransformerRepository repo, IControlPointRepository controlPointService)
         {
             _repo = repo;
             _controlPointService = controlPointService;
@@ -90,9 +90,13 @@ namespace TNE.Services.Implementations
             entity.VerificationDate = dto.VerificationDate;
             entity.Status = dto.Status;
             entity.TransformationRate = dto.TransformationRate;
-            if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPoint.Id, dto.ControlPointId))
+            if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPointId, dto.ControlPointId))
             {
                 entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
+            }
+            else
+            {
+                entity.ControlPointId = dto.ControlPointId;
             }
             return entity;
         }
