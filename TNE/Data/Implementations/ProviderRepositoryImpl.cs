@@ -63,6 +63,7 @@ namespace TNE.Data.Implementations
             var result = await _context.Providers
                 .AsNoTracking()
                 .Include(s => s.Address)
+                .Include(b => b.SubDivision)
                 .Where(s => s.Deleted == false)
                 .Select(s => new ProviderDto(s))
                 .ToListAsync();

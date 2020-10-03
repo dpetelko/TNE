@@ -131,6 +131,7 @@ namespace TNE.Data.Implementations
             Log.Debug("GetAllActive SubDivisionDto");
             var result = await _context.SubDivisions
                 .AsNoTracking()
+                .Include(b => b.LeadDivision)
                 .Include(s => s.Address)
                 .Where(s => s.Deleted == false)
                 .Select(s => new SubDivisionDto(s))
