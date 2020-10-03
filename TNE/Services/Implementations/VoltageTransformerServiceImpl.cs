@@ -90,7 +90,7 @@ namespace TNE.Services.Implementations
             entity.VerificationDate = dto.VerificationDate;
             entity.Status = dto.Status;
             entity.TransformationRate = dto.TransformationRate;
-            if (!entity.ControlPoint.Id.Equals(dto.ControlPointId))
+            if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPoint.Id, dto.ControlPointId))
             {
                 entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
             }

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TNE.Dtos;
 using TNE.Models;
 
-namespace TNE.Services.Implementations
+namespace TNE.Services
 {
     public interface IElectricityMeterService : IService<ElectricityMeter>
     {

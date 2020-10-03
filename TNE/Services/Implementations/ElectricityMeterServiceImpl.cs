@@ -88,7 +88,7 @@ namespace TNE.Services.Implementations
             entity.Type = dto.Type;
             entity.VerificationDate = dto.VerificationDate;
             entity.Status = dto.Status;
-            if (!Equals(entity.ControlPoint.Id, dto.ControlPointId))
+            if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPoint.Id, dto.ControlPointId))
             {
                 entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
             }
