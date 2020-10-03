@@ -20,25 +20,30 @@ namespace TNE.Data
         public DbSet<LeadDivision> LeadDivisions { get; set; }
         public DbSet<SubDivision> SubDivisions { get; set; }
         public DbSet<Provider> Providers { get; set; }
+
         public DbSet<BillingPoint> BillingPoints { get; set; }
         public DbSet<ControlPoint> ControlPoints { get; set; }
         public DbSet<DeliveryPoint> DeliveryPoints { get; set; }
+
+        public DbSet<Device> Devices { get; set; }
         public DbSet<ElectricityMeter> ElectricityMeters { get; set; }
         public DbSet<CurrentTransformer> CurrentTransformers { get; set; }
         public DbSet<VoltageTransformer> VoltageTransformers { get; set; }
-        public DbSet<Device> Devices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<LeadDivision>()
+            modelBuilder
+                .Entity<LeadDivision>()
                 .HasIndex(b => b.Name)
                 .IsUnique();
 
-            modelBuilder.Entity<SubDivision>()
+            modelBuilder
+                .Entity<SubDivision>()
                 .HasIndex(b => b.Name)
                 .IsUnique();
 
-            modelBuilder.Entity<Provider>()
+            modelBuilder
+                .Entity<Provider>()
                 .HasIndex(b => b.Name)
                 .IsUnique();
 
