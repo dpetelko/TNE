@@ -16,14 +16,8 @@ namespace TNE.Models
         public virtual ControlPoint ControlPoint { get; set; }
         public Guid? DeliveryPointId { get; set; }
         public virtual DeliveryPoint DeliveryPoint { get; set; }
-        [DefaultValue(false)]
-        public bool Deleted { get; set; }
 
-        public BillingPoint()
-        {
-            //ControlPoint = new ControlPoint();
-            //DeliveryPoint = new DeliveryPoint();
-        }
+        public BillingPoint() { }
 
         public override string ToString()
         {
@@ -33,8 +27,7 @@ namespace TNE.Models
                 $"StartTime:{StartTime}, " +
                 $"EndTime:{EndTime}, " +
                 $"ControlPoint:{ControlPoint}, " +
-                $"DeliveryPoint:{DeliveryPoint} " +
-                $"Deleted:{Deleted} ]";
+                $"DeliveryPoint:{DeliveryPoint} ]";
         }
     }
 }

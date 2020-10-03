@@ -1,4 +1,6 @@
 ﻿using System;
+using TNE.Models;
+
 namespace TNE.Dtos
 {
     public class BillingPointDto : IEquatable<BillingPointDto>
@@ -10,10 +12,18 @@ namespace TNE.Dtos
         public string ControlPointName { get; set; }
         public Guid DeliveryPointId { get; set; }
         public string DeliveryPointName { get; set; }
-        public bool Deleted { get; set; }
 
-        public BillingPointDto()
+        public BillingPointDto() { }
+
+        public BillingPointDto(BillingPoint entity) 
         {
+            Id = entity.Id;
+            StartTime = entity.StartTime;
+            EndTime = entity.EndTime;
+            ControlPointId = entity.ControlPoint.Id;
+            ControlPointName = entity.ControlPoint.Name;
+            DeliveryPointId = entity.DeliveryPoint.Id;
+            DeliveryPointName = entity.DeliveryPoint.Name;
         }
 
         public override bool Equals(object obj)
@@ -45,8 +55,7 @@ namespace TNE.Dtos
                 $"ControlPointId:{ControlPointId}, " +
                 $"ControlPointName:{ControlPointName}, " +
                 $"DeliveryPointId:{DeliveryPointId} " +
-                $"DeliveryPointName:{DeliveryPointName} " +
-                $"Deleted:{Deleted} ]";
+                $"DeliveryPointName:{DeliveryPointName} ]";
         }
     }
 }
