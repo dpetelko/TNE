@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace TNE.Models
 {
-    public class VoltageTransformer : Transformer
+    public class VoltageTransformer : Device
     {
+        public int TransformationRate { get; set; }
+
         public override string ToString()
         {
             return $"VoltageTransformer" +

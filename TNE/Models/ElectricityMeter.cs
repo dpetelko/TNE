@@ -6,21 +6,9 @@ using System.Threading.Tasks;
 
 namespace TNE.Models
 {
-    public class ElectricityMeter
+    public class ElectricityMeter : Device
     {
-        public Guid Id { get; set; }
-        public string Number { get; set; }
-        public string Type { get; set; }
-        public DateTime VerificationDate { get; set; }
-        public Guid ControlPointId { get; set; }
-        public virtual ControlPoint ControlPoint { get; set; }// = new ControlPoint();
-        [DefaultValue(Status.InStorage)]
-        public Status Status { get; set; }
-
-        public ElectricityMeter()
-        {
-            //ControlPoint = new ControlPoint();
-        }
+        public ElectricityMeter() { }
 
         public override string ToString()
         {
