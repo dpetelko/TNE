@@ -9,11 +9,11 @@ namespace TNE.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class ProviderController : ControllerBase
+    public class ProvidersController : ControllerBase
     {
         private readonly IProviderService _service;
 
-        public ProviderController(IProviderService service) { _service = service; }
+        public ProvidersController(IProviderService service) { _service = service; }
 
         [HttpGet]
         public async Task<List<ProviderDto>> GetAll() { return await _service.GetAllDtoAsync(); }

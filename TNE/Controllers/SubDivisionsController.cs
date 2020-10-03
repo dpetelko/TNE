@@ -11,11 +11,11 @@ namespace TNE.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class SubDivisionController : ControllerBase
+    public class SubDivisionsController : ControllerBase
     {
         private readonly ISubDivisionService _service;
 
-        public SubDivisionController(ISubDivisionService service) {  _service = service; }
+        public SubDivisionsController(ISubDivisionService service) {  _service = service; }
 
         [HttpGet]
         public async Task<List<SubDivisionDto>> GetAll() { return await _service.GetAllDtoAsync(); }
