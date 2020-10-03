@@ -7,7 +7,7 @@ using TNE.Models;
 
 namespace TNE.Data
 {
-    interface IBillingPointRepository : IRepository<BillingPoint>
+    public interface IBillingPointRepository : IRepository<BillingPoint>
     {
         Task<BillingPointDto> GetDtoByIdAsync(Guid Id);
         Task<List<BillingPointDto>> GetAllDtoAsync();
