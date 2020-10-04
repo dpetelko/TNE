@@ -12,12 +12,12 @@ namespace TNE.Services.Implementations
     public class VoltageTransformerServiceImpl : IVoltageTransformerService
     {
         private readonly IVoltageTransformerRepository _repo;
-        private readonly IControlPointRepository _controlPointService;
+        private readonly IControlPointRepository _controlPointRepository;
 
-        public VoltageTransformerServiceImpl(IVoltageTransformerRepository repo, IControlPointRepository controlPointService)
+        public VoltageTransformerServiceImpl(IVoltageTransformerRepository repo, IControlPointRepository controlPointRepository)
         {
             _repo = repo;
-            _controlPointService = controlPointService;
+            _controlPointRepository = controlPointRepository;
         }
 
         public void CheckExistsById(Guid id)
@@ -92,7 +92,7 @@ namespace TNE.Services.Implementations
             entity.TransformationRate = dto.TransformationRate;
             if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPointId, dto.ControlPointId))
             {
-                entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
+                entity.ControlPoint = _controlPointRepository.GetById(dto.ControlPointId);
             }
             else
             {

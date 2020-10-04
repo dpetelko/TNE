@@ -12,12 +12,12 @@ namespace TNE.Services.Implementations
     public class ElectricityMeterServiceImpl : IElectricityMeterService
     {
         private readonly IElectricityMeterRepository _repo;
-        private readonly IControlPointRepository _controlPointService;
+        private readonly IControlPointRepository _controlPointRepository;
 
-        public ElectricityMeterServiceImpl(IElectricityMeterRepository repo, IControlPointRepository controlPointService)
+        public ElectricityMeterServiceImpl(IElectricityMeterRepository repo, IControlPointRepository controlPointRepository)
         {
             _repo = repo;
-            _controlPointService = controlPointService;
+            _controlPointRepository = controlPointRepository;
         }
 
         public void CheckExistsById(Guid id)
@@ -91,7 +91,7 @@ namespace TNE.Services.Implementations
             entity.Status = dto.Status;
             if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPointId, dto.ControlPointId))
             {
-                entity.ControlPoint = _controlPointService.GetById(dto.ControlPointId);
+                entity.ControlPoint = _controlPointRepository.GetById(dto.ControlPointId);
             }
             else
             {
