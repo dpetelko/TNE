@@ -5,7 +5,7 @@ using TNE.Services.Validators;
 
 namespace TNE.Dtos
 {
-    public class ControlPointDto
+    public class ControlPointDto : IEquatable<ControlPointDto>
     {
         public Guid Id { get; set; }
         [Required]
@@ -63,6 +63,51 @@ namespace TNE.Dtos
             ElectricityMeterNumber = entity.ElectricityMeter.Number;
             ElectricityMeterType = entity.ElectricityMeter.Type;
             ElectricityMeterVerificationDate = entity.ElectricityMeter.VerificationDate;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ControlPointDto);
+        }
+
+        public bool Equals(ControlPointDto other)
+        {
+            return other != null &&
+                   Id.Equals(other.Id) &&
+                   Name == other.Name &&
+                   ProviderId.Equals(other.ProviderId) &&
+                   ElectricityMeterId.Equals(other.ElectricityMeterId) &&
+                   CurrentTransformerId.Equals(other.CurrentTransformerId) &&
+                   VoltageTransformerId.Equals(other.VoltageTransformerId);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name, ProviderId, ElectricityMeterId, CurrentTransformerId, VoltageTransformerId);
+        }
+
+        public override string ToString()
+        {
+            return $"ControlPointDto " +
+                $"[ Id:{Id}, " +
+                $"Name:{Name}, " +
+                $"Deleted:{Deleted}, " +
+                $"ProviderId:{ProviderId}, " +
+                $"ProviderName:{ProviderName}, " +
+                $"CurrentTransformerId:{CurrentTransformerId} " +
+                $"CurrentTransformerNumber:{CurrentTransformerNumber}, " +
+                $"CurrentTransformerType:{CurrentTransformerType}, " +
+                $"CurrentTransformerVerificationDate:{CurrentTransformerVerificationDate}, " +
+                $"CurrentTransformerTransformationRate:{CurrentTransformerTransformationRate}, " +
+                $"VoltageTransformerId:{VoltageTransformerId} " +
+                $"VoltageTransformerNumber:{VoltageTransformerNumber}, " +
+                $"VoltageTransformerType:{VoltageTransformerType}, " +
+                $"VoltageTransformerVerificationDate:{VoltageTransformerVerificationDate}, " +
+                $"VoltageTransformerTransformationRate:{VoltageTransformerTransformationRate}, " +
+                $"ElectricityMeterId:{ElectricityMeterId} " +
+                $"ElectricityMeterNumber:{ElectricityMeterNumber}, " +
+                $"ElectricityMeterType:{ElectricityMeterType}, " +
+                $"ElectricityMeterVerificationDate:{ElectricityMeterVerificationDate} ]";
         }
     }
 }
