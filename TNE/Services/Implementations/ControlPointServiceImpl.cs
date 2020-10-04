@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TNE.Data;
 using TNE.Data.Exceptions;
@@ -72,13 +71,7 @@ namespace TNE.Services.Implementations
 
         private ControlPoint ConvertToEntity(ControlPointDto dto)
         {
-            var entity = new ControlPoint
-            {
-                Provider = new Provider(),
-                VoltageTransformer = new VoltageTransformer(),
-                CurrentTransformer = new CurrentTransformer(),
-                ElectricityMeter = new ElectricityMeter()
-            };
+            var entity = new ControlPoint();
             if (!dto.Id.Equals(Guid.Empty))
             {
                 entity = _repo.GetById(dto.Id);
@@ -89,7 +82,7 @@ namespace TNE.Services.Implementations
             {
                 entity.CurrentTransformer = _currentTransformerService.GetById(dto.CurrentTransformer.Id);
             }
-            if (!Equals(entity.VoltageTransformerId,dto.VoltageTransformer.Id))
+            if (!Equals(entity.VoltageTransformerId, dto.VoltageTransformer.Id))
             {
                 entity.VoltageTransformer = _voltageTransformerService.GetById(dto.VoltageTransformer.Id);
             }

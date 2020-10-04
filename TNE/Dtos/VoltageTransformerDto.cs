@@ -8,8 +8,9 @@ using TNE.Models;
 
 namespace TNE.Dtos
 {
-    public class VoltageTransformerDto : TransformerDto
+    public class VoltageTransformerDto : DeviceDto
     {
+        public int TransformationRate { get; set; }
         public VoltageTransformerDto() { }
         public VoltageTransformerDto(VoltageTransformer entity)
         {

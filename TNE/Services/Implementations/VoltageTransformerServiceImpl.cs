@@ -94,10 +94,6 @@ namespace TNE.Services.Implementations
             {
                 entity.ControlPoint = _controlPointRepository.GetById(dto.ControlPointId);
             }
-            else
-            {
-                entity.ControlPointId = dto.ControlPointId;
-            }
             return entity;
         }
     }

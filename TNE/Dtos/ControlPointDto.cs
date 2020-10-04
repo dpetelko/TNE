@@ -18,8 +18,8 @@ namespace TNE.Dtos
         public Guid ProviderId { get; set; }
         public string ProviderName { get; set; }
         public ElectricityMeterDto ElectricityMeter { get; set; }
-        public TransformerDto CurrentTransformer { get; set; }
-        public TransformerDto VoltageTransformer { get; set; }
+        public CurrentTransformerDto CurrentTransformer { get; set; }
+        public VoltageTransformerDto VoltageTransformer { get; set; }
 
         public ControlPointDto() { }
 

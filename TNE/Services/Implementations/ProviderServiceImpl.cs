@@ -95,7 +95,7 @@ namespace TNE.Services.Implementations
             entity.Address.Street = dto.Street;
             entity.Address.Building = dto.Building;
             entity.Deleted = dto.Deleted;
-            if (!entity.SubDivisionId.Equals(dto.SubDivisionId))
+            if (!Equals(dto.SubDivisionId, Guid.Empty) && !entity.SubDivisionId.Equals(dto.SubDivisionId))
             {
                 entity.SubDivision = _subDivisionService.GetById(dto.SubDivisionId);
             }

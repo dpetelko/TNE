@@ -88,7 +88,7 @@ namespace TNE.Services.Implementations
             entity.Name = dto.Name;
             entity.MaxPower = dto.MaxPower;
             entity.Deleted = dto.Deleted;
-            if (!entity.ProviderId.Equals(dto.ProviderId))
+            if (!Equals(dto.ProviderId, Guid.Empty) && !Equals(entity.ProviderId, dto.ProviderId))
             {
                 entity.Provider = _providerService.GetById(dto.ProviderId);
             }

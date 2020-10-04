@@ -86,17 +86,9 @@ namespace TNE.Services.Implementations
             {
                 entity.ControlPoint = _controlPointRepository.GetById(dto.ControlPointId);
             }
-            else
-            {
-                entity.ControlPointId = dto.ControlPointId;
-            }
             if (!Equals(dto.DeliveryPointId, Guid.Empty) && !Equals(entity.DeliveryPointId, dto.DeliveryPointId))
             {
                 entity.DeliveryPoint = _deliveryPointRepository.GetById(dto.ControlPointId);
-            }
-            else
-            {
-                entity.DeliveryPointId = dto.DeliveryPointId;
             }
             return entity;
         }
