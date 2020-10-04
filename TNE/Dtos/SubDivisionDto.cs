@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using TNE.Models;
 
 namespace TNE.Dto
 {
     public class SubDivisionDto : DivisionDto, IEquatable<SubDivisionDto>
     {
+        [Required]
         public Guid LeadDivisionId { get; set; }
         public string LeadDivisionName { get; set; }
 

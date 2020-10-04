@@ -5,6 +5,7 @@ namespace TNE.Dto
 {
     public class ProviderDto : DivisionDto, IEquatable<ProviderDto>
     {
+        [Required]
         public Guid SubDivisionId { get; set; }
         public string SubDivisionName { get; set; }
 

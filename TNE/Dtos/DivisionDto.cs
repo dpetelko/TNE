@@ -13,11 +13,14 @@ namespace TNE.Dto
         public string Name { get; set; }
         public Guid AddressId { get; set; }
         public int PostCode { get; set; }
+        [Required]
         public string Country { get; set; }
+        [Required]
         public string Region { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
         public string Building { get; set; }
+        [Required]
         public bool Deleted { get; set; }
 
         public override bool Equals(object obj)

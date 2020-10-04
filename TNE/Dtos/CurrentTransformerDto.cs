@@ -10,6 +10,7 @@ namespace TNE.Dtos
 {
     public class CurrentTransformerDto : DeviceDto
     {
+        [Required]
         public int TransformationRate { get; set; }
         public CurrentTransformerDto() { }
         public CurrentTransformerDto(CurrentTransformer entity)
