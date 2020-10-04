@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Models;
 
 namespace TNE.Data
@@ -14,5 +15,6 @@ namespace TNE.Data
         Task<ControlPointDto> GetDtoByIdAsync(Guid Id);
         Task<List<ControlPointDto>> GetAllDtoAsync();
         Task<List<ControlPointDto>> GetAllActiveDtoAsync();
+        Task<List<ControlPointDto>> GetAllDtoByFilterAsync(ProviderFilter searchFilter);
     }
 }

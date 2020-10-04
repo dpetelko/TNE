@@ -5,41 +5,34 @@ using TNE.Services.Validators;
 
 namespace TNE.Dtos.SearchFilters
 {
-    public class ControlPointFilter : IEquatable<ControlPointFilter>
+    public class ProviderFilter : IEquatable<ProviderFilter>
     {
-        public Guid ControlPointId { get; set; }
-
-        public string ElectricityMeterNumber { get; set; }
+        public Guid? ProviderId { get; set; }
         public string ElectricityMeterType { get; set; }
-        public DateTime ElectricityMeterVerificationDate { get; set; }
-        public string CurrentTransformerNumber { get; set; }
+        public DateTime? ElectricityMeterVerificationDate { get; set; }
         public string CurrentTransformerType { get; set; }
-        public DateTime CurrentTransformerVerificationDate { get; set; }
-        public int CurrentTransformerTransformationRate { get; set; }
-        public string VoltageTransformerNumber { get; set; }
+        public DateTime? CurrentTransformerVerificationDate { get; set; }
+        public int? CurrentTransformerTransformationRate { get; set; }
         public string VoltageTransformerType { get; set; }
-        public DateTime VoltageTransformerVerificationDate { get; set; }
-        public int VoltageTransformerTransformationRate { get; set; }
+        public DateTime? VoltageTransformerVerificationDate { get; set; }
+        public int? VoltageTransformerTransformationRate { get; set; }
 
-        public ControlPointFilter() { }
+        public ProviderFilter() { }
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as ControlPointFilter);
+            return Equals(obj as ProviderFilter);
         }
 
-        public bool Equals(ControlPointFilter other)
+        public bool Equals(ProviderFilter other)
         {
             return other != null &&
-                   ControlPointId.Equals(other.ControlPointId) &&
-                   ElectricityMeterNumber == other.ElectricityMeterNumber &&
+                   ProviderId.Equals(other.ProviderId) &&
                    ElectricityMeterType == other.ElectricityMeterType &&
                    ElectricityMeterVerificationDate == other.ElectricityMeterVerificationDate &&
-                   CurrentTransformerNumber == other.CurrentTransformerNumber &&
                    CurrentTransformerType == other.CurrentTransformerType &&
                    CurrentTransformerVerificationDate == other.CurrentTransformerVerificationDate &&
                    CurrentTransformerTransformationRate == other.CurrentTransformerTransformationRate &&
-                   VoltageTransformerNumber == other.VoltageTransformerNumber &&
                    VoltageTransformerType == other.VoltageTransformerType &&
                    VoltageTransformerVerificationDate == other.VoltageTransformerVerificationDate &&
                    VoltageTransformerTransformationRate == other.VoltageTransformerTransformationRate;
@@ -48,15 +41,12 @@ namespace TNE.Dtos.SearchFilters
         public override int GetHashCode()
         {
             HashCode hash = new HashCode();
-            hash.Add(ControlPointId);
-            hash.Add(ElectricityMeterNumber);
+            hash.Add(ProviderId);
             hash.Add(ElectricityMeterType);
             hash.Add(ElectricityMeterVerificationDate);
-            hash.Add(CurrentTransformerNumber);
             hash.Add(CurrentTransformerType);
             hash.Add(CurrentTransformerVerificationDate);
             hash.Add(CurrentTransformerTransformationRate);
-            hash.Add(VoltageTransformerNumber);
             hash.Add(VoltageTransformerType);
             hash.Add(VoltageTransformerVerificationDate);
             hash.Add(VoltageTransformerTransformationRate);
@@ -66,15 +56,13 @@ namespace TNE.Dtos.SearchFilters
         public override string ToString()
         {
             return $"ControlPointFilter: [" +
-                $"CurrentTransformerNumber:{CurrentTransformerNumber}, " +
+                $"ProviderId:{ProviderId}, " +
                 $"CurrentTransformerType:{CurrentTransformerType}, " +
                 $"CurrentTransformerVerificationDate:{CurrentTransformerVerificationDate}, " +
                 $"CurrentTransformerTransformationRate:{CurrentTransformerTransformationRate}, " +
-                $"VoltageTransformerNumber:{VoltageTransformerNumber}, " +
                 $"VoltageTransformerType:{VoltageTransformerType}, " +
                 $"VoltageTransformerVerificationDate:{VoltageTransformerVerificationDate}, " +
                 $"VoltageTransformerTransformationRate:{VoltageTransformerTransformationRate}, " +
-                $"ElectricityMeterNumber:{ElectricityMeterNumber}, " +
                 $"ElectricityMeterType:{ElectricityMeterType}, " +
                 $"ElectricityMeterVerificationDate:{ElectricityMeterVerificationDate} ]";
         }

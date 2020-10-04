@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LinqKit;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Models;
 
 namespace TNE.Data.Implementations
@@ -145,6 +147,51 @@ namespace TNE.Data.Implementations
             _context.ControlPoints.Update(entity);
             await _context.SaveChangesAsync();
             return entity;
+        }
+
+        public async Task<List<ControlPointDto>> GetAllDtoByFilterAsync(ProviderFilter searchFilter)
+        {
+            Log.Debug("GetAll ControlPointDto");
+
+            var predicate = PredicateBuilder.New<ControlPoint>();
+
+            if (searchFilter.ProviderId.HasValue)
+                predicate = predicate.And(s => s.Provider.Id == searchFilter.ProviderId);
+
+            if (!string.IsNullOrEmpty(searchFilter.ElectricityMeterType))
+                predicate = predicate.And(s => s.ElectricityMeter.Type == searchFilter.ElectricityMeterType);
+
+            if (searchFilter.ElectricityMeterVerificationDate.HasValue)
+                predicate = predicate.And(s => DateTime.Compare(s.ElectricityMeter.VerificationDate, (DateTime)searchFilter.ElectricityMeterVerificationDate) <= 0);
+
+            if (!string.IsNullOrEmpty(searchFilter.CurrentTransformerType))
+                predicate = predicate.And(s => s.CurrentTransformer.Type == searchFilter.CurrentTransformerType);
+
+            if (searchFilter.CurrentTransformerVerificationDate.HasValue)
+                predicate = predicate.And(s => DateTime.Compare(s.CurrentTransformer.VerificationDate, (DateTime)searchFilter.CurrentTransformerVerificationDate) <= 0);
+
+            if (searchFilter.CurrentTransformerTransformationRate.HasValue)
+                predicate = predicate.And(s => s.CurrentTransformer.TransformationRate == searchFilter.CurrentTransformerTransformationRate);
+
+            if (!string.IsNullOrEmpty(searchFilter.VoltageTransformerType))
+                predicate = predicate.And(s => s.VoltageTransformer.Type == searchFilter.VoltageTransformerType);
+
+            if (searchFilter.CurrentTransformerVerificationDate.HasValue)
+                predicate = predicate.And(s => DateTime.Compare(s.VoltageTransformer.VerificationDate, (DateTime)searchFilter.VoltageTransformerVerificationDate) <= 0);
+
+            if (searchFilter.CurrentTransformerTransformationRate.HasValue)
+                predicate = predicate.And(s => s.VoltageTransformer.TransformationRate == searchFilter.VoltageTransformerTransformationRate);
+
+            var result = await _context.ControlPoints
+                .AsNoTracking()
+                .Include(s => s.Provider)
+                .Include(s => s.CurrentTransformer)
+                .Include(s => s.VoltageTransformer)
+                .Include(s => s.ElectricityMeter)
+                .Where(predicate)
+                .Select(s => new ControlPointDto(s))
+                .ToListAsync();
+            return result;
         }
     }
 }

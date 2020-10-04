@@ -78,17 +78,17 @@ namespace TNE.Services.Implementations
             }
             entity.Name = dto.Name;
             entity.Deleted = dto.Deleted;
-            if (!Equals(dto.CurrentTransformer.Id, entity.CurrentTransformerId))
+            if (!Equals(dto.CurrentTransformerId, entity.CurrentTransformerId))
             {
-                entity.CurrentTransformer = _currentTransformerService.GetById(dto.CurrentTransformer.Id);
+                entity.CurrentTransformer = _currentTransformerService.GetById(dto.CurrentTransformerId);
             }
-            if (!Equals(entity.VoltageTransformerId, dto.VoltageTransformer.Id))
+            if (!Equals(entity.VoltageTransformerId, dto.VoltageTransformerId))
             {
-                entity.VoltageTransformer = _voltageTransformerService.GetById(dto.VoltageTransformer.Id);
+                entity.VoltageTransformer = _voltageTransformerService.GetById(dto.VoltageTransformerId);
             }
-            if (!Equals(entity.ElectricityMeterId, dto.ElectricityMeter.Id))
+            if (!Equals(entity.ElectricityMeterId, dto.ElectricityMeterId))
             {
-                entity.ElectricityMeter = _electricityMeterService.GetById(dto.VoltageTransformer.Id);
+                entity.ElectricityMeter = _electricityMeterService.GetById(dto.VoltageTransformerId);
             }
             return entity;
         }
