@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TNE.Models
 {
-    public class Provider : Division
+    public class Provider : Division, IEquatable<Provider>
     {
         public Guid? SubDivisionId { get; set; }
         public SubDivision SubDivision { get; set; }
@@ -13,6 +13,23 @@ namespace TNE.Models
         public List<DeliveryPoint> DeliveryPoints { get; set; }
 
         public Provider() { }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Provider);
+        }
+
+        public bool Equals(Provider other)
+        {
+            return other != null &&
+                   Id.Equals(other.Id) &&
+                   Name == other.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name);
+        }
 
         public override string ToString()
         {
@@ -23,5 +40,6 @@ namespace TNE.Models
                 $"SubDivision:{SubDivision} " +
                 $"Deleted:{Deleted} ]";
         }
+
     }
 }

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TNE.Models
 {
-    public class DeliveryPoint
+    public class DeliveryPoint : IEquatable<DeliveryPoint>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -21,11 +21,24 @@ namespace TNE.Models
         [DefaultValue(false)]
         public bool Deleted { get; set; }
 
-        public DeliveryPoint()
+        public DeliveryPoint() { }
+
+        public override bool Equals(object obj)
         {
-            //Provider = new Provider();
+            return Equals(obj as DeliveryPoint);
         }
 
+        public bool Equals(DeliveryPoint other)
+        {
+            return other != null &&
+                   Id.Equals(other.Id) &&
+                   Name == other.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name);
+        }
         public override string ToString()
         {
             return $"DeliveryPoint" +

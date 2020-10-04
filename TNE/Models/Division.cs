@@ -19,7 +19,6 @@ namespace TNE.Models
 
         public Division()
         {
-            //Address = new Address();
         }
     }
 }

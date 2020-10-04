@@ -5,9 +5,30 @@ using System.Threading.Tasks;
 
 namespace TNE.Models
 {
-    public class CurrentTransformer : Device
+    public class CurrentTransformer : Device, IEquatable<CurrentTransformer>
     {
         public int TransformationRate { get; set; }
+
+        public CurrentTransformer() { }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as CurrentTransformer);
+        }
+
+        public bool Equals(CurrentTransformer other)
+        {
+            return other != null &&
+                   Id.Equals(other.Id) &&
+                   Number == other.Number &&
+                   Type == other.Type &&
+                   TransformationRate == other.TransformationRate;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Number, Type, TransformationRate);
+        }
 
         public override string ToString()
         {

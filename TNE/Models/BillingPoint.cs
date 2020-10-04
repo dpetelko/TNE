@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TNE.Models
 {
-    public class BillingPoint
+    public class BillingPoint : IEquatable<BillingPoint>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -19,6 +20,26 @@ namespace TNE.Models
 
         public BillingPoint() { }
 
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as BillingPoint);
+        }
+
+        public bool Equals(BillingPoint other)
+        {
+            return other != null &&
+                   Id.Equals(other.Id) &&
+                   StartTime == other.StartTime &&
+                   EndTime == other.EndTime &&
+                   EqualityComparer<Guid?>.Default.Equals(ControlPointId, other.ControlPointId) &&
+                   EqualityComparer<Guid?>.Default.Equals(DeliveryPointId, other.DeliveryPointId);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, StartTime, EndTime, ControlPointId, DeliveryPointId);
+        }
+
         public override string ToString()
         {
             //return JsonConvert.SerializeObject(this);
@@ -29,5 +50,6 @@ namespace TNE.Models
                 $"ControlPoint:{ControlPoint}, " +
                 $"DeliveryPoint:{DeliveryPoint} ]";
         }
+
     }
 }

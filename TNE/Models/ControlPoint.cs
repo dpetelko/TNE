@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace TNE.Models
 {
-    public class ControlPoint
+    public class ControlPoint : IEquatable<ControlPoint>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -31,12 +31,23 @@ namespace TNE.Models
         [DefaultValue(false)]
         public bool Deleted { get; set; }
 
-        public ControlPoint()
+        public ControlPoint() { }
+
+        public override bool Equals(object obj)
         {
-            //ElectricityMeter = new ElectricityMeter();
-            //CurrentTransformer = new Transformer();
-            //VoltageTransformer = new Transformer();
-            //Provider = new Provider();
+            return Equals(obj as ControlPoint);
+        }
+
+        public bool Equals(ControlPoint other)
+        {
+            return other != null &&
+                   Id.Equals(other.Id) &&
+                   Name == other.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name);
         }
 
         public override string ToString()
@@ -47,7 +58,7 @@ namespace TNE.Models
                 $"ElectricityMeter:{ElectricityMeter}, " +
                 $"CurrentTransformer:{CurrentTransformer}, " +
                 $"VoltageTransformer:{VoltageTransformer}, " +
-                $"Provider:{Provider.Name} " +
+                $"Provider:{Provider} " +
                 $"Deleted:{Deleted} ]";
         }
     }
