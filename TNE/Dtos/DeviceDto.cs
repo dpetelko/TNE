@@ -12,7 +12,8 @@ namespace TNE.Dtos
         [Required]
         public string Type { get; set; }
         [Required]
-        public DateTime VerificationDate { get; set; }
+        public DateTime LastVerificationDate { get; set; }
+        public TimeSpan InterTestingPeriod { get; set; } = new TimeSpan(365, 0, 0, 0);
         public Guid ControlPointId { get; set; }
         public string ControlPointName { get; set; }
         [EnumDataType(typeof(Status), ErrorMessage = "Invalid Status value")]

@@ -34,7 +34,8 @@ namespace TNE.Models
                 $"[ Id:{Id}, " +
                 $"Number:{Number}, " +
                 $"Type:{Type}, " +
-                $"VerificationDate:{VerificationDate}, " +
+                $"VerificationDate:{LastVerificationDate}, " +
+                $"InterTestingPeriod:{InterTestingPeriod}, " +
                 $"ControlPoint:{ControlPoint} " +
                 $"Status:{Status} ]";
         }

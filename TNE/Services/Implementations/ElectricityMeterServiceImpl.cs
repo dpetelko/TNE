@@ -87,7 +87,8 @@ namespace TNE.Services.Implementations
             }
             entity.Number = dto.Number;
             entity.Type = dto.Type;
-            entity.VerificationDate = dto.VerificationDate;
+            entity.LastVerificationDate = dto.LastVerificationDate;
+            entity.InterTestingPeriod = dto.InterTestingPeriod;
             entity.Status = dto.Status;
             if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPointId, dto.ControlPointId))
             {

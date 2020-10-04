@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
 using TNE.Models;
 
 namespace TNE.Dtos
@@ -18,7 +13,8 @@ namespace TNE.Dtos
             Id = entity.Id;
             Number = entity.Number;
             Type = entity.Type;
-            VerificationDate = entity.VerificationDate;
+            LastVerificationDate = entity.LastVerificationDate;
+            InterTestingPeriod = entity.InterTestingPeriod;
             TransformationRate = entity.TransformationRate;
             ControlPointName = entity.ControlPoint.Name;
             Status = entity.Status;
@@ -30,7 +26,8 @@ namespace TNE.Dtos
                 $"[ Id:{Id}, " +
                 $"Number:{Number}, " +
                 $"Type:{Type}, " +
-                $"VerificationDate:{VerificationDate}, " +
+                $"LastVerificationDate:{LastVerificationDate}, " +
+                $"InterTestingPeriod:{InterTestingPeriod}, " +
                 $"TransformationRate:{TransformationRate}, " +
                 $"ControlPointId:{ControlPointId} " +
                 $"ControlPointName:{ControlPointName} " +
