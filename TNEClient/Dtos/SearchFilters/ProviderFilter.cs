@@ -1,9 +1,6 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using TNE.Models;
-using TNE.Services.Validators;
 
-namespace TNE.Dtos.SearchFilters
+namespace TNEClient.Dtos.SearchFilters
 {
     public class ProviderFilter : IEquatable<ProviderFilter>
     {

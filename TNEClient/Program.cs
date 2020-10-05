@@ -6,7 +6,7 @@ using Serilog;
 using System;
 using System.Net;
 
-namespace TNE
+namespace TNEClient
 {
     public class Program
     {
@@ -40,7 +40,7 @@ namespace TNE
                 {
                     webBuilder.ConfigureKestrel(serverOptions =>
                     {
-                        serverOptions.Listen(IPAddress.Loopback, 8050);
+                        serverOptions.Listen(IPAddress.Loopback, 8060);
                     });
                     webBuilder.UseStartup<Startup>();
                 })
