@@ -11,7 +11,7 @@ namespace TNE.Data
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
         : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 

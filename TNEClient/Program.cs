@@ -34,7 +34,7 @@ namespace TNEClient
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((context, services) =>
                 {
-                    //services.Configure<KestrelServerOptions>(context.Configuration.GetSection("Kestrel"));
+                    services.Configure<KestrelServerOptions>(context.Configuration.GetSection("Kestrel"));
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

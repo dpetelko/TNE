@@ -43,5 +43,13 @@ namespace TNE.Controllers
                 ? (ActionResult<CurrentTransformerDto>)Ok(await _service.UpdateAsync(dto))
                 : BadRequest(ModelState);
         }
+
+        [HttpPut("{id}/{status}")]
+        public async Task<ActionResult<bool>> SetStatus(Guid id, Status status)
+        {
+            return ModelState.IsValid
+                ? (ActionResult<bool>)Ok(await _service.SetStatus(id, status))
+                : BadRequest(ModelState);
+        }
     }
 }

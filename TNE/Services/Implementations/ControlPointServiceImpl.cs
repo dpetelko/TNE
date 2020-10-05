@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using TNE.Data;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Models;
 
 namespace TNE.Services.Implementations
@@ -45,6 +46,8 @@ namespace TNE.Services.Implementations
         public async Task<List<ControlPointDto>> GetAllActiveDtoAsync() { return await _repo.GetAllActiveDtoAsync(); }
 
         public async Task<List<ControlPointDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
+
+        public async Task<List<ControlPointDto>> GetAllDtoByFilterAsync(InterTestingFilter filter) { return await _repo.GetAllDtoByFilterAsync(filter); }
 
         public ControlPoint GetById(Guid id) { return _repo.GetById(id); }
 

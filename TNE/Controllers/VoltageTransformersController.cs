@@ -36,11 +36,11 @@ namespace TNE.Controllers
             return CreatedAtAction(nameof(Create), new { id = result.Id }, result);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<VoltageTransformerDto>> Update([FromBody] VoltageTransformerDto dto)
+        [HttpPut("{id}/{status}")]
+        public async Task<ActionResult<bool>> SetStatus(Guid id, Status status)
         {
             return ModelState.IsValid
-                ? (ActionResult<VoltageTransformerDto>)Ok(await _service.UpdateAsync(dto))
+                ? (ActionResult<bool>)Ok(await _service.SetStatus(id, status))
                 : BadRequest(ModelState);
         }
     }

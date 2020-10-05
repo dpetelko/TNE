@@ -149,7 +149,7 @@ namespace TNE.Data.Implementations
             return entity;
         }
 
-        public async Task<List<ControlPointDto>> GetAllDtoByFilterAsync(ProviderFilter searchFilter)
+        public async Task<List<ControlPointDto>> GetAllDtoByFilterAsync(InterTestingFilter searchFilter)
         {
             Log.Debug("GetAllDtoByFilterAsync ControlPointDto by Filter: {searchFilter}", searchFilter);
 

@@ -5,21 +5,21 @@ using TNE.Services.Validators;
 
 namespace TNE.Dtos.SearchFilters
 {
-    public class ProviderFilter : IEquatable<ProviderFilter>
+    public class InterTestingFilter : IEquatable<InterTestingFilter>
     {
         public Guid? ProviderId { get; set; }
         public DateTime? ElectricityMeterVerificationDate { get; set; }
         public DateTime? CurrentTransformerVerificationDate { get; set; }
         public DateTime? VoltageTransformerVerificationDate { get; set; }
 
-        public ProviderFilter() { }
+        public InterTestingFilter() { }
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as ProviderFilter);
+            return Equals(obj as InterTestingFilter);
         }
 
-        public bool Equals(ProviderFilter other)
+        public bool Equals(InterTestingFilter other)
         {
             return other != null &&
                    ProviderId.Equals(other.ProviderId) &&
