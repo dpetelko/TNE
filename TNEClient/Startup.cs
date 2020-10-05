@@ -24,10 +24,12 @@ namespace TNEClient
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            
+            
             services.AddRefitClient<ILeadDivisionRepository>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
             services.AddScoped<ILeadDivisionService, LeadDivisionServiceImpl>();
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -35,22 +37,26 @@ namespace TNEClient
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-            app.UseHttpsRedirection();
 
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("App starting...");
-                    var service = context.Request.HttpContext.RequestServices.GetRequiredService<ILeadDivisionService>();
-                    var countries = await service.GetAllAsync();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                //endpoints.MapGet("/", async context =>
+                //{
 
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(countries));
-                });
+                //    var service = context.Request.HttpContext.RequestServices.GetRequiredService<ILeadDivisionService>();
+                //    var countries = await service.GetAllAsync();
+                //    await context.Response.WriteAsync(JsonConvert.SerializeObject(countries));
+                //});
             });
         }
     }

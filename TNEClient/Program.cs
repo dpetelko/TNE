@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
+using System.IO;
 using System.Net;
 
 namespace TNEClient
@@ -42,6 +43,8 @@ namespace TNEClient
                     //{
                     //    serverOptions.Listen(IPAddress.Loopback, 8060);
                     //});
+                    webBuilder.UseKestrel();
+                    //webBuilder.UseContentRoot(Directory.GetCurrentDirectory());
                     webBuilder.UseStartup<Startup>();
                 })
                 .UseSerilog((hostingContext, loggerConfiguration) =>
