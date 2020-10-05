@@ -1,5 +1,4 @@
 ﻿using System;
-using TNE.Models;
 
 namespace TNEClient.Dtos
 {
@@ -7,18 +6,7 @@ namespace TNEClient.Dtos
     {
         public int TransformationRate { get; set; }
         public VoltageTransformerDto() { }
-        public VoltageTransformerDto(VoltageTransformer entity)
-        {
-            if (entity is null) throw new ArgumentNullException(nameof(entity));
-            Id = entity.Id;
-            Number = entity.Number;
-            Type = entity.Type;
-            LastVerificationDate = entity.LastVerificationDate;
-            InterTestingPeriod = entity.InterTestingPeriod;
-            TransformationRate = entity.TransformationRate;
-            ControlPointName = entity.ControlPoint.Name;
-            Status = entity.Status;
-        }
+        
 
         public override string ToString()
         {

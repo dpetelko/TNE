@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TNE.Models;
 
 namespace TNEClient.Dtos
 {
@@ -19,17 +18,6 @@ namespace TNEClient.Dtos
         public string DeliveryPointName { get; set; }
 
         public BillingPointDto() { }
-
-        public BillingPointDto(BillingPoint entity) 
-        {
-            Id = entity.Id;
-            StartTime = entity.StartTime;
-            EndTime = entity.EndTime;
-            ControlPointId = entity.ControlPoint.Id;
-            ControlPointName = entity.ControlPoint.Name;
-            DeliveryPointId = entity.DeliveryPoint.Id;
-            DeliveryPointName = entity.DeliveryPoint.Name;
-        }
 
         public override bool Equals(object obj)
         {

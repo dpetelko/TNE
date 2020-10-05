@@ -4,13 +4,11 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
 using TNE.Dtos.SearchFilters;
 using TNE.Models;
-using static System.String;
 
 namespace TNE.Data.Implementations
 {
@@ -160,29 +158,15 @@ namespace TNE.Data.Implementations
             if (searchFilter.ProviderId.HasValue)
                 predicate = predicate.And(s => s.Provider.Id == searchFilter.ProviderId);
 
-            if (!IsNullOrEmpty(searchFilter.ElectricityMeterType))
-                predicate = predicate.And(s => s.ElectricityMeter.Type == searchFilter.ElectricityMeterType);
-
             if (searchFilter.ElectricityMeterVerificationDate.HasValue)
                 predicate = predicate.And(s => DateTime.Compare(s.ElectricityMeter.LastVerificationDate.Subtract(s.ElectricityMeter.InterTestingPeriod), (DateTime)searchFilter.ElectricityMeterVerificationDate) <= 0);
-
-            if (!IsNullOrEmpty(searchFilter.CurrentTransformerType))
-                predicate = predicate.And(s => s.CurrentTransformer.Type == searchFilter.CurrentTransformerType);
 
             if (searchFilter.CurrentTransformerVerificationDate.HasValue)
                 predicate = predicate.And(s => DateTime.Compare(s.CurrentTransformer.LastVerificationDate.Subtract(s.CurrentTransformer.InterTestingPeriod), (DateTime)searchFilter.CurrentTransformerVerificationDate) <= 0);
 
-            if (searchFilter.CurrentTransformerTransformationRate.HasValue)
-                predicate = predicate.And(s => s.CurrentTransformer.TransformationRate == searchFilter.CurrentTransformerTransformationRate);
-
-            if (!IsNullOrEmpty(searchFilter.VoltageTransformerType))
-                predicate = predicate.And(s => s.VoltageTransformer.Type == searchFilter.VoltageTransformerType);
 
             if (searchFilter.CurrentTransformerVerificationDate.HasValue)
                 predicate = predicate.And(s => DateTime.Compare(s.VoltageTransformer.LastVerificationDate.Subtract(s.VoltageTransformer.InterTestingPeriod), (DateTime)searchFilter.VoltageTransformerVerificationDate) <= 0);
-
-            if (searchFilter.CurrentTransformerTransformationRate.HasValue)
-                predicate = predicate.And(s => s.VoltageTransformer.TransformationRate == searchFilter.VoltageTransformerTransformationRate);
 
             var result = await _context.ControlPoints
                 .AsNoTracking()
@@ -194,17 +178,6 @@ namespace TNE.Data.Implementations
                 .Select(s => new ControlPointDto(s))
                 .ToListAsync();
             return result;
-        }
-
-        public static bool IsBetween(DateTime checkedDate, DateTime startDate, DateTime endDate)
-        {
-            if (DateTime.Compare(checkedDate, startDate) == 0) return true;
-            if (DateTime.Compare(checkedDate, endDate) == 0) return true;
-
-            if (DateTime.Compare(startDate, endDate) <= 0)
-                return (DateTime.Compare(checkedDate, startDate) >= 0 && DateTime.Compare(checkedDate, endDate) <= 0);
-            else
-                throw new InvalidOperationException("StartDate must be earlier than EndDate.");
         }
     }
 }

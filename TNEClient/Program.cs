@@ -34,14 +34,14 @@ namespace TNEClient
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((context, services) =>
                 {
-                    services.Configure<KestrelServerOptions>(context.Configuration.GetSection("Kestrel"));
+                    //services.Configure<KestrelServerOptions>(context.Configuration.GetSection("Kestrel"));
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.ConfigureKestrel(serverOptions =>
-                    {
-                        serverOptions.Listen(IPAddress.Loopback, 8060);
-                    });
+                    //webBuilder.ConfigureKestrel(serverOptions =>
+                    //{
+                    //    serverOptions.Listen(IPAddress.Loopback, 8060);
+                    //});
                     webBuilder.UseStartup<Startup>();
                 })
                 .UseSerilog((hostingContext, loggerConfiguration) =>

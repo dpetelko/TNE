@@ -1,15 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TNE.Services.Validators;
 
-namespace TNEClient.Dto
+namespace TNEClient.Dtos
 {
     public class DivisionDto
     {
         public Guid Id { get; set; }
         [Required]
         [StringLength(10, MinimumLength = 3, ErrorMessage = "The {0} length must be between {2} and {1} characters.")]
-        [UniqueField]
+        //[UniqueField]
         public string Name { get; set; }
         public Guid AddressId { get; set; }
         public int PostCode { get; set; }

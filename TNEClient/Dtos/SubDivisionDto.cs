@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TNE.Models;
 
-namespace TNEClient.Dto
+namespace TNEClient.Dtos
 {
     public class SubDivisionDto : DivisionDto, IEquatable<SubDivisionDto>
     {
@@ -11,23 +10,6 @@ namespace TNEClient.Dto
         public string LeadDivisionName { get; set; }
 
         public SubDivisionDto() { }
-
-        public SubDivisionDto(SubDivision entity)
-        {
-            if (entity is null) throw new ArgumentNullException(nameof(entity));
-            Id = entity.Id;
-            Name = entity.Name;
-            Deleted = entity.Deleted;
-            AddressId = entity.Address.Id;
-            PostCode = entity.Address.PostCode;
-            Country = entity.Address.Country;
-            Region = entity.Address.Region;
-            City = entity.Address.City;
-            Street = entity.Address.Street;
-            Building = entity.Address.Building;
-            LeadDivisionId = entity.LeadDivision.Id;
-            LeadDivisionName = entity.LeadDivision.Name;
-        }
 
         public override string ToString()
         {

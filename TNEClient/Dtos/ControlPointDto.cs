@@ -1,7 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TNE.Models;
-using TNE.Services.Validators;
 
 namespace TNEClient.Dtos
 {
@@ -10,7 +8,7 @@ namespace TNEClient.Dtos
         public Guid Id { get; set; }
         [Required]
         [StringLength(10, MinimumLength = 3, ErrorMessage = "The {0} length must be between {2} and {1} characters.")]
-        [UniqueField]
+        //[UniqueField]
         public string Name { get; set; }
         [Required]
         public bool Deleted { get; set; }
@@ -37,33 +35,6 @@ namespace TNEClient.Dtos
         public int VoltageTransformerTransformationRate { get; set; }
 
         public ControlPointDto() { }
-
-        public ControlPointDto(ControlPoint entity)
-        {
-            Id = entity.Id;
-            Name = entity.Name;
-            Deleted = entity.Deleted;
-
-            ProviderId = entity.Provider.Id;
-            ProviderName = entity.Provider.Name;
-
-            CurrentTransformerId = entity.CurrentTransformer.Id;
-            CurrentTransformerNumber = entity.CurrentTransformer.Number;
-            CurrentTransformerType = entity.CurrentTransformer.Type;
-            CurrentTransformerLastVerificationDate = entity.CurrentTransformer.LastVerificationDate;
-            CurrentTransformerTransformationRate = entity.CurrentTransformer.TransformationRate;
-
-            VoltageTransformerId = entity.VoltageTransformer.Id;
-            VoltageTransformerNumber = entity.VoltageTransformer.Number;
-            VoltageTransformerType = entity.VoltageTransformer.Type;
-            VoltageTransformerLastVerificationDate = entity.VoltageTransformer.LastVerificationDate;
-            VoltageTransformerTransformationRate = entity.VoltageTransformer.TransformationRate;
-
-            ElectricityMeterId = entity.ElectricityMeter.Id;
-            ElectricityMeterNumber = entity.ElectricityMeter.Number;
-            ElectricityMeterType = entity.ElectricityMeter.Type;
-            ElectricityMeterLastVerificationDate = entity.ElectricityMeter.LastVerificationDate;
-        }
 
         public override bool Equals(object obj)
         {

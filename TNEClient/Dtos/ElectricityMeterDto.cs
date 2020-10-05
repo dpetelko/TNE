@@ -1,25 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using TNE.Models;
 
 namespace TNEClient.Dtos
 {
     public class ElectricityMeterDto : DeviceDto, IEquatable<ElectricityMeterDto>
     {
         public ElectricityMeterDto() { }
-
-        public ElectricityMeterDto(ElectricityMeter entity) 
-        {
-            if (entity is null) throw new ArgumentNullException(nameof(entity));
-            Id = entity.Id;
-            Number = entity.Number;
-            Type = entity.Type;
-            LastVerificationDate = entity.LastVerificationDate;
-            InterTestingPeriod = entity.InterTestingPeriod;
-            ControlPointId = entity.ControlPoint.Id;
-            ControlPointName = entity.ControlPoint.Name;
-            Status = entity.Status;
-        }
 
         public override bool Equals(object obj)
         {
