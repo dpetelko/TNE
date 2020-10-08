@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using TNEClient.Services;
 
 namespace TNEClient.Controllers
@@ -12,12 +13,15 @@ namespace TNEClient.Controllers
     {
         private readonly ILeadDivisionService _service;
 
-        public LeadDivisionsController(ILeadDivisionService service) { }
+        public LeadDivisionsController(ILeadDivisionService service) { _service = service; }
+
+
 
         // GET: LeadDivisionsController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            Log.Error("Hello from LeadDivisionsController!!!!");
+            return View("~/Views/LeadDivisions/Index.cshtml", await _service.GetAllAsync());
         }
 
         // GET: LeadDivisionsController/Details/5

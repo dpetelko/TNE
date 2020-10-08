@@ -1,93 +1,159 @@
 ﻿@model List<LeadDivisionDto>
 @{
-    ViewData["Title"] = "Каталог товаров";
+    ViewData["Title"] = "ТрансНефтьЭнерго - Главная";
 }
 <br />
-<div class="container-sm">
-    <table class="table table-stripped table-hover">
-        <tr>
-            <td><strong>Имя</strong></td>
-            <td><strong>Индекс</strong></td>
-            <td><strong>Страна</strong></td>
-            <td><strong>Регион</strong></td>
-            <td><strong>Город</strong></td>
-            <td><strong>Улица</strong></td>
-            <td><strong>Строение</strong></td>
-            <td></td>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Name</td>
-                <td>@item.PostCode</td>
-                <td>@item.Country</td>
-                <td>@item.Region</td>
-                <td>@item.City</td>
-                <td>@item.Street</td>
-                <td>@item.Building</td>
-                <td>
-                    <div class="btn-group" role="group">
+<br />
 
-                            <a th:href="" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal" data-whatever="@item">Подробности</a>
-                            <a th:href="" class="btn btn-outline-warning btn-sm">Редактировать</a>
-                            <a th:href="" class="btn btn-outline-danger font-weight-bold btn-sm" id="deleteButton">Удалить</a>
+<div>
 
-                    </div>
-                </td>
-            </tr>
-        }
-    </table>
 
-</div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Подробная информация</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+            <div id="card1" class="card">
+                <div class="card-header">
+                    <h3>Головные</h3>
+                    <h3>организации</h3>
+                    <p class="card-text">Раздел предоставляет инструменты для работы с головными организациями</p>
+                    <br />
+                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                </div>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Индекс:</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Recipient:</label>
-                        <input type="text" class="form-control" id="recipient-name1">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Recipient:</label>
-                        <input type="text" class="form-control" id="recipient-name2">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                </form>
+        </div>
+
+        <div class="col-xs-12 col-md-4">
+            <div id="card2" class="card">
+                <div class="card-header">
+                    <h3>Дочерние</h3>
+                    <h3>организации</h3>
+                    <p class="card-text">Раздел предоставляет инструменты для работы с дочерними организациями</p>
+                    <br />
+                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+        </div>
+
+        <div class="col-xs-12 col-md-4">
+            <div id="card3" class="card">
+                <div class="card-header">
+                    <h3>Объекты</h3>
+                    <h3>потребления</h3>
+                    <p class="card-text">Раздел предоставляет инструменты для работы с объектами потребления</p>
+                    <br />
+                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <hr style="width:100%;" />
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+            <div id="card4" class="card">
+                <div class="card-header">
+                    <h3>Точки измерения</h3>
+                    <h3>электроэнергии</h3>
+                    <p class="card-text">Раздел предоставляет инструменты для работы с точками учета электроэнергии</p>
+                    <br />
+                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-4">
+            <div id="card5"  class="card">
+                <div class="card-header">
+                    <h3>Точки поставки</h3>
+                    <h3>электроэнергии</h3>
+                    <p class="card-text">Раздел предоставляет инструменты для работы с точками поставки электроэнергии</p>
+                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-4">
+            <div id="card6" class="card">
+                <div class="card-header">
+                    <h3>Расчетные</h3>
+                    <h3>приборы учета</h3>
+                    <p class="card-text">Раздел предоставляет инструменты для работы с расчетными приборами учета</p>
+                    <br />
+                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12 col-md-12">
+                <hr style="width:100%;" />
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div id="card7" class="card">
+                    <div class="card-header">
+                        <h3>Счетчики</h3>
+                        <h3>электроэнергии</h3>
+                        <p class="card-text">Раздел предоставляет инструменты для работы со счетчиками электроэнергии</p>
+                        <br />
+                        <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div id="card8" class="card">
+                    <div class="card-header">
+                        <h3>Трансформаторы</h3>
+                        <h3>тока</h3>
+                        <p class="card-text">Раздел предоставляет инструменты для работы с трансформаторами тока</p>
+                        <br />
+                        <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div id="card9" class="card">
+                    <div class="card-header">
+                        <h3>Трансформаторы</h3>
+                        <h3>напряжения</h3>
+                        <p class="card-text">Раздел предоставляет инструменты для работы с трансформаторами напряжения</p>
+                        <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                    </div>
+                </div>
+        </div>
 
 
 
 
-<script>
-    $('#exampleModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-title').text('Просмотр записи ' + recipient.Id)
-        modal.find('.modal-body input recipient-name').val("Some shit")
-    })
+
+
+    </div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#card1, #card2, #card3, #card4, #card5, #card6, #card7, #card8, #card9').mouseover(function () {
+            $(this).addClass('border-info');
+        });
+
+        $('#card1, #card2, #card3, #card4, #card5, #card6, #card7, #card8, #card9').mouseout(function () {
+            $(this).removeClass('border-info');
+        });
+    });
 </script>

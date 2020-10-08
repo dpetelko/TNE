@@ -1,0 +1,41 @@
+﻿@using TNEClient.Dtos
+@model List<LeadDivisionDto>
+@{
+    ViewData["Title"] = "ТрансНефтьЭнерго - Головные подразделения";
+}
+<br />
+<div class="container-sm">
+    <table class="table table-stripped table-hover">
+        <tr>
+            <td><strong>Имя</strong></td>
+            <td><strong>Индекс</strong></td>
+            <td><strong>Страна</strong></td>
+            <td><strong>Регион</strong></td>
+            <td><strong>Город</strong></td>
+            <td><strong>Улица</strong></td>
+            <td><strong>Строение</strong></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.PostCode</td>
+                <td>@item.Country</td>
+                <td>@item.Region</td>
+                <td>@item.City</td>
+                <td>@item.Street</td>
+                <td>@item.Building</td>
+                <td>
+                    <div class="btn-group" role="group">
+
+                        <a th:href="" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal" data-whatever="@item">Подробности</a>
+                        <a th:href="" class="btn btn-outline-warning btn-sm">Редактировать</a>
+                        <a th:href="" class="btn btn-outline-danger font-weight-bold btn-sm" id="deleteButton">Удалить</a>
+
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+    </div>
