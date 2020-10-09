@@ -110,7 +110,8 @@ namespace TNE.Data.Implementations
         public async Task<bool> SetStatus(Guid id, Status newStatus)
         {
             Log.Debug("Setting new Status= '{newStatus}' for VoltageTransformer ID= '{id}'", newStatus, id);
-            var obj = new VoltageTransformer { Id = id, Status = newStatus };
+            var obj = await GetByIdAsync(id);
+            obj.Status = newStatus;
             _context.VoltageTransformers.Attach(obj);
             _context.Entry(obj).Property(x => x.Status).IsModified = true;
             await _context.SaveChangesAsync();

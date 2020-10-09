@@ -28,6 +28,10 @@ namespace TNEClient
             
             services.AddRefitClient<ILeadDivisionRepository>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+
+            services.AddRefitClient<ISubDivisionRepository>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+
             services.AddScoped<ILeadDivisionService, LeadDivisionServiceImpl>();
             services.AddMvc();
         }
@@ -49,7 +53,7 @@ namespace TNEClient
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id:Guid?}");
                 //endpoints.MapGet("/", async context =>
                 //{
 

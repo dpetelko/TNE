@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using TNEClient.Data;
 using TNEClient.Services;
 
 namespace TNEClient.Controllers
@@ -12,8 +13,14 @@ namespace TNEClient.Controllers
     public class LeadDivisionsController : Controller
     {
         private readonly ILeadDivisionService _service;
+        private readonly ISubDivisionRepository _subRepo;
 
-        public LeadDivisionsController(ILeadDivisionService service) { _service = service; }
+        public LeadDivisionsController(ILeadDivisionService service, ISubDivisionRepository subRepo)
+        {
+            _service = service;
+            _subRepo = subRepo;
+        }
+
 
 
 
@@ -25,9 +32,12 @@ namespace TNEClient.Controllers
         }
 
         // GET: LeadDivisionsController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(Guid id)
         {
-            return View();
+            Log.Error("Hello from LeadDivisionsController    Details   !!!!");
+            var subDivisionList = await _subRepo.GetByLeadDivisionAsync(id);
+            ViewBag.SubDivisionList = subDivisionList;
+            return View(await _service.GetAsync(id));
         }
 
         // GET: LeadDivisionsController/Create
@@ -73,24 +83,22 @@ namespace TNEClient.Controllers
         }
 
         // GET: LeadDivisionsController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Undelete(Guid id)
         {
-            return View();
+            await _service.UndeleteAsync(id);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: LeadDivisionsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpGet]
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(Guid id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            Log.Error("Hello from LeadDivisionsController DELETE !!!!");
+
+            await _service.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }

@@ -1,13 +1,9 @@
-﻿@model List<LeadDivisionDto>
-@{
+﻿@{
     ViewData["Title"] = "ТрансНефтьЭнерго - Главная";
 }
-<br />
-<br />
 
 <div>
-
-
+    <br />
     <div class="row">
         <div class="col-xs-12 col-md-4">
             <div id="card1" class="card">
@@ -16,7 +12,7 @@
                     <h3>организации</h3>
                     <p class="card-text">Раздел предоставляет инструменты для работы с головными организациями</p>
                     <br />
-                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                    <a asp-action="Index" asp-controller="LeadDivisions" class="btn btn-outline-info btn-sm">Перейти к разделу »</a>
                 </div>
             </div>
         </div>
@@ -28,7 +24,7 @@
                     <h3>организации</h3>
                     <p class="card-text">Раздел предоставляет инструменты для работы с дочерними организациями</p>
                     <br />
-                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                    <a asp-action="Index" asp-controller="LeadDivisions" class="btn btn-outline-info btn-sm">Перейти к разделу »</a>
                 </div>
             </div>
         </div>
@@ -40,21 +36,17 @@
                     <h3>потребления</h3>
                     <p class="card-text">Раздел предоставляет инструменты для работы с объектами потребления</p>
                     <br />
-                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                    <a asp-action="Index" asp-controller="LeadDivisions" class="btn btn-outline-info btn-sm">Перейти к разделу »</a>
                 </div>
             </div>
         </div>
     </div>
-
-
 
     <div class="row">
         <div class="col-xs-12 col-md-12">
             <hr style="width:100%;" />
         </div>
     </div>
-
-
 
     <div class="row">
         <div class="col-xs-12 col-md-4">
@@ -63,8 +55,8 @@
                     <h3>Точки измерения</h3>
                     <h3>электроэнергии</h3>
                     <p class="card-text">Раздел предоставляет инструменты для работы с точками учета электроэнергии</p>
-                    
-                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                    <br />
+                    <a asp-action="Index" asp-controller="LeadDivisions" class="btn btn-outline-info btn-sm">Перейти к разделу »</a>
                 </div>
             </div>
         </div>
@@ -75,7 +67,7 @@
                     <h3>Точки поставки</h3>
                     <h3>электроэнергии</h3>
                     <p class="card-text">Раздел предоставляет инструменты для работы с точками поставки электроэнергии</p>
-                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                    <a asp-action="Index" asp-controller="LeadDivisions" class="btn btn-outline-info btn-sm">Перейти к разделу »</a>
                 </div>
             </div>
         </div>
@@ -87,22 +79,18 @@
                     <h3>приборы учета</h3>
                     <p class="card-text">Раздел предоставляет инструменты для работы с расчетными приборами учета</p>
                     <br />
-                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                    <a asp-action="Index" asp-controller="LeadDivisions" class="btn btn-outline-info btn-sm">Перейти к разделу »</a>
                 </div>
             </div>
         </div>
 
     </div>
 
-    
-
     <div class="row">
         <div class="col-xs-12 col-md-12">
             <hr style="width:100%;" />
         </div>
     </div>
-
-    
 
     <div class="row">
         <div class="col-xs-12 col-md-4">
@@ -112,7 +100,7 @@
                     <h3>электроэнергии</h3>
                     <p class="card-text">Раздел предоставляет инструменты для работы со счетчиками электроэнергии</p>
                     <br />
-                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                    <a asp-action="Index" asp-controller="LeadDivisions" class="btn btn-outline-info btn-sm">Перейти к разделу »</a>
                 </div>
             </div>
         </div>
@@ -123,7 +111,7 @@
                     <h3>тока</h3>
                     <p class="card-text">Раздел предоставляет инструменты для работы с трансформаторами тока</p>
                     <br />
-                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                    <a asp-action="Index" asp-controller="LeadDivisions" class="btn btn-outline-info btn-sm">Перейти к разделу »</a>
                 </div>
             </div>
         </div>
@@ -133,17 +121,13 @@
                     <h3>Трансформаторы</h3>
                     <h3>напряжения</h3>
                     <p class="card-text">Раздел предоставляет инструменты для работы с трансформаторами напряжения</p>
-                    <a href="/LeadDivisions/Index" class="btn btn-outline-info btn-sm">Перейти к списку »</a>
+                    <a asp-action="Index" asp-controller="LeadDivisions" class="btn btn-outline-info btn-sm">Перейти к разделу »</a>
                 </div>
             </div>
         </div>
 
-
-
-
-
-
     </div>
+
 </div>
 
 

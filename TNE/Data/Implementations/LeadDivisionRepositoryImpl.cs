@@ -115,7 +115,8 @@ namespace TNE.Data.Implementations
         public async Task<bool> DeleteAsync(Guid id)
         {
             Log.Debug("Deleting LeadDivision ID = {id}", id);
-            var obj = new LeadDivision { Id = id, Deleted = true };
+            var obj = await GetByIdAsync(id);
+            obj.Deleted = true;
             _context.LeadDivisions.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
             await _context.SaveChangesAsync();
@@ -125,7 +126,8 @@ namespace TNE.Data.Implementations
         public async Task<bool> UndeleteAsync(Guid id)
         {
             Log.Debug("Undeleting LeadDivision ID = {id}", id);
-            var obj = new LeadDivision { Id = id, Deleted = false };
+            var obj = await GetByIdAsync(id);
+            obj.Deleted = false;
             _context.LeadDivisions.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
             await _context.SaveChangesAsync();

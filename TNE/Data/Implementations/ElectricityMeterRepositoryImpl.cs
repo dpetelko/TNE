@@ -110,7 +110,8 @@ namespace TNE.Data.Implementations
         public async Task<bool> SetStatus(Guid id, Status newStatus)
         {
             Log.Debug("Setting new Status= '{newStatus}' for ElectricityMeter ID= '{id}'", newStatus, id);
-            var obj = new ElectricityMeter { Id = id, Status = newStatus };
+            var obj = await GetByIdAsync(id);
+            obj.Status = newStatus;
             _context.ElectricityMeters.Attach(obj);
             _context.Entry(obj).Property(x => x.Status).IsModified = true;
             await _context.SaveChangesAsync();

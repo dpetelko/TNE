@@ -40,6 +40,11 @@ namespace TNE.Services.Implementations
 
         public async Task<List<SubDivisionDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
 
+        public async Task<List<SubDivisionDto>> GetAllDtoByLeadDivisionIdAsync(Guid id)
+        {
+            return await _repo.GetAllDtoByLeadDivisionIdAsync(id);
+        }
+
         public SubDivision GetById(Guid id) 
         {
             CheckExistsById(id);

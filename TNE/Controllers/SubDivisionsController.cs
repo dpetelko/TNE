@@ -23,6 +23,9 @@ namespace TNE.Controllers
         [HttpGet("active")]
         public async Task<List<SubDivisionDto>> GetAllActive() { return await _service.GetAllActiveDtoAsync(); }
 
+        [HttpGet("byLeadDivision/{id}")]
+        public async Task<List<SubDivisionDto>> GetAllByLeadDivisionId(Guid id) { return await _service.GetAllDtoByLeadDivisionIdAsync(id); }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<SubDivisionDto>> GetById(Guid id) { return Ok(await _service.GetDtoByIdAsync(id)); }
 

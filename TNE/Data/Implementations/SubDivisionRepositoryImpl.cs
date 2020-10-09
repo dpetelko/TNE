@@ -34,7 +34,8 @@ namespace TNE.Data.Implementations
         public async Task<bool> DeleteAsync(Guid id)
         {
             Log.Debug("Deleting SubDivision ID = {id}", id);
-            var obj = new SubDivision { Id = id, Deleted = true };
+            var obj = await GetByIdAsync(id);
+            obj.Deleted = true;
             _context.SubDivisions.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
             await _context.SaveChangesAsync();
@@ -44,7 +45,8 @@ namespace TNE.Data.Implementations
         public async Task<bool> UndeleteAsync(Guid id)
         {
             Log.Debug("Undeleting SubDivision ID = {id}", id);
-            var obj = new SubDivision { Id = id, Deleted = false };
+            var obj = await GetByIdAsync(id);
+            obj.Deleted = false;
             _context.SubDivisions.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
             await _context.SaveChangesAsync();
@@ -134,6 +136,20 @@ namespace TNE.Data.Implementations
                 .Include(b => b.LeadDivision)
                 .Include(s => s.Address)
                 .Where(s => s.Deleted == false)
+                .Select(s => new SubDivisionDto(s))
+                .ToListAsync();
+            result.TrimExcess();
+            return result;
+        }
+
+        public async Task<List<SubDivisionDto>> GetAllDtoByLeadDivisionIdAsync(Guid id)
+        {
+            Log.Debug("GetAllDtoByLeadDivisionIdAsync SubDivisionDto");
+            var result = await _context.SubDivisions
+                .AsNoTracking()
+                .Include(b => b.LeadDivision)
+                .Include(s => s.Address)
+                .Where(s => s.LeadDivisionId == id)
                 .Select(s => new SubDivisionDto(s))
                 .ToListAsync();
             result.TrimExcess();

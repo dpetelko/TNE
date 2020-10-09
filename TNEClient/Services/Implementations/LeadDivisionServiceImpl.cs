@@ -18,24 +18,24 @@ namespace TNEClient.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _repo.DeleteAsync(id);
         }
 
-        public Task<List<LeadDivisionDto>> GetAllActiveAsync()
+        public async Task<List<LeadDivisionDto>> GetAllActiveAsync()
         {
-            throw new NotImplementedException();
+            return await _repo.GetAllActiveAsync();
         }
 
-        public Task<List<LeadDivisionDto>> GetAllAsync()
+        public async Task<List<LeadDivisionDto>> GetAllAsync()
         {
-            return _repo.GetAllAsync();
+            return await _repo.GetAllAsync();
         }
 
-        public Task<LeadDivisionDto> GetAsync(int id)
+        public Task<LeadDivisionDto> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return _repo.GetAsync(id);
         }
 
         public Task<LeadDivisionDto> ReplaceAsync(LeadDivisionDto dto)
@@ -43,9 +43,9 @@ namespace TNEClient.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<bool> UndeleteAsync(int id)
+        public async Task<bool> UndeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _repo.UndeleteAsync(id);
         }
     }
 }

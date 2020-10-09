@@ -12,7 +12,7 @@
 <body>
     <div>
         <div id="menu">
-            <nav class="navbar navbar-expand-sm bg-info navbar-dark">
+            <nav class="navbar navbar-expand-sm bg-info navbar-dark fixed-top">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Главная</a>
@@ -21,24 +21,27 @@
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false">Разделы</a>
                         <div class="dropdown-menu bg-info">
-                            <a class="dropdown-item text-white bg-info" href="/LeadDivisions/Index">Головные организации</a>
-                            <a class="dropdown-item text-white bg-info" href="/LeadDivisions/Index">Дочерние организации</a>
-                            <a class="dropdown-item text-white bg-info" href="">Объекты потребления</a>
+                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="LeadDivisions">Головные организации</a>
+                            <a class="dropdown-item text-white bg-info" href="#">Дочерние организации</a>
+                            <a class="dropdown-item text-white bg-info" href="#">Объекты потребления</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-white bg-info" href="">Точки измерения</a>
-                            <a class="dropdown-item text-white bg-info" href="">Точки поставки</a>
-                            <a class="dropdown-item text-white bg-info" href="">Расчетные приборы учета</a>
+                            <a class="dropdown-item text-white bg-info" href="#">Точки измерения</a>
+                            <a class="dropdown-item text-white bg-info" href="#">Точки поставки</a>
+                            <a class="dropdown-item text-white bg-info" href="#">Расчетные приборы учета</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-white bg-info" href="">Счетчики ЭЭ</a>
-                            <a class="dropdown-item text-white bg-info" href="">Трансформаторы тока</a>
-                            <a class="dropdown-item text-white bg-info" href="">Трансформаторы напряжения</a>
+                            <a class="dropdown-item text-white bg-info" href="#">Счетчики ЭЭ</a>
+                            <a class="dropdown-item text-white bg-info" href="#">Трансформаторы тока</a>
+                            <a class="dropdown-item text-white bg-info" href="#">Трансформаторы напряжения</a>
                         </div>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="">Контроль поверки приборов</a>
+                        <a class="nav-link" href="#">Контроль поверки приборов</a>
                     </li>
                 </ul>
             </nav>
+            <br />
+            <br />
+            <br />
         </div>
         <div class="container-sm">
             @RenderBody()
@@ -53,11 +56,10 @@
         }
         else
         {
-            <div style="bottom:0;position: fixed; width:100%;">
+           <div style="bottom:0; position: fixed; width:100%;">
                 <hr style="width:100%;" />
-                <footer>
-                    <p align="center">Copyright @DateTime.Now.Year by TNE</p>
-                </footer>
+                <p align="center">Copyright @DateTime.Now.Year by TNE</p>
+
             </div>
         }
     </footer>

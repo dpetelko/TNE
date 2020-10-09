@@ -34,7 +34,8 @@ namespace TNE.Data.Implementations
         public async Task<bool> DeleteAsync(Guid id)
         {
             Log.Debug("Deleting Provider ID = {id}", id);
-            var obj = new Provider { Id = id, Deleted = true };
+            var obj = await GetByIdAsync(id);
+            obj.Deleted = true;
             _context.Providers.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
             await _context.SaveChangesAsync();
@@ -125,7 +126,8 @@ namespace TNE.Data.Implementations
         public async Task<bool> UndeleteAsync(Guid id)
         {
             Log.Debug("Undeleting Provider ID = {id}", id);
-            var obj = new Provider { Id = id, Deleted = false };
+            var obj = await GetByIdAsync(id);
+            obj.Deleted = false;
             _context.Providers.Attach(obj);
             _context.Entry(obj).Property(x => x.Deleted).IsModified = true;
             await _context.SaveChangesAsync();

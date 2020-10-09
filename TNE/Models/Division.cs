@@ -12,7 +12,7 @@ namespace TNE.Models
         public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public Guid? AddressId { get; set; }
+        public Guid AddressId { get; set; }
         public Address Address { get; set; } = new Address();
         [DefaultValue(false)]
         public bool Deleted { get; set; }
