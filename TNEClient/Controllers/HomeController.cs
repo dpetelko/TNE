@@ -7,17 +7,10 @@ namespace TNEClient.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILeadDivisionRepository _repo;
-
-        public HomeController(ILeadDivisionRepository repo)
-        {
-            _repo = repo;
-        }
-
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             Log.Error("Hello from HomeController!!!!");
-            return View(await _repo.GetAllAsync());
+            return View();
         }
     }
 }
