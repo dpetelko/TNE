@@ -11,7 +11,7 @@ namespace TNEClient.Services
         Task<List<LeadDivisionDto>> GetAllActiveAsync();
         Task<LeadDivisionDto> GetAsync(Guid id);
         Task<LeadDivisionDto> CreateAsync(LeadDivisionDto dto);
-        Task<LeadDivisionDto> ReplaceAsync(LeadDivisionDto dto);
+        Task<LeadDivisionDto> UpdateAsync(LeadDivisionDto dto);
         Task<bool> DeleteAsync(Guid id);
         Task<bool> UndeleteAsync(Guid id);
     }

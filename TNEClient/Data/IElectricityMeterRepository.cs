@@ -24,6 +24,6 @@ namespace TNEClient.Data
         Task<ElectricityMeterDto> UpdateAsync([Body] ElectricityMeterDto dto);
 
         [Put("/api/v1/ElectricityMeters/{id}/{status}")]
-        Task<bool> UpdateAsync(Guid id, Status status);
+        Task<bool> SetStatus(Guid id, Status status);
     }
 }

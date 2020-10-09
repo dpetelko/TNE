@@ -1,0 +1,43 @@
+﻿@using TNEClient.Dtos
+@model List<VoltageTransformerDto>
+@{
+    ViewData["Title"] = "ТрансНефтьЭнерго - Трансрформаторы напряжения";
+}
+<div class="container-sm">
+    <h3 align="center">Трансформаторы напряжения</h3>
+    <br />
+    <a asp-action="Create" asp-controller="VoltageTransformers" class="btn btn-secondary">Добавить новый трансформатор напряжения</a>
+    <p></p>
+    <table class="table table-stripped table-hover">
+        <tr>
+            <td><strong>Номер</strong></td>
+            <td><strong>Тип</strong></td>
+            <td><strong>Коэффициент трансформации</strong></td>
+            <td><strong>Дата последней поверки</strong></td>
+            <td><strong>Межповерочный период</strong></td>
+            <td><strong>Точка измерения</strong></td>
+            <td><strong>Статус</strong></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Number</td>
+                <td>@item.Type</td>
+                <td>@item.TransformationRate</td>
+                <td>@item.LastVerificationDate</td>
+                <td>@item.InterTestingPeriod</td>
+                <td>@item.ControlPointName</td>
+                <td>@item.Status</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a asp-action="Details" asp-controller="LeadDivisions" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">Подробности</a>
+                        <a asp-action="Edit" asp-controller="LeadDivisions" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm">Редактировать</a>
+                        <a class="btn btn-outline-danger font-weight-bold btn-sm" id="deleteButton" href="/LeadDivisions/Delete/@item.Id">Удалить</a>
+
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

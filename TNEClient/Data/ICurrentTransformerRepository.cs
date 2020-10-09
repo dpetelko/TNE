@@ -24,6 +24,6 @@ namespace TNEClient.Data
         Task<CurrentTransformerDto> UpdateAsync([Body] CurrentTransformerDto dto);
 
         [Put("/api/v1/CurrentTransformers/{id}/{status}")]
-        Task<bool> UpdateAsync(Guid id, Status status);
+        Task<bool> SetStatus(Guid id, Status status);
     }
 }

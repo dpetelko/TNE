@@ -10,6 +10,7 @@ namespace TNEClient.Dtos
         public string Number { get; set; }
         [Required]
         public string Type { get; set; }
+        [DataType(DataType.Date)]
         [Required]
         public DateTime LastVerificationDate { get; set; }
         public TimeSpan InterTestingPeriod { get; set; } = new TimeSpan(365, 0, 0, 0);

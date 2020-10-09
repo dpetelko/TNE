@@ -38,7 +38,7 @@ namespace TNEClient.Services.Implementations
             return _repo.GetAsync(id);
         }
 
-        public Task<LeadDivisionDto> ReplaceAsync(LeadDivisionDto dto)
+        public Task<LeadDivisionDto> UpdateAsync(LeadDivisionDto dto)
         {
             throw new NotImplementedException();
         }
