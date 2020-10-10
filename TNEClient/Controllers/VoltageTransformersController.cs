@@ -22,9 +22,9 @@ namespace TNEClient.Controllers
         }
 
         // GET: VoltageTransformersController/Details/5
-        public ActionResult Details(Guid id)
+        public async Task<ActionResult> Details(Guid id)
         {
-            return View();
+            return View(await _service.GetAsync(id));
         }
 
         // GET: VoltageTransformersController/Create
