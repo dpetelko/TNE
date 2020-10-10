@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using TNEClient.Data;
 using TNEClient.Dtos;
@@ -12,9 +14,21 @@ namespace TNEClient.Services.Implementations
 
         public VoltageTransformerServiceImpl(IVoltageTransformerRepository repo) { _repo = repo; }
 
-        public async Task<VoltageTransformerDto> CreateAsync(VoltageTransformerDto dto)
+        public async Task<List<HttpResponseMessage>> CreateAsync(VoltageTransformerDto dto)
         {
-            return await _repo.CreateAsync(dto);
+            Log.Error("Welcome to CreateAsync");
+            try
+            {
+                var qq = await _repo.CreateAsync(dto);
+            }
+            catch (Exception q)
+            {
+
+                Log.Error("Welcome to CreateAsync - {q}", q.InnerException);
+            }
+            
+
+            return null;
         }
 
         public async Task<List<VoltageTransformerDto>> GetAllAsync()

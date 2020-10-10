@@ -87,7 +87,7 @@ namespace TNE.Services.Implementations
             entity.Number = dto.Number;
             entity.Type = dto.Type;
             entity.LastVerificationDate = dto.LastVerificationDate;
-            entity.InterTestingPeriod = dto.InterTestingPeriod;
+            entity.InterTestingPeriodInDays = dto.InterTestingPeriodInDays;
             entity.Status = dto.Status;
             entity.TransformationRate = dto.TransformationRate;
             if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPointId, dto.ControlPointId))

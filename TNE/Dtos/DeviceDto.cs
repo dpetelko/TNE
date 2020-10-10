@@ -7,17 +7,17 @@ namespace TNE.Dtos
     public class DeviceDto : IEquatable<DeviceDto>
     {
         public Guid Id { get; set; }
-        [Required]
+        //[Required]
         public string Number { get; set; }
-        [Required]
+        //[Required]
         public string Type { get; set; }
-        [Required]
+        //[Required]
         public DateTime LastVerificationDate { get; set; }
-        public TimeSpan InterTestingPeriod { get; set; } = new TimeSpan(365, 0, 0, 0);
+        public int InterTestingPeriodInDays { get; set; } = 365;
         public Guid ControlPointId { get; set; }
         public string ControlPointName { get; set; }
-        [EnumDataType(typeof(Status), ErrorMessage = "Invalid Status value")]
-        public Status Status { get; set; }
+        //[EnumDataType(typeof(Status), ErrorMessage = "Invalid Status value")]
+        public Status Status { get; set; } = Status.InStorage;
 
         public DeviceDto() { }
 

@@ -5,16 +5,16 @@
 
 <div class="container-sm">
     <br>
-    <h3 align="center">Создание нового транформатора напряжения</h3>
+    <h3 align="center">Редактирование транформатора напряжения</h3>
     <br>
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
 
 
-            <form asp-action="Create">
+            <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                @*<input type="hidden" asp-for="Id" />*@
+                <input type="hidden" asp-for="Id" />
                 <div class="form-group">
                     <label asp-for="Number" class="control-label"></label>
                     <input asp-for="Number" class="form-control" />

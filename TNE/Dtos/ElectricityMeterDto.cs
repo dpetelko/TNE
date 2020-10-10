@@ -15,7 +15,7 @@ namespace TNE.Dtos
             Number = entity.Number;
             Type = entity.Type;
             LastVerificationDate = entity.LastVerificationDate;
-            InterTestingPeriod = entity.InterTestingPeriod;
+            InterTestingPeriodInDays = entity.InterTestingPeriodInDays;
             ControlPointId = entity.ControlPoint.Id;
             ControlPointName = entity.ControlPoint.Name;
             Status = entity.Status;
@@ -45,7 +45,7 @@ namespace TNE.Dtos
                 $"Number:{Number}, " +
                 $"Type:{Type}, " +
                 $"LastVerificationDate:{LastVerificationDate}, " +
-                $"InterTestingPeriod:{InterTestingPeriod}, " +
+                $"InterTestingPeriodInDays:{InterTestingPeriodInDays}, " +
                 $"ControlPointId:{ControlPointId} " +
                 $"ControlPointName:{ControlPointName} " +
                 $"Status:{Status} ]";

@@ -1,11 +1,13 @@
 ﻿using Refit;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using TNEClient.Dtos;
 
 namespace TNEClient.Data
 {
+    [Headers("Accept: application/json")]
     public interface IVoltageTransformerRepository
     {
         [Get("/api/v1/VoltageTransformers")]
@@ -18,7 +20,7 @@ namespace TNEClient.Data
         Task<VoltageTransformerDto> GetAsync(Guid id);
 
         [Post("/api/v1/VoltageTransformers")]
-        Task<VoltageTransformerDto> CreateAsync([Body] VoltageTransformerDto dto);
+        Task<List<HttpResponseMessage>> CreateAsync([Body] VoltageTransformerDto dto);
 
         [Put("/api/v1/VoltageTransformers")]
         Task<VoltageTransformerDto> UpdateAsync([Body] VoltageTransformerDto dto);

@@ -6,6 +6,7 @@ namespace TNEClient.Dtos
     public class CurrentTransformerDto : DeviceDto
     {
         [Required]
+        [Display(Name = "Коэффициент трансформации")]
         public int TransformationRate { get; set; }
         public CurrentTransformerDto() { }
         
@@ -16,7 +17,7 @@ namespace TNEClient.Dtos
                 $"Number:{Number}, " +
                 $"Type:{Type}, " +
                 $"LastVerificationDate:{LastVerificationDate}, " +
-                $"InterTestingPeriod:{InterTestingPeriod}, " +
+                $"InterTestingPeriodInDays:{InterTestingPeriodInDays}, " +
                 $"TransformationRate:{TransformationRate}, " +
                 $"ControlPointName:{ControlPointName} " +
                 $"Status:{Status} ]";

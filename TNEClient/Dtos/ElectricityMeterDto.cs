@@ -30,7 +30,7 @@ namespace TNEClient.Dtos
                 $"Number:{Number}, " +
                 $"Type:{Type}, " +
                 $"LastVerificationDate:{LastVerificationDate}, " +
-                $"InterTestingPeriod:{InterTestingPeriod}, " +
+                $"InterTestingPeriodInDays:{InterTestingPeriodInDays}, " +
                 $"ControlPointId:{ControlPointId} " +
                 $"ControlPointName:{ControlPointName} " +
                 $"Status:{Status} ]";

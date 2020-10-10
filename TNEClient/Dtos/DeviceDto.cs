@@ -7,17 +7,24 @@ namespace TNEClient.Dtos
     {
         public Guid Id { get; set; }
         [Required]
+        [Display(Name = "Номер")]
         public string Number { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Введите значение")]
+        [Display(Name = "Тип")]
         public string Type { get; set; }
+        
+        
         [DataType(DataType.Date)]
-        [Required]
+        [Display(Name = "Дата последней поверки")]
         public DateTime LastVerificationDate { get; set; }
-        public TimeSpan InterTestingPeriod { get; set; } = new TimeSpan(365, 0, 0, 0);
+        [Display(Name = "Межповерочный период")]
+        public int InterTestingPeriodInDays { get; set; } = 365;
         public Guid ControlPointId { get; set; }
+        [Display(Name = "Точка контроля электроэнергии")]
         public string ControlPointName { get; set; }
         [EnumDataType(typeof(Status), ErrorMessage = "Invalid Status value")]
-        public Status Status { get; set; }
+        [Display(Name = "Статус прибора")]
+        public Status Status { get; set; } = Status.InStorage;
 
         public DeviceDto() { }
 

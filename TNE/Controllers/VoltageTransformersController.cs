@@ -31,9 +31,19 @@ namespace TNE.Controllers
         [HttpPost]
         public async Task<ActionResult<VoltageTransformerDto>> Create([FromBody] VoltageTransformerDto dto)
         {
+            Log.Error("IncommingD DTO: {dto}", dto);
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var result = await _service.CreateAsync(dto);
             return CreatedAtAction(nameof(Create), new { id = result.Id }, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<VoltageTransformerDto>> Update([FromBody] VoltageTransformerDto dto)
+        {
+            Log.Error("IncommingD DTO: {dto}", dto);
+            return ModelState.IsValid
+                ? (ActionResult<VoltageTransformerDto>)Ok(await _service.UpdateAsync(dto))
+                : BadRequest(ModelState);
         }
 
         [HttpPut("{id}/{status}")]

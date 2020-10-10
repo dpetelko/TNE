@@ -13,7 +13,7 @@ namespace TNE.Models
         public string Number { get; set; }
         public string Type { get; set; }
         public DateTime LastVerificationDate { get; set; }
-        public TimeSpan InterTestingPeriod { get; set; } = new TimeSpan(365, 0, 0, 0);
+        public int InterTestingPeriodInDays { get; set; } = 365;
         public Guid ControlPointId { get; set; }
         public virtual ControlPoint ControlPoint { get; set; }
         [DefaultValue(Status.InStorage)]

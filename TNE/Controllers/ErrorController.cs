@@ -19,8 +19,8 @@ namespace TNE.Controllers
             var source = exception.GetType().Name;
             Log.Warning("Handling {source} - {message}...", source, message);
             IActionResult result = StatusCode(500);
-            if (exception is EntityNotFoundException) result = StatusCode(StatusCodes.Status404NotFound); //NotFound();
-            else if (exception is InvalidEntityException) result = StatusCode(StatusCodes.Status400BadRequest); //BadRequest();
+            if (exception is EntityNotFoundException) result = StatusCode(StatusCodes.Status404NotFound);
+            else if (exception is InvalidEntityException) result = StatusCode(StatusCodes.Status400BadRequest);
             else if (exception is Exception) result = StatusCode(StatusCodes.Status500InternalServerError);
             return result;
         }

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TNEClient.Dtos
 {
     public class VoltageTransformerDto : DeviceDto
     {
+        [Display(Name = "Коэффициент трансформации")]
+        [Required (ErrorMessage = "Введите значение")]
         public int TransformationRate { get; set; }
         public VoltageTransformerDto() { }
         
@@ -15,7 +18,7 @@ namespace TNEClient.Dtos
                 $"Number:{Number}, " +
                 $"Type:{Type}, " +
                 $"LastVerificationDate:{LastVerificationDate}, " +
-                $"InterTestingPeriod:{InterTestingPeriod}, " +
+                $"InterTestingPeriodInDays:{InterTestingPeriodInDays}, " +
                 $"TransformationRate:{TransformationRate}, " +
                 $"ControlPointId:{ControlPointId} " +
                 $"ControlPointName:{ControlPointName} " +
