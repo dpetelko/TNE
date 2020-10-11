@@ -1,0 +1,48 @@
+﻿@using TNEClient.Dtos
+@model List<ElectricityMeterDto>
+@{
+    ViewData["Title"] = "ТрансНефтьЭнерго - Счетчики электроэнергии";
+}
+<div class="container-md">
+    <h3 align="center">Счетчики электроэнергии</h3>
+    <br />
+    <a asp-action="Create" asp-controller="ElectricityMeters" class="btn btn-secondary">Добавить новый счетчик электроэнергии</a>
+    <p></p>
+    <table class="table table-stripped table-hover">
+        <tr>
+            <td><strong>Номер</strong></td>
+            <td><strong>Тип прибора</strong></td>
+            <td><strong>Последняя поверка</strong></td>
+            <td><strong>Очередная поверка</strong></td>
+            <td><strong>Точка измерения</strong></td>
+            <td><strong>Статус</strong></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Number</td>
+                <td>@item.Type</td>
+                <td>@item.LastVerificationDate.Date.ToShortDateString()</td>
+                <td>@item.LastVerificationDate.AddDays(@item.InterTestingPeriodInDays).ToShortDateString() </td>
+
+                @if (@String.IsNullOrEmpty(item.ControlPointName))
+                {
+                    <td>Не привязана</td>
+                }
+                else
+                {
+                    <td>@item.ControlPointName</td>
+                }
+            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+
+                <td>
+                    <div class="btn-group" role="group">
+                        <a asp-action="Details" asp-controller="ElectricityMeters" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">Подробнее</a>
+                        <a asp-action="Edit" asp-controller="ElectricityMeters" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm">Редактировать</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

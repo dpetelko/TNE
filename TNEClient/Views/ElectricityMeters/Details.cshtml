@@ -1,0 +1,43 @@
+﻿@model ElectricityMeterDto
+@{
+    ViewData["Title"] = "ТрансНефтьЭнерго - Счетчики электроэнергии";
+}
+
+<div class="container-sm">
+    <br>
+    <h3 align="center">Просмотр счетчика электроэнергии</h3>
+    <br>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label asp-for="Number" class="control-label"></label>
+                <input type="text" readonly class="form-control-plaintext font-weight-bold" value=@Model.Number>
+            </div>
+            <div class="form-group">
+                <label asp-for="Type" class="control-label"></label>
+                <input type="text" readonly class="form-control-plaintext font-weight-bold" value=@Model.Type>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastVerificationDate" class="control-label"></label>
+                <input type="text" readonly class="form-control-plaintext font-weight-bold" value=@Model.LastVerificationDate>
+            </div>
+            <div class="form-group">
+                <label asp-for="InterTestingPeriodInDays" class="control-label"></label>
+                <input type="text" readonly class="form-control-plaintext font-weight-bold" value="@Model.InterTestingPeriodInDays дней">
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input type="text" readonly class="form-control-plaintext font-weight-bold" value=@Html.DisplayFor(modelItem => Model.Status)>
+            </div>
+
+            <div class="form-group">
+                <a asp-action="Index" class="btn btn-danger">К списку »</a>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Редактировать</a>
+            </div>
+
+        </div>
+    </div>
+</div>

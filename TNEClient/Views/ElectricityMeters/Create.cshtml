@@ -1,0 +1,49 @@
+﻿@using System;
+@model ElectricityMeterDto
+
+@{
+    ViewData["Title"] = "ТрансНефтьЭнерго - Трансформаторы тока";
+}
+
+<div class="container-sm">
+    <br>
+    <h3 align="center">Создание нового счетчика электроэнергии</h3>
+    <br>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form id="delete" asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Number" class="control-label"></label>
+                    <input asp-for="Number" class="form-control" />
+                    <span asp-validation-for="Number" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Type" class="control-label"></label>
+                    <input asp-for="Type" class="form-control" />
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastVerificationDate" class="control-label"></label>
+                    <input asp-for="LastVerificationDate" class="form-control" />
+                    <span asp-validation-for="LastVerificationDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="InterTestingPeriodInDays" class="control-label"></label>
+                    <input asp-for="InterTestingPeriodInDays" class="form-control" value="0" />
+                    <span asp-validation-for="InterTestingPeriodInDays" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Status" class="control-label"></label>
+                    <select asp-for="Status" class="form-control" asp-items="@Html.GetEnumSelectList<Status>()"></select>
+                </div>
+                <div class="form-group">
+                    <a asp-action="Index" onclick="return confirm('Изменения не будут сохранены. Уверены, что хотите покинуть страницу?')" class="btn btn-danger">К списку »</a>
+                    <input type="submit" value="Сохранить" onclick="return confirm('Сохранить изменения?')" class="btn btn-warning" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

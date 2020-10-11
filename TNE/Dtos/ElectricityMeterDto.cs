@@ -16,8 +16,11 @@ namespace TNE.Dtos
             Type = entity.Type;
             LastVerificationDate = entity.LastVerificationDate;
             InterTestingPeriodInDays = entity.InterTestingPeriodInDays;
-            ControlPointId = entity.ControlPoint.Id;
-            ControlPointName = entity.ControlPoint.Name;
+            ControlPointId = entity.ControlPointId;
+            if (!(entity.ControlPoint is null))
+            {
+                ControlPointName = entity.ControlPoint.Name;
+            }
             Status = entity.Status;
         }
 
