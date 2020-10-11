@@ -47,8 +47,8 @@
                 </div>
 
                 <div class="form-group">
-                    <a asp-action="Index" class="btn btn-danger">Отмена</a>
-                    <input type="submit" value="Сохранить" class="btn btn-warning" />
+                    <a asp-action="Index" onclick="return confirm('Изменения не будут сохранены. Уверены, что хотите покинуть страницу?')" class="btn btn-danger">Отмена</a>
+                    <input type="submit" onclick="return confirm('Сохранить изменения?')" value="Сохранить" class="btn btn-warning" />
                 </div>
             </form>
 

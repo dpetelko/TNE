@@ -43,7 +43,7 @@ namespace TNEClient.Controllers
                 await _service.CreateAsync(form);
                 return RedirectToAction(nameof(Index));
             }
-            return View("Create");
+            return View();
         }
 
         // GET: VoltageTransformersController/Edit/5
