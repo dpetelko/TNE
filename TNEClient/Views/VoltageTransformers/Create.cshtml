@@ -1,4 +1,6 @@
-﻿@model VoltageTransformerDto
+﻿@using System;
+@model VoltageTransformerDto
+
 @{
     ViewData["Title"] = "ТрансНефтьЭнерго - Трансформаторы напряжения";
 }
@@ -27,17 +29,17 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="LastVerificationDate" class="control-label"></label>
-                    <input asp-for="LastVerificationDate" class="form-control" />
+                    <input asp-for="LastVerificationDate" class="form-control" value="@DateTime.MinValue.ToShortDateString()"/>
                     <span asp-validation-for="LastVerificationDate" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="InterTestingPeriodInDays" class="control-label"></label>
-                    <input asp-for="InterTestingPeriodInDays" class="form-control" />
+                    <input asp-for="InterTestingPeriodInDays" class="form-control" value="0" />
                     <span asp-validation-for="InterTestingPeriodInDays" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="TransformationRate" class="control-label"></label>
-                    <input asp-for="TransformationRate" class="form-control" />
+                    <input asp-for="TransformationRate" class="form-control" value="0" />
                     <span asp-validation-for="TransformationRate" class="text-danger"></span>
                 </div>
 

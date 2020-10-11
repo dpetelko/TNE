@@ -5,8 +5,9 @@ namespace TNEClient.Dtos
 {
     public class CurrentTransformerDto : DeviceDto
     {
-        [Required]
         [Display(Name = "Коэффициент трансформации")]
+        [Required(ErrorMessage = "Введите значение")]
+        [Range(1, Int32.MaxValue, ErrorMessage = "Неверное значение поля")]
         public int TransformationRate { get; set; }
         public CurrentTransformerDto() { }
         

@@ -6,18 +6,20 @@ namespace TNEClient.Dtos
     public class DeviceDto : IEquatable<DeviceDto>
     {
         public Guid Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Номер")]
         public string Number { get; set; }
         [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Тип")]
         public string Type { get; set; }
-        
-        
-        [DataType(DataType.Date)]
+
         [Display(Name = "Дата последней поверки")]
+        [DataType(DataType.Date, ErrorMessage = "Неверное значение поля")]
         public DateTime LastVerificationDate { get; set; }
+
         [Display(Name = "Межповерочный период")]
+        [Range(1, Int32.MaxValue, ErrorMessage = "Неверное значение поля")]
+        [Required(ErrorMessage = "Введите значение")]
         public int InterTestingPeriodInDays { get; set; } = 365;
         public Guid ControlPointId { get; set; }
         [Display(Name = "Точка контроля электроэнергии")]
