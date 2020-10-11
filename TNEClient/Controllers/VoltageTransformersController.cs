@@ -62,28 +62,7 @@ namespace TNEClient.Controllers
                 await _service.UpdateAsync(form);
                 return RedirectToAction(nameof(Index));
             }
-            return View("Edit");
-        }
-
-        // GET: VoltageTransformersController/Delete/5
-        public ActionResult Delete(Guid id)
-        {
             return View();
-        }
-
-        // POST: VoltageTransformersController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(Guid id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

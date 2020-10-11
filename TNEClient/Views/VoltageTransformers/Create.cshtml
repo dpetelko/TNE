@@ -14,7 +14,7 @@
         <div class="col-md-6">
 
 
-            <form asp-action="Create">
+            <form id="delete" asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 @*<input type="hidden" asp-for="Id" />*@
                 <div class="form-group">
@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="LastVerificationDate" class="control-label"></label>
-                    <input asp-for="LastVerificationDate" class="form-control" value="@DateTime.MinValue.ToShortDateString()"/>
+                    <input asp-for="LastVerificationDate" class="form-control" value="@DateTime.MinValue.ToShortDateString()" />
                     <span asp-validation-for="LastVerificationDate" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -49,11 +49,12 @@
                 </div>
 
                 <div class="form-group">
-                    <a asp-action="Index" class="btn btn-danger">Отмена</a>
-                    <input type="submit" value="Сохранить" class="btn btn-warning" />
+                    <a asp-action="Index" class="btn btn-danger">К списку »</a>
+                    <input type="submit" value="Сохранить" id="deleteButton" onclick="return confirm('Сохранить изменения?')" class="btn btn-warning" />
                 </div>
             </form>
 
         </div>
     </div>
 </div>
+
