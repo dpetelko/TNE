@@ -12,7 +12,7 @@ namespace TNEClient.Services
         Task<List<VoltageTransformerDto>> GetAllAsync();
         Task<List<VoltageTransformerDto>> GetAllByStatusAsync(Status status);
         Task<VoltageTransformerDto> GetAsync(Guid id);
-        Task<List<HttpResponseMessage>> CreateAsync(VoltageTransformerDto dto);
+        Task<VoltageTransformerDto> CreateAsync(VoltageTransformerDto dto);
         Task<VoltageTransformerDto> UpdateAsync(VoltageTransformerDto dto);
         Task<bool> SetStatus(Guid id, Status status);
     }

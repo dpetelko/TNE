@@ -22,7 +22,10 @@ namespace TNE.Dtos
             LastVerificationDate = entity.LastVerificationDate;
             InterTestingPeriodInDays = entity.InterTestingPeriodInDays;
             TransformationRate = entity.TransformationRate;
-            ControlPointName = entity.ControlPoint.Name;
+            if (!(entity.ControlPoint is null))
+            {
+                ControlPointName = entity.ControlPoint.Name;
+            }
             Status = entity.Status;
         }
 

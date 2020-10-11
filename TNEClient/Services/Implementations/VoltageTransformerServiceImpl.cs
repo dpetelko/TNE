@@ -14,7 +14,7 @@ namespace TNEClient.Services.Implementations
 
         public VoltageTransformerServiceImpl(IVoltageTransformerRepository repo) { _repo = repo; }
 
-        public async Task<List<HttpResponseMessage>> CreateAsync(VoltageTransformerDto dto)
+        public async Task<VoltageTransformerDto> CreateAsync(VoltageTransformerDto dto)
         {
             Log.Error("Welcome to CreateAsync");
             try

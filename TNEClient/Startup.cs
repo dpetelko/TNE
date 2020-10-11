@@ -35,8 +35,12 @@ namespace TNEClient
             services.AddRefitClient<IVoltageTransformerRepository>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
 
+            services.AddRefitClient<ICurrentTransformerRepository>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+
             services.AddScoped<ILeadDivisionService, LeadDivisionServiceImpl>();
             services.AddScoped<IVoltageTransformerService, VoltageTransformerServiceImpl>();
+            services.AddScoped<ICurrentTransformerService, CurrentTransformerServiceImpl>();
             services.AddMvc();
         }
 
