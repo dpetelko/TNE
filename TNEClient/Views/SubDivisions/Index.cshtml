@@ -1,0 +1,77 @@
+﻿@using TNEClient.Dtos
+@model List<SubDivisionDto>
+@{
+    ViewData["Title"] = "ТрансНефтьЭнерго - Дочерние организации";
+}
+<div class="container-sm">
+    <h3 align="center">Дочерние организации</h3>
+    <br />
+    <a asp-action="Create" asp-controller="SubDivisions" class="btn btn-secondary">Добавить новую организацию</a>
+    <p></p>
+    <table class="table table-stripped table-hover">
+        <tr>
+            <td><strong>Наименование</strong></td>
+            <td><strong>Головная организация</strong></td>
+            <td><strong>Индекс</strong></td>
+            <td><strong>Страна</strong></td>
+            <td><strong>Регион</strong></td>
+            <td><strong>Город</strong></td>
+            <td><strong>Улица</strong></td>
+            <td><strong>Строение</strong></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>@item.Name</td>
+        <td>@item.LeadDivisionName</td>
+        <td>@item.PostCode</td>
+        <td>@item.Country</td>
+        <td>@item.Region</td>
+        <td>@item.City</td>
+        <td>@item.Street</td>
+        <td>@item.Building</td>
+        <td>
+            <div class="btn-group" role="group">
+
+                <a asp-action="Details" asp-controller="SubDivisions" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">Подробности</a>
+                <a asp-action="Edit" asp-controller="SubDivisions" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm">Редактировать</a>
+                <a class="btn btn-outline-danger font-weight-bold btn-sm" id="deleteButton" href="/SubDivisions/Delete/@item.Id">Удалить</a>
+
+            </div>
+        </td>
+    </tr>
+        }
+    </table>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Подтверждение удаления</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены, что хотите удалить эту запись?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="btn btn-danger" id="delRef">Да, конечно</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+        $('document').ready(function () {
+            $('.table #deleteButton').on('click', function (event) {
+                event.preventDefault();
+                var href = $(this).attr('href');
+                $('#deleteModal #delRef').attr('href', href);
+                $('#deleteModal').modal();
+            });
+        });
+</script>

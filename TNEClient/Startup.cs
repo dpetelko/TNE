@@ -42,6 +42,7 @@ namespace TNEClient
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
 
             services.AddScoped<ILeadDivisionService, LeadDivisionServiceImpl>();
+            services.AddScoped<ISubDivisionService, SubDivisionServiceImpl>();
             services.AddScoped<IVoltageTransformerService, VoltageTransformerServiceImpl>();
             services.AddScoped<ICurrentTransformerService, CurrentTransformerServiceImpl>();
             services.AddScoped<IElectricityMeterService, ElectricityMeterServiceImpl>();

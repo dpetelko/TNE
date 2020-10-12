@@ -7,7 +7,7 @@ namespace TNE.Models
 {
     public class SubDivision : Division, IEquatable<SubDivision>
     {
-        public Guid? LeadDivisionId { get; set; }
+        public Guid LeadDivisionId { get; set; }
         public LeadDivision LeadDivision { get; set; }
         public List<Provider> Providers { get; set; }
 

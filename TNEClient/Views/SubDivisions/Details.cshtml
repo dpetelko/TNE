@@ -1,0 +1,143 @@
+﻿@using TNEClient.Dtos
+@model LeadDivisionDto
+@{
+    ViewData["Title"] = "ТНЭ - " + @Model.Name;
+}
+
+<div class="container-sm">
+    <h3 align="center">Головное подразделение - подробности</h3>
+    <br />
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Наименование</label>
+        <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" value=@Model.Name>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Индекс</label>
+        <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" value=@Model.PostCode>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Страна</label>
+        <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" value=@Model.Country>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Регион</label>
+        <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" value=@Model.Region>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Населенный пункт</label>
+        <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" value=@Model.City>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Улица</label>
+        <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" value=@Model.Street>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Строение</label>
+        <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" value=@Model.Building>
+        </div>
+    </div>
+
+
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Дочерние организации</label>
+
+        @if (@ViewBag.SubDivisionList.Count != 0)
+        {
+            <br />
+            <table class="table table-stripped table-hover">
+                <tr>
+                    <td>Наименование</td>
+                    <td>Индекс</td>
+                    <td>Страна</td>
+                    <td>Регион</td>
+                    <td>Город</td>
+                    <td>Улица</td>
+                    <td>Строение</td>
+                    <td></td>
+                </tr>
+                @foreach (var item in @ViewBag.SubDivisionList)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.PostCode</td>
+                        <td>@item.Country</td>
+                        <td>@item.Region</td>
+                        <td>@item.City</td>
+                        <td>@item.Street</td>
+                        <td>@item.Building</td>
+                        <td>
+                            <div class="btn-group" role="group">
+
+                                <a asp-action="Details" asp-controller="SubDivisions" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">Подробности</a>
+                                <a asp-action="Delete" asp-controller="SubDivisions" asp-route-id="@item.Id" class="btn btn-outline-danger font-weight-bold btn-sm" id="deleteButton">Удалить</a>
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        }
+        else
+        {
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" value="Отсутствуют">
+            </div>
+        }
+    </div>
+
+
+
+
+
+
+    <a asp-action="Index" asp-controller="LeadDivisions" class="btn btn-secondary">К списку »</a>
+    <a asp-action="Edit" asp-controller="LeadDivisions" asp-route-id="@Model.Id" class="btn btn-warning">Редактировать</a>
+    <a asp-action="Delete" asp-controller="LeadDivisions" asp-route-id="@Model.Id" class="btn btn-danger" id="deleteButton">Удалить</a>
+
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Подтверждение удаления</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены, что хотите удалить эту запись?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="btn btn-danger" id="delRef">Да, конечно</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('document').ready(function () {
+        $('#deleteButton').on('click', function (event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+            $('#deleteModal #delRef').attr('href', href);
+            $('#deleteModal').modal();
+        });
+    });
+</script>

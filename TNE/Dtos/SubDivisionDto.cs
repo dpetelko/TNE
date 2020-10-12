@@ -25,7 +25,7 @@ namespace TNE.Dto
             City = entity.Address.City;
             Street = entity.Address.Street;
             Building = entity.Address.Building;
-            LeadDivisionId = entity.LeadDivision.Id;
+            LeadDivisionId = entity.LeadDivisionId;
             LeadDivisionName = entity.LeadDivision.Name;
         }
 

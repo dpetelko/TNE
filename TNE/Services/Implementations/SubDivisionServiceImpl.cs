@@ -100,10 +100,12 @@ namespace TNE.Services.Implementations
             entity.Address.Street = dto.Street;
             entity.Address.Building = dto.Building;
             entity.Deleted = dto.Deleted;
-            if (!Equals(dto.LeadDivisionId, Guid.Empty) && !entity.LeadDivisionId.Equals(dto.LeadDivisionId))
-            {
-                entity.LeadDivision = _leadDivisionService.GetById(dto.LeadDivisionId);
-            }
+            
+            //if (!Equals(dto.LeadDivisionId, Guid.Empty) && !entity.LeadDivisionId.Equals(dto.LeadDivisionId))
+            //{
+            //    entity.LeadDivision = _leadDivisionService.GetById(dto.LeadDivisionId);
+            //}
+            entity.LeadDivisionId = dto.LeadDivisionId;
             return entity;
         }
     }

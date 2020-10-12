@@ -22,16 +22,16 @@
                            aria-expanded="false">Разделы</a>
                         <div class="dropdown-menu bg-info">
                             <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="LeadDivisions">Головные организации</a>
-                            <a class="dropdown-item text-white bg-info" href="#">Дочерние организации</a>
+                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="SubDivisions">Дочерние организации</a>
                             <a class="dropdown-item text-white bg-info" href="#">Объекты потребления</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-white bg-info" href="#">Точки измерения</a>
                             <a class="dropdown-item text-white bg-info" href="#">Точки поставки</a>
                             <a class="dropdown-item text-white bg-info" href="#">Расчетные приборы учета</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-white bg-info" href="#">Счетчики ЭЭ</a>
-                            <a class="dropdown-item text-white bg-info" href="#">Трансформаторы тока</a>
-                            <a class="dropdown-item text-white bg-info" href="#">Трансформаторы напряжения</a>
+                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="ElectricityMeters">Счетчики ЭЭ</a>
+                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="CurrentTransformers">Трансформаторы тока</a>
+                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="VoltageTransformers">Трансформаторы напряжения</a>
                         </div>
                     </li>
                     <li class="nav-item active">

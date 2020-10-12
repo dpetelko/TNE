@@ -28,7 +28,7 @@ namespace TNE.Data.Implementations
             Log.Debug("Creating SubDivision: {entity}", entity);
             _context.SubDivisions.Add(entity);
             await _context.SaveChangesAsync();
-            return entity;
+            return await GetByIdAsync(entity.Id);
         }
 
         public async Task<bool> DeleteAsync(Guid id)
