@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Serilog;
-using System.Threading.Tasks;
-using TNEClient.Data;
 
 namespace TNEClient.Controllers
 {

@@ -87,10 +87,11 @@ namespace TNE.Services.Implementations
         private SubDivision ConvertToEntity(SubDivisionDto dto)
         {
             var entity = new SubDivision();
-            if (!dto.Id.Equals(Guid.Empty))
-            {
-                entity = _repo.GetById(dto.Id);
-            }
+            entity.Id = dto.Id;
+            //if (!dto.Id.Equals(Guid.Empty))
+            //{
+            //    entity = _repo.GetById(dto.Id);
+            //}
             entity.Name = dto.Name;
             entity.AddressId = dto.AddressId;
             entity.Address.PostCode = dto.PostCode;
@@ -101,12 +102,12 @@ namespace TNE.Services.Implementations
             entity.Address.Building = dto.Building;
             entity.Deleted = dto.Deleted;
 
-            if (!Equals(entity.LeadDivisionId, Guid.Empty) &&
-                !Equals(dto.LeadDivisionId, Guid.Empty) &&
-                !entity.LeadDivisionId.Equals(dto.LeadDivisionId))
-            {
-                entity.LeadDivision = _leadDivisionService.GetById(dto.LeadDivisionId);
-            }
+            //if (!Equals(entity.LeadDivisionId, Guid.Empty) &&
+            //    !Equals(dto.LeadDivisionId, Guid.Empty) &&
+            //    !entity.LeadDivisionId.Equals(dto.LeadDivisionId))
+            //{
+            //    entity.LeadDivision = _leadDivisionService.GetById(dto.LeadDivisionId);
+            //}
             entity.LeadDivisionId = dto.LeadDivisionId;
             return entity;
         }

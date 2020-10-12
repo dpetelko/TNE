@@ -32,6 +32,9 @@ namespace TNEClient
             services.AddRefitClient<ISubDivisionRepository>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
 
+            services.AddRefitClient<IProviderRepository>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+
             services.AddRefitClient<IVoltageTransformerRepository>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
 
@@ -43,6 +46,7 @@ namespace TNEClient
 
             services.AddScoped<ILeadDivisionService, LeadDivisionServiceImpl>();
             services.AddScoped<ISubDivisionService, SubDivisionServiceImpl>();
+            services.AddScoped<IProviderService, ProviderServiceImpl>();
             services.AddScoped<IVoltageTransformerService, VoltageTransformerServiceImpl>();
             services.AddScoped<ICurrentTransformerService, CurrentTransformerServiceImpl>();
             services.AddScoped<IElectricityMeterService, ElectricityMeterServiceImpl>();

@@ -107,16 +107,16 @@ namespace TNE.Data.Implementations
                 : result;
         }
 
-        public async Task<SubDivisionDto> GetDtoByIdAsync(Guid Id)
+        public async Task<SubDivisionDto> GetDtoByIdAsync(Guid id)
         {
-            Log.Debug("Get SubDivisionDto by Id: '{Id}'", Id);
+            Log.Debug("Get SubDivisionDto by Id: '{Id}'", id);
             var result = await _context.SubDivisions.AsNoTracking()
                 .Include(s => s.Address)
                 .Include(b => b.LeadDivision)
-                .Where(s => s.Id == Id)
+                .Where(s => s.Id == id)
                 .Select(s => new SubDivisionDto(s))
                 .SingleOrDefaultAsync();
-            if (result is null) throw new EntityNotFoundException($"SubDivision with ID = '{Id}' not found!");
+            if (result is null) throw new EntityNotFoundException($"SubDivision with ID = '{id}' not found!");
             return result;
         }
 
@@ -125,6 +125,7 @@ namespace TNE.Data.Implementations
             Log.Debug("Updating SubDivision: '{entity}'", entity);
             _context.SubDivisions.Update(entity);
             await _context.SaveChangesAsync();
+            _context.Entry(entity).Reference(c => c.LeadDivision).Load();
             return entity;
         }
 

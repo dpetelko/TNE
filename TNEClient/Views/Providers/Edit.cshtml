@@ -1,13 +1,13 @@
 ﻿@using System;
-@model SubDivisionDto
+@model ProviderDto
 
 @{
-    ViewData["Title"] = "ТрансНефтьЭнерго - Дочерние организации";
+    ViewData["Title"] = "ТрансНефтьЭнерго - Объекты потребления";
 }
 
 <div class="container-sm">
     <br>
-    <h3 align="center">Редактирование дочерней организации</h3>
+    <h3 align="center">Редактирование объекта потребления</h3>
     <br>
     <div class="row">
         <div class="col-md-3"></div>
@@ -16,8 +16,8 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id" />
                 <div class="form-group">
-                    <label asp-for="LeadDivisionName" class="control-label"></label>
-                    <select asp-for="LeadDivisionId" class="form-control" asp-items="ViewBag.LeadDivisionList"></select>
+                    <label asp-for="SubDivisionName" class="control-label"></label>
+                    <select asp-for="SubDivisionId" class="form-control" asp-items="ViewBag.SubDivisionList"></select>
                 </div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>

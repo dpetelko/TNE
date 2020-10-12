@@ -1,5 +1,5 @@
 ﻿@using TNEClient.Dtos
-@model SubDivisionDto
+@model ProviderDto
 @{
     ViewData["Title"] = "ТНЭ - " + @Model.Name;
 }
@@ -14,9 +14,9 @@
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Наименование головной организации</label>
+        <label class="col-sm-2 col-form-label">Наименование дочерней организации</label>
         <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext" value=@Model.LeadDivisionName>
+            <input type="text" readonly class="form-control-plaintext" value=@Model.SubDivisionName>
         </div>
     </div>
     <div class="form-group row">
@@ -59,37 +59,37 @@
 
 
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Объекты потребления электроэнергии</label>
+        <label class="col-sm-2 col-form-label">Точки измерения электроэнергии</label>
 
-        @*@if (@ViewBag.ProviderList.Count != 0)
+        @if (@ViewBag.ControlPointList.Count != 0)
         {
             <br />
             <table class="table table-stripped table-hover">
                 <tr>
                     <td>Наименование</td>
-                    <td>Индекс</td>
-                    <td>Страна</td>
-                    <td>Регион</td>
-                    <td>Город</td>
-                    <td>Улица</td>
-                    <td>Строение</td>
+                    <td>Тип счетчика ЭЭ</td>
+                    <td>Номер счетчика ЭЭ</td>
+                    <td>Тип ТН</td>
+                    <td>Номер ТН</td>
+                    <td>Тип ТТ</td>
+                    <td>Номер ТТ</td>
                     <td></td>
                 </tr>
-                @foreach (var item in @ViewBag.ProviderList)
+                @foreach (var item in @ViewBag.ControlPointList)
                 {
                     <tr>
                         <td>@item.Name</td>
-                        <td>@item.PostCode</td>
-                        <td>@item.Country</td>
-                        <td>@item.Region</td>
-                        <td>@item.City</td>
-                        <td>@item.Street</td>
-                        <td>@item.Building</td>
+                        <td>@item.ElectricityMeterType</td>
+                        <td>@item.ElectricityMeterNumber</td>
+                        <td>@item.VoltageTransformerType</td>
+                        <td>@item.VoltageTransformerNumber</td>
+                        <td>@item.CurrentTransformerType</td>
+                        <td>@item.CurrentTransformerNumber</td>
                         <td>
                             <div class="btn-group" role="group">
 
-                                <a asp-action="Details" asp-controller="Providers" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">Подробности</a>
-                                <a asp-action="Delete" asp-controller="Providers" asp-route-id="@item.Id" class="btn btn-outline-danger font-weight-bold btn-sm" id="deleteButton">Удалить</a>
+                                <a asp-action="Details" asp-controller="ControlPoints" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">Подробности</a>
+                                <a asp-action="Delete" asp-controller="ControlPoints" asp-route-id="@item.Id" class="btn btn-outline-danger font-weight-bold btn-sm" id="deleteButton">Удалить</a>
 
                             </div>
                         </td>
@@ -99,21 +99,54 @@
 
         }
         else
-        {*@
+        {
             <div class="col-sm-10">
                 <input type="text" readonly class="form-control-plaintext" value="Отсутствуют">
             </div>
-        @*}*@
+        }
     </div>
 
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Точки поставки электроэнергии</label>
 
+        @if (@ViewBag.DeliveryPointList.Count != 0)
+        {
+            <br />
+            <table class="table table-stripped table-hover">
+                <tr>
+                    <td>Наименование</td>
+                    <td>Максимальная мощность, кВт</td>
+                    <td></td>
+                </tr>
+                @foreach (var item in @ViewBag.SubDivisionList)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.MaxPower</td>
+                        <td>
+                            <div class="btn-group" role="group">
 
+                                <a asp-action="Details" asp-controller="DeliveryPoints" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">Подробности</a>
+                                <a asp-action="Delete" asp-controller="DeliveryPoints" asp-route-id="@item.Id" class="btn btn-outline-danger font-weight-bold btn-sm" id="deleteButton">Удалить</a>
 
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
 
+        }
+        else
+        {
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" value="Отсутствуют">
+            </div>
+        }
+    </div>
 
-    <a asp-action="Index" asp-controller="SubDivisions" class="btn btn-secondary">К списку »</a>
-    <a asp-action="Edit" asp-controller="SubDivisions" asp-route-id="@Model.Id" class="btn btn-warning">Редактировать</a>
-    <a asp-action="Delete" asp-controller="SubDivisions" asp-route-id="@Model.Id" class="btn btn-danger" id="deleteButton">Удалить</a>
+    <a asp-action="Index" asp-controller="LeadDivisions" class="btn btn-secondary">К списку »</a>
+    <a asp-action="Edit" asp-controller="LeadDivisions" asp-route-id="@Model.Id" class="btn btn-warning">Редактировать</a>
+    <a asp-action="Delete" asp-controller="LeadDivisions" asp-route-id="@Model.Id" class="btn btn-danger" id="deleteButton">Удалить</a>
 
 </div>
 
