@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using TNEClient.Data;
+using TNEClient.Dtos;
 using TNEClient.Services;
 
 namespace TNEClient.Controllers
@@ -21,20 +22,15 @@ namespace TNEClient.Controllers
             _subRepo = subRepo;
         }
 
-
-
-
         // GET: LeadDivisionsController
         public async Task<IActionResult> Index()
         {
-            Log.Error("Hello from LeadDivisionsController!!!!");
-            return View("~/Views/LeadDivisions/Index.cshtml", await _service.GetAllAsync());
+            return View(await _service.GetAllAsync());
         }
 
         // GET: LeadDivisionsController/Details/5
         public async Task<ActionResult> Details(Guid id)
         {
-            Log.Error("Hello from LeadDivisionsController    Details   !!!!");
             var subDivisionList = await _subRepo.GetByLeadDivisionAsync(id);
             ViewBag.SubDivisionList = subDivisionList;
             return View(await _service.GetAsync(id));
@@ -49,37 +45,33 @@ namespace TNEClient.Controllers
         // POST: LeadDivisionsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(LeadDivisionDto form)
         {
-            try
+            if (ModelState.IsValid)
             {
+                await _service.CreateAsync(form);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: LeadDivisionsController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(Guid id)
         {
-            return View();
+            return View(await _service.GetAsync(id));
         }
 
         // POST: LeadDivisionsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(LeadDivisionDto form)
         {
-            try
+            if (ModelState.IsValid)
             {
+                await _service.UpdateAsync(form);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: LeadDivisionsController/Delete/5
@@ -94,8 +86,6 @@ namespace TNEClient.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Guid id)
         {
-            Log.Error("Hello from LeadDivisionsController DELETE !!!!");
-
             await _service.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
 
