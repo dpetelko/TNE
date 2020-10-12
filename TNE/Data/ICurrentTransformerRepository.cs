@@ -12,5 +12,6 @@ namespace TNE.Data
         Task<CurrentTransformerDto> GetDtoByIdAsync(Guid Id);
         Task<List<CurrentTransformerDto>> GetAllDtoAsync();
         Task<List<CurrentTransformerDto>> GetAllDtoByStatusAsync(Status status);
+        Task<CurrentTransformerDto> GetDtoByControlPointId(Guid id);
     }
 }

@@ -125,5 +125,17 @@ namespace TNE.Data.Implementations
             await _context.SaveChangesAsync();
             return entity;
         }
+        public async Task<CurrentTransformerDto> GetDtoByControlPointId(Guid id)
+        {
+            Log.Debug("Get GetDtoByControlPointId by Id: '{id}'", id);
+            var result = await _context.CurrentTransformers
+                .AsNoTracking()
+                .Include(b => b.ControlPoint)
+                .Where(s => s.ControlPointId == id)
+                .Select(s => new CurrentTransformerDto(s))
+                .SingleOrDefaultAsync();
+            if (result is null) throw new EntityNotFoundException($"CurrentTransformer with ControlPointId = '{id}' not found!");
+            return result;
+        }
     }
 }

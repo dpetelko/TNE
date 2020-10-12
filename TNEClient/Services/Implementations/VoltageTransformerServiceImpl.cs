@@ -55,5 +55,10 @@ namespace TNEClient.Services.Implementations
         {
             return await _repo.SetStatus(id, status);
         }
+
+        public async Task<VoltageTransformerDto> GetDtoByControlPointId(Guid id)
+        {
+            return await _repo.GetByControlPointIdAsync(id);
+        }
     }
 }

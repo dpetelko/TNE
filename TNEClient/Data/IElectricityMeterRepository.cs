@@ -17,6 +17,9 @@ namespace TNEClient.Data
         [Get("/api/v1/ElectricityMeters/{id}")]
         Task<ElectricityMeterDto> GetAsync(Guid id);
 
+        [Get("/api/v1/ElectricityMeters/ControlPoint/{id}")]
+        Task<ElectricityMeterDto> GetByControlPointIdAsync(Guid id);
+
         [Post("/api/v1/ElectricityMeters")]
         Task<ElectricityMeterDto> CreateAsync([Body] ElectricityMeterDto dto);
 

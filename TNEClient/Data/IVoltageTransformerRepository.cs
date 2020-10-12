@@ -19,6 +19,9 @@ namespace TNEClient.Data
         [Get("/api/v1/VoltageTransformers/{id}")]
         Task<VoltageTransformerDto> GetAsync(Guid id);
 
+        [Get("/api/v1/VoltageTransformers/ControlPoint/{id}")]
+        Task<VoltageTransformerDto> GetByControlPointIdAsync(Guid id);
+
         [Post("/api/v1/VoltageTransformers")]
         Task<List<HttpResponseMessage>> CreateAsync([Body] VoltageTransformerDto dto);
 

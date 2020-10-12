@@ -17,6 +17,9 @@ namespace TNEClient.Data
         [Get("/api/v1/CurrentTransformers/{id}")]
         Task<CurrentTransformerDto> GetAsync(Guid id);
 
+        [Get("/api/v1/CurrentTransformers/ControlPoint/{id}")]
+        Task<CurrentTransformerDto> GetByControlPointIdAsync(Guid id);
+
         [Post("/api/v1/CurrentTransformers")]
         Task<CurrentTransformerDto> CreateAsync([Body] CurrentTransformerDto dto);
 

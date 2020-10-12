@@ -94,6 +94,19 @@ namespace TNE.Data.Implementations
                 : result;
         }
 
+        public async Task<VoltageTransformerDto> GetDtoByControlPointId(Guid id)
+        {
+            Log.Debug("Get GetDtoByControlPointId by Id: '{id}'", id);
+            var result = await _context.VoltageTransformers
+                .AsNoTracking()
+                .Include(b => b.ControlPoint)
+                .Where(s => s.ControlPointId == id)
+                .Select(s => new VoltageTransformerDto(s))
+                .SingleOrDefaultAsync();
+            if (result is null) throw new EntityNotFoundException($"VoltageTransformer with ControlPointId = '{id}' not found!");
+            return result;
+        }
+
         public async Task<VoltageTransformerDto> GetDtoByIdAsync(Guid Id)
         {
             Log.Debug("Get VoltageTransformerDto by Id: '{Id}'", Id);

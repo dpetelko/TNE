@@ -53,6 +53,11 @@ namespace TNE.Services.Implementations
             return await _repo.GetByIdAsync(id);
         }
 
+        public async Task<VoltageTransformerDto> GetDtoByControlPointId(Guid id)
+        {
+            return await _repo.GetDtoByControlPointId(id);
+        }
+
         public async Task<VoltageTransformerDto> GetDtoByIdAsync(Guid id)
         {
             return await _repo.GetDtoByIdAsync(id);

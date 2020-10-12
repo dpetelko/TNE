@@ -94,6 +94,19 @@ namespace TNE.Data.Implementations
                 : result;
         }
 
+        public async Task<ElectricityMeterDto> GetDtoByControlPointId(Guid id)
+        {
+            Log.Debug("Get GetDtoByControlPointId by Id: '{id}'", id);
+            var result = await _context.ElectricityMeters
+                .AsNoTracking()
+                .Include(b => b.ControlPoint)
+                .Where(s => s.ControlPointId == id)
+                .Select(s => new ElectricityMeterDto(s))
+                .SingleOrDefaultAsync();
+            if (result is null) throw new EntityNotFoundException($"ElectricityMeter with ControlPointId = '{id}' not found!");
+            return result;
+        }
+
         public async Task<ElectricityMeterDto> GetDtoByIdAsync(Guid Id)
         {
             Log.Debug("Get ElectricityMeterDto by Id: '{Id}'", Id);

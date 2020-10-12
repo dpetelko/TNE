@@ -15,5 +15,6 @@ namespace TNEClient.Services
         Task<VoltageTransformerDto> CreateAsync(VoltageTransformerDto dto);
         Task<VoltageTransformerDto> UpdateAsync(VoltageTransformerDto dto);
         Task<bool> SetStatus(Guid id, Status status);
+        Task<VoltageTransformerDto> GetDtoByControlPointId(Guid id);
     }
 }

@@ -43,5 +43,10 @@ namespace TNEClient.Services.Implementations
         {
             return await _repo.SetStatus(id, status);
         }
+
+        public async Task<ElectricityMeterDto> GetDtoByControlPointId(Guid id)
+        {
+            return await _repo.GetByControlPointIdAsync(id);
+        }
     }
 }

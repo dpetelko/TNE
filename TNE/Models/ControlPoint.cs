@@ -18,15 +18,15 @@ namespace TNE.Models
         public string Name { get; set; }
         public Guid? ElectricityMeterId { get; set; }
         [ForeignKey("ElectricityMeterId")]
-        public virtual ElectricityMeter ElectricityMeter { get; set; }// = new ElectricityMeter();
+        public virtual ElectricityMeter ElectricityMeter { get; set; }
         public Guid? CurrentTransformerId { get; set; }
         [ForeignKey("CurrentTransformerId")]
-        public virtual CurrentTransformer CurrentTransformer { get; set; }// = new Transformer();
+        public virtual CurrentTransformer CurrentTransformer { get; set; }
         public Guid? VoltageTransformerId { get; set; }
         [ForeignKey("VoltageTransformerId")]
-        public virtual VoltageTransformer VoltageTransformer { get; set; }// = new Transformer();
+        public virtual VoltageTransformer VoltageTransformer { get; set; }
         public Guid? ProviderId { get; set; }
-        public virtual Provider Provider { get; set; }// = new Provider();
+        public virtual Provider Provider { get; set; }
         public List<BillingPoint> BillingPoints { get; set; }
         [DefaultValue(false)]
         public bool Deleted { get; set; }

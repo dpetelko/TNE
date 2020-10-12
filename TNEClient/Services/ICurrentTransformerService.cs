@@ -15,5 +15,6 @@ namespace TNEClient.Services
         Task<CurrentTransformerDto> CreateAsync(CurrentTransformerDto dto);
         Task<CurrentTransformerDto> UpdateAsync(CurrentTransformerDto dto);
         Task<bool> SetStatus(Guid id, Status status);
+        Task<CurrentTransformerDto> GetDtoByControlPointId(Guid id);
     }
 }

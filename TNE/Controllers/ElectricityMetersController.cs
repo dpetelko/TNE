@@ -22,6 +22,9 @@ namespace TNE.Controllers
         [HttpGet("status/{status}")]
         public async Task<List<ElectricityMeterDto>> GetAllByStatus(Status status) { return await _service.GetAllDtoByStatusAsync(status); }
 
+        [HttpGet("ControlPoint/{id}")]
+        public async Task<ElectricityMeterDto> GetByControlPointId(Guid id) { return await _service.GetDtoByControlPointId(id); }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ElectricityMeterDto>> GetById(Guid id) { return Ok(await _service.GetDtoByIdAsync(id)); }
 

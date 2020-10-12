@@ -12,5 +12,6 @@ namespace TNE.Data
         Task<ElectricityMeterDto> GetDtoByIdAsync(Guid Id);
         Task<List<ElectricityMeterDto>> GetAllDtoAsync();
         Task<List<ElectricityMeterDto>> GetAllDtoByStatusAsync(Status status);
+        Task<ElectricityMeterDto> GetDtoByControlPointId(Guid id);
     }
 }

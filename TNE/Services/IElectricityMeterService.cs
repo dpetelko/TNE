@@ -14,5 +14,6 @@ namespace TNE.Services
         Task<ElectricityMeterDto> CreateAsync(ElectricityMeterDto dto);
         Task<ElectricityMeterDto> UpdateAsync(ElectricityMeterDto dto);
         Task<List<ElectricityMeterDto>> GetAllDtoByStatusAsync(Status status);
+        Task<ElectricityMeterDto> GetDtoByControlPointId(Guid id);
     }
 }

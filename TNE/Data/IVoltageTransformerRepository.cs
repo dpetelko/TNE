@@ -12,5 +12,6 @@ namespace TNE.Data
         Task<VoltageTransformerDto> GetDtoByIdAsync(Guid Id);
         Task<List<VoltageTransformerDto>> GetAllDtoAsync();
         Task<List<VoltageTransformerDto>> GetAllDtoByStatusAsync(Status status);
+        Task<VoltageTransformerDto> GetDtoByControlPointId(Guid id);
     }
 }

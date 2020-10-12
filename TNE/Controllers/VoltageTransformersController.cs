@@ -25,6 +25,9 @@ namespace TNE.Controllers
         [HttpGet("status/{status}")]
         public async Task<List<VoltageTransformerDto>> GetAllByStatus(Status status) { return await _service.GetAllDtoByStatusAsync(status); }
 
+        [HttpGet("ControlPoint/{id}")]
+        public async Task<VoltageTransformerDto> GetByControlPointId(Guid id) { return await _service.GetDtoByControlPointId(id); }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<VoltageTransformerDto>> GetById(Guid id) { return Ok(await _service.GetDtoByIdAsync(id)); }
 
