@@ -9,7 +9,6 @@ namespace TNEClient.Controllers
     {
         public IActionResult Index()
         {
-            Log.Error("Hello from HomeController!!!!");
             return View();
         }
     }

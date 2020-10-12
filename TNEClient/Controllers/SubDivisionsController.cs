@@ -38,7 +38,7 @@ namespace TNEClient.Controllers
         // GET: SubDivisionsController/Create
         public async Task<ActionResult> Create()
         {
-            ViewBag.LeadDivisionList = new SelectList(await _leadDivisionService.GetAllAsync(), "Id", "Name");
+            await GetLeadDivisionList();
             return View();
         }
 
@@ -47,21 +47,19 @@ namespace TNEClient.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(SubDivisionDto form)
         {
-            Log.Error("!!!!!!!!!!!!!Incomming DTO - {form}", form);
-
             if (ModelState.IsValid)
             {
                 await _subDivisionService.CreateAsync(form);
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.LeadDivisionList = new SelectList(await _leadDivisionService.GetAllAsync(), "Id", "Name");
+            await GetLeadDivisionList();
             return View();
         }
 
         // GET: SubDivisionsController/Edit/5
         public async Task<ActionResult> Edit(Guid id)
         {
-            ViewBag.LeadDivisionList = new SelectList(await _leadDivisionService.GetAllAsync(), "Id", "Name");
+            await GetLeadDivisionList();
             return View(await _subDivisionService.GetAsync(id));
         }
 
@@ -75,7 +73,7 @@ namespace TNEClient.Controllers
                 await _subDivisionService.UpdateAsync(form);
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.LeadDivisionList = new SelectList(await _leadDivisionService.GetAllAsync(), "Id", "Name");
+            await GetLeadDivisionList();
             return View();
         }
 
@@ -88,12 +86,17 @@ namespace TNEClient.Controllers
 
         // POST: SubDivisionsController/Delete/5
         [HttpGet]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Guid id)
         {
             await _subDivisionService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
 
+        }
+
+        private async Task GetLeadDivisionList()
+        {
+            ViewBag.LeadDivisionList = new SelectList(await _leadDivisionService.GetAllAsync(), "Id", "Name");
         }
     }
 }
