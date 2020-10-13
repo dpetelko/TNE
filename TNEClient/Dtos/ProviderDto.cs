@@ -7,6 +7,7 @@ namespace TNEClient.Dtos
     {
         [Required]
         public Guid SubDivisionId { get; set; }
+        [Display(Name = "Дочерняя огранизация")]
         public string SubDivisionName { get; set; }
 
         public ProviderDto() { }
