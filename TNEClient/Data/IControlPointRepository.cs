@@ -17,6 +17,9 @@ namespace TNEClient.Data
         [Get("/api/v1/ControlPoints/{id}")]
         Task<ControlPointDto> GetAsync(Guid id);
 
+        [Get("/api/v1/ControlPoints/byProvider/{id}")]
+        Task<List<ControlPointDto>> GetByProviderAsync(Guid id);
+
         [Post("/api/v1/ControlPoints")]
         Task<ControlPointDto> CreateAsync([Body] ControlPointDto dto);
 

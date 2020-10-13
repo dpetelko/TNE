@@ -18,5 +18,6 @@ namespace TNE.Services
         Task<bool> DeleteAsync(Guid id);
         Task<bool> UndeleteAsync(Guid id);
         Task<List<ControlPointDto>> GetAllDtoByFilterAsync(InterTestingFilter filter);
+        Task<List<ControlPointDto>> GetAllDtoByProviderIdAsync(Guid id);
     }
 }

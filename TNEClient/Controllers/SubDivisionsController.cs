@@ -15,13 +15,14 @@ namespace TNEClient.Controllers
     {
         private readonly ISubDivisionService _subDivisionService;
         private readonly ILeadDivisionService _leadDivisionService;
+        private readonly IProviderService _providerService;
 
-        public SubDivisionsController(ISubDivisionService subDivisionService, ILeadDivisionService leadDivisionService)
+        public SubDivisionsController(ISubDivisionService subDivisionService, ILeadDivisionService leadDivisionService, IProviderService providerService)
         {
             _subDivisionService = subDivisionService;
             _leadDivisionService = leadDivisionService;
+            _providerService = providerService;
         }
-
 
         // GET: SubDivisionsController
         public async Task<IActionResult> Index()
@@ -32,6 +33,7 @@ namespace TNEClient.Controllers
         // GET: SubDivisionsController/Details/5
         public async Task<ActionResult> Details(Guid id)
         {
+            ViewBag.ProviderList = await _providerService.GetAllDtoBySubDivisionIdAsync(id);
             return View(await _subDivisionService.GetAsync(id));
         }
 

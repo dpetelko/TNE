@@ -44,7 +44,7 @@ namespace TNE.Services.Validators
                     result = _validationContext.GetService<ISubDivisionService>().IsFieldUnique(id, fieldName, fieldValue);
                     break;
                 case "ProviderDto":
-                    //service = validationContext.GetService<ILeadDivisionService>();
+                    result = _validationContext.GetService<IProviderService>().IsFieldUnique(id, fieldName, fieldValue);
                     break;
                 default:
                     throw new InvalidOperationException("Unknown object for validation");

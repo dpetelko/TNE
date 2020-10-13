@@ -41,19 +41,21 @@ namespace TNE.Services.Implementations
             return new ControlPointDto(result);
         }
 
-        public async Task<bool> DeleteAsync(Guid id) { return await _repo.DeleteAsync(id); }
+        public async Task<bool> DeleteAsync(Guid id) => await _repo.DeleteAsync(id);
 
-        public async Task<List<ControlPointDto>> GetAllActiveDtoAsync() { return await _repo.GetAllActiveDtoAsync(); }
+        public async Task<List<ControlPointDto>> GetAllActiveDtoAsync() => await _repo.GetAllActiveDtoAsync();
 
-        public async Task<List<ControlPointDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
+        public async Task<List<ControlPointDto>> GetAllDtoAsync() => await _repo.GetAllDtoAsync();
 
-        public async Task<List<ControlPointDto>> GetAllDtoByFilterAsync(InterTestingFilter filter) { return await _repo.GetAllDtoByFilterAsync(filter); }
+        public async Task<List<ControlPointDto>> GetAllDtoByFilterAsync(InterTestingFilter filter) => await _repo.GetAllDtoByFilterAsync(filter);
 
-        public ControlPoint GetById(Guid id) { return _repo.GetById(id); }
+        public async Task<List<ControlPointDto>> GetAllDtoByProviderIdAsync(Guid id) => await _repo.GetAllDtoByProviderIdAsync(id);
 
-        public async Task<ControlPoint> GetByIdAsync(Guid id) { return await _repo.GetByIdAsync(id); }
+        public ControlPoint GetById(Guid id) => _repo.GetById(id);
 
-        public async Task<ControlPointDto> GetDtoByIdAsync(Guid id) { return await _repo.GetDtoByIdAsync(id); }
+        public async Task<ControlPoint> GetByIdAsync(Guid id) => await _repo.GetByIdAsync(id);
+
+        public async Task<ControlPointDto> GetDtoByIdAsync(Guid id) => await _repo.GetDtoByIdAsync(id);
 
         public bool IsFieldUnique(Guid id, string fieldName, object fieldValue)
         {
@@ -62,7 +64,7 @@ namespace TNE.Services.Implementations
                 : _repo.ExistsByFieldAndNotId(id, fieldName, fieldValue);
         }
 
-        public async Task<bool> UndeleteAsync(Guid id) { return await _repo.UndeleteAsync(id); }
+        public async Task<bool> UndeleteAsync(Guid id) => await _repo.UndeleteAsync(id);
 
         public async Task<ControlPointDto> UpdateAsync(ControlPointDto dto)
         {
@@ -74,26 +76,15 @@ namespace TNE.Services.Implementations
 
         private ControlPoint ConvertToEntity(ControlPointDto dto)
         {
-            var entity = new ControlPoint();
-            if (!dto.Id.Equals(Guid.Empty))
+            return new ControlPoint
             {
-                entity = _repo.GetById(dto.Id);
-            }
-            entity.Name = dto.Name;
-            entity.Deleted = dto.Deleted;
-            if (!Equals(dto.CurrentTransformerId, entity.CurrentTransformerId))
-            {
-                entity.CurrentTransformer = _currentTransformerService.GetById(dto.CurrentTransformerId);
-            }
-            if (!Equals(entity.VoltageTransformerId, dto.VoltageTransformerId))
-            {
-                entity.VoltageTransformer = _voltageTransformerService.GetById(dto.VoltageTransformerId);
-            }
-            if (!Equals(entity.ElectricityMeterId, dto.ElectricityMeterId))
-            {
-                entity.ElectricityMeter = _electricityMeterService.GetById(dto.VoltageTransformerId);
-            }
-            return entity;
+                Id = dto.Id,
+                Name = dto.Name,
+                Deleted = dto.Deleted,
+                CurrentTransformerId = dto.CurrentTransformerId,
+                VoltageTransformerId = dto.VoltageTransformerId,
+                ElectricityMeterId = dto.ElectricityMeterId
+            };
         }
     }
 }

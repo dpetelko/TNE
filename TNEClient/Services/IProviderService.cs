@@ -14,5 +14,6 @@ namespace TNEClient.Services
         Task<ProviderDto> UpdateAsync(ProviderDto dto);
         Task<bool> DeleteAsync(Guid id);
         Task<bool> UndeleteAsync(Guid id);
+        Task<List<ProviderDto>> GetAllDtoBySubDivisionIdAsync(Guid id);
     }
 }

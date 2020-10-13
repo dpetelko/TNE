@@ -19,7 +19,7 @@ namespace TNE.Services.Implementations
             _providerService = providerService;
         }
 
-        public void CheckExistsById(Guid id) { _repo.CheckExistsById(id); }
+        public void CheckExistsById(Guid id) => _repo.CheckExistsById(id);
 
         public async Task<DeliveryPointDto> CreateAsync(DeliveryPointDto dto)
         {
@@ -35,9 +35,11 @@ namespace TNE.Services.Implementations
             return await _repo.DeleteAsync(id);
         }
 
-        public async Task<List<DeliveryPointDto>> GetAllActiveDtoAsync() { return await _repo.GetAllActiveDtoAsync(); }
+        public async Task<List<DeliveryPointDto>> GetAllActiveDtoAsync() => await _repo.GetAllActiveDtoAsync();
 
-        public async Task<List<DeliveryPointDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
+        public async Task<List<DeliveryPointDto>> GetAllDtoAsync() => await _repo.GetAllDtoAsync();
+
+        public async Task<List<DeliveryPointDto>> GetAllDtoByProviderIdAsync(Guid id) => await _repo.GetAllDtoByProviderIdAsync(id);
 
         public DeliveryPoint GetById(Guid id)
         {
@@ -80,19 +82,14 @@ namespace TNE.Services.Implementations
 
         private DeliveryPoint ConvertToEntity(DeliveryPointDto dto)
         {
-            var entity = new DeliveryPoint();
-            if (!dto.Id.Equals(Guid.Empty))
+            return new DeliveryPoint
             {
-                entity = _repo.GetById(dto.Id);
-            }
-            entity.Name = dto.Name;
-            entity.MaxPower = dto.MaxPower;
-            entity.Deleted = dto.Deleted;
-            if (!Equals(dto.ProviderId, Guid.Empty) && !Equals(entity.ProviderId, dto.ProviderId))
-            {
-                entity.Provider = _providerService.GetById(dto.ProviderId);
-            }
-            return entity;
+                Id = dto.Id,
+                Name = dto.Name,
+                MaxPower = dto.MaxPower,
+                Deleted = dto.Deleted,
+                ProviderId = dto.ProviderId
+            };
         }
     }
 }

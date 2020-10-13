@@ -79,6 +79,19 @@ namespace TNE.Data.Implementations
             return result;
         }
 
+        public async Task<List<DeliveryPointDto>> GetAllDtoByProviderIdAsync(Guid id)
+        {
+            Log.Debug("Get GetAllDtoByProviderIdAsync by Id: '{id}'", id);
+            var result = await _context.DeliveryPoints
+                .AsNoTracking()
+                .Include(s => s.Provider)
+                .Where(s => s.ProviderId == id)
+                .Select(s => new DeliveryPointDto(s))
+                .ToListAsync();
+            result.TrimExcess();
+            return result;
+        }
+
         public DeliveryPoint GetById(Guid id)
         {
             Log.Debug("Get DeliveryPoint by Id: '{Id}'", id);

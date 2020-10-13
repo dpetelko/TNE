@@ -13,25 +13,28 @@ namespace TNE.Controllers
     public class ControlPointsController : ControllerBase
     {
         private readonly IControlPointService _service;
-        public ControlPointsController(IControlPointService service) { _service = service; }
+        public ControlPointsController(IControlPointService service) => _service = service;
 
         [HttpGet]
-        public async Task<List<ControlPointDto>> GetAll() { return await _service.GetAllDtoAsync(); }
+        public async Task<List<ControlPointDto>> GetAll() => await _service.GetAllDtoAsync();
 
         [HttpGet("active")]
-        public async Task<List<ControlPointDto>> GetAllActive() { return await _service.GetAllActiveDtoAsync(); }
+        public async Task<List<ControlPointDto>> GetAllActive() => await _service.GetAllActiveDtoAsync();
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ControlPointDto>> GetById(Guid id) { return Ok(await _service.GetDtoByIdAsync(id)); }
+        public async Task<ActionResult<ControlPointDto>> GetById(Guid id) => Ok(await _service.GetDtoByIdAsync(id));
 
         [HttpGet("filter")]
-        public async Task<List<ControlPointDto>> GetByFilter([FromBody] InterTestingFilter filter) { return await _service.GetAllDtoByFilterAsync(filter); }
+        public async Task<List<ControlPointDto>> GetByFilter([FromBody] InterTestingFilter filter) => await _service.GetAllDtoByFilterAsync(filter);
+
+        [HttpGet("byProvider/{id}")]
+        public async Task<List<ControlPointDto>> GetAllBySubDivisionId(Guid id) => await _service.GetAllDtoByProviderIdAsync(id);
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ControlPointDto>> DeleteById(Guid id) { return Ok(await _service.DeleteAsync(id)); }
+        public async Task<ActionResult<ControlPointDto>> DeleteById(Guid id) => Ok(await _service.DeleteAsync(id));
 
         [HttpDelete("undelete/{id}")]
-        public async Task<ActionResult<ControlPointDto>> UndeleteById(Guid id) { return Ok(await _service.UndeleteAsync(id)); }
+        public async Task<ActionResult<ControlPointDto>> UndeleteById(Guid id) => Ok(await _service.UndeleteAsync(id));
 
         [HttpPost]
         public async Task<ActionResult<ControlPointDto>> Create([FromBody] ControlPointDto dto)

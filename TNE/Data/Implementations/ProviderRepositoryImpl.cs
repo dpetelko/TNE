@@ -28,6 +28,7 @@ namespace TNE.Data.Implementations
             Log.Debug("Creating Provider: {entity}", entity);
             _context.Providers.Add(entity);
             await _context.SaveChangesAsync();
+            _context.Entry(entity).Reference(c => c.SubDivision).Load();
             return entity;
         }
 
@@ -85,21 +86,34 @@ namespace TNE.Data.Implementations
             return result;
         }
 
+        public async Task<List<ProviderDto>> GetAllDtoBySubDivisionIdAsync(Guid id)
+        {
+            Log.Debug("Get GetAllDtoBySubDivisionIdAsync by Id: '{id}'", id);
+            var result = await _context.Providers.AsNoTracking()
+                .Include(s => s.Address)
+                .Include(b => b.SubDivision)
+                .Where(s => s.SubDivisionId == id)
+                .Select(s => new ProviderDto(s))
+                .ToListAsync();
+            result.TrimExcess();
+            return result;
+        }
+
         public Provider GetById(Guid id)
         {
-            Log.Debug("Get Provider by Id: '{Id}'", id);
+            Log.Debug("Get Provider by Id: '{id}'", id);
             var result = _context.Providers.AsNoTracking()
                 .Include(b => b.Address)
                 .Include(b => b.SubDivision)
                 .SingleOrDefault(b => b.Id == id);
             return (result is null)
-                ? throw new EntityNotFoundException($"Provider with Id='{id}' not found!")
+                ? throw new EntityNotFoundException($"Provider with id='{id}' not found!")
                 : result;
         }
 
         public async Task<Provider> GetByIdAsync(Guid id)
         {
-            Log.Debug("Get Provider by Id: '{Id}'", id);
+            Log.Debug("Get Provider by Id: '{id}'", id);
             var result = await _context.Providers
                 .AsNoTracking()
                 .Include(b => b.Address)
@@ -110,16 +124,16 @@ namespace TNE.Data.Implementations
                 : result;
         }
 
-        public async Task<ProviderDto> GetDtoByIdAsync(Guid Id)
+        public async Task<ProviderDto> GetDtoByIdAsync(Guid id)
         {
-            Log.Debug("Get ProviderDto by Id: '{Id}'", Id);
+            Log.Debug("Get ProviderDto by Id: '{id}'", id);
             var result = await _context.Providers.AsNoTracking()
                 .Include(s => s.Address)
                 .Include(b => b.SubDivision)
-                .Where(s => s.Id == Id)
+                .Where(s => s.Id == id)
                 .Select(s => new ProviderDto(s))
                 .SingleOrDefaultAsync();
-            if (result is null) throw new EntityNotFoundException($"Provider with ID = '{Id}' not found!");
+            if (result is null) throw new EntityNotFoundException($"Provider with ID = '{id}' not found!");
             return result;
         }
 
@@ -139,6 +153,7 @@ namespace TNE.Data.Implementations
             Log.Debug("Updating Provider: '{entity}'", entity);
             _context.Providers.Update(entity);
             await _context.SaveChangesAsync();
+            _context.Entry(entity).Reference(c => c.SubDivision).Load();
             return entity;
         }
     }

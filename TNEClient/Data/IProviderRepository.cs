@@ -17,6 +17,9 @@ namespace TNEClient.Data
         [Get("/api/v1/Providers/{id}")]
         Task<ProviderDto> GetAsync(Guid id);
 
+        [Get("/api/v1/Providers/bySubDivision/{id}")]
+        Task<List<ProviderDto>> GetBySubDivisionAsync(Guid id);
+
         [Post("/api/v1/Providers")]
         Task<ProviderDto> CreateAsync([Body] ProviderDto dto);
 

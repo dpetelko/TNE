@@ -26,5 +26,7 @@ namespace TNEClient.Services.Implementations
         public async Task<ProviderDto> UpdateAsync(ProviderDto dto) => await _repo.UpdateAsync(dto);
 
         public async Task<bool> UndeleteAsync(Guid id) => await _repo.UndeleteAsync(id);
+
+        public async Task<List<ProviderDto>> GetAllDtoBySubDivisionIdAsync(Guid id) => await _repo.GetBySubDivisionAsync(id);
     }
 }

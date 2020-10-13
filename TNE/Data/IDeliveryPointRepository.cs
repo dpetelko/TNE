@@ -14,5 +14,6 @@ namespace TNE.Data
         Task<DeliveryPointDto> GetDtoByIdAsync(Guid Id);
         Task<List<DeliveryPointDto>> GetAllDtoAsync();
         Task<List<DeliveryPointDto>> GetAllActiveDtoAsync();
+        Task<List<DeliveryPointDto>> GetAllDtoByProviderIdAsync(Guid id);
     }
 }

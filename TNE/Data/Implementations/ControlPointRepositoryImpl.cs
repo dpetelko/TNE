@@ -181,5 +181,20 @@ namespace TNE.Data.Implementations
                 .ToListAsync();
             return result;
         }
+
+        public async Task<List<ControlPointDto>> GetAllDtoByProviderIdAsync(Guid id)
+        {
+            Log.Debug("Get GetAllDtoByProviderIdAsync by Id: '{id}'", id);
+            var result = await _context.ControlPoints.AsNoTracking()
+                .Include(s => s.Provider)
+                .Include(s => s.CurrentTransformer)
+                .Include(s => s.VoltageTransformer)
+                .Include(s => s.ElectricityMeter)
+                .Where(s => s.ProviderId == id)
+                .Select(s => new ControlPointDto(s))
+                .ToListAsync();
+            result.TrimExcess();
+            return result;
+        }
     }
 }

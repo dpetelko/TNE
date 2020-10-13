@@ -25,6 +25,9 @@ namespace TNE.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<DeliveryPointDto>> GetById(Guid id) { return Ok(await _service.GetDtoByIdAsync(id)); }
 
+        [HttpGet("byProvider/{id}")]
+        public async Task<List<DeliveryPointDto>> GetAllBySubDivisionId(Guid id) => await _service.GetAllDtoByProviderIdAsync(id);
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<DeliveryPointDto>> DeleteById(Guid id) { return Ok(await _service.DeleteAsync(id)); }
 

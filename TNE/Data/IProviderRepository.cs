@@ -13,5 +13,6 @@ namespace TNE.Data
         Task<ProviderDto> GetDtoByIdAsync(Guid Id);
         Task<List<ProviderDto>> GetAllDtoAsync();
         Task<List<ProviderDto>> GetAllActiveDtoAsync();
+        Task<List<ProviderDto>> GetAllDtoBySubDivisionIdAsync(Guid id);
     }
 }

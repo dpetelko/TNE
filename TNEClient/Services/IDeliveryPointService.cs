@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using TNE.Dtos;
-using TNE.Models;
+using TNEClient.Dtos;
 
-namespace TNE.Services
+namespace TNEClient.Services
 {
-    public interface IDeliveryPointService : IService<DeliveryPoint>
+    public interface IDeliveryPointService
     {
-        Task<DeliveryPointDto> GetDtoByIdAsync(Guid id);
-        Task<List<DeliveryPointDto>> GetAllDtoAsync();
+        Task<List<DeliveryPointDto>> GetAllAsync();
+        Task<List<DeliveryPointDto>> GetAllActiveAsync();
+        Task<DeliveryPointDto> GetAsync(Guid id);
         Task<DeliveryPointDto> CreateAsync(DeliveryPointDto dto);
         Task<DeliveryPointDto> UpdateAsync(DeliveryPointDto dto);
-        Task<List<DeliveryPointDto>> GetAllActiveDtoAsync();
         Task<bool> DeleteAsync(Guid id);
         Task<bool> UndeleteAsync(Guid id);
         Task<List<DeliveryPointDto>> GetAllDtoByProviderIdAsync(Guid id);

@@ -35,6 +35,12 @@ namespace TNEClient
             services.AddRefitClient<IProviderRepository>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
 
+            services.AddRefitClient<IControlPointRepository>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+
+            services.AddRefitClient<IDeliveryPointRepository>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+
             services.AddRefitClient<IVoltageTransformerRepository>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
 
@@ -47,6 +53,8 @@ namespace TNEClient
             services.AddScoped<ILeadDivisionService, LeadDivisionServiceImpl>();
             services.AddScoped<ISubDivisionService, SubDivisionServiceImpl>();
             services.AddScoped<IProviderService, ProviderServiceImpl>();
+            services.AddScoped<IControlPointService, ControlPointServiceImpl>();
+            services.AddScoped<IDeliveryPointService, DeliveryPointServiceImpl>();
             services.AddScoped<IVoltageTransformerService, VoltageTransformerServiceImpl>();
             services.AddScoped<ICurrentTransformerService, CurrentTransformerServiceImpl>();
             services.AddScoped<IElectricityMeterService, ElectricityMeterServiceImpl>();
@@ -71,13 +79,6 @@ namespace TNEClient
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id:Guid?}");
-                //endpoints.MapGet("/", async context =>
-                //{
-
-                //    var service = context.Request.HttpContext.RequestServices.GetRequiredService<ILeadDivisionService>();
-                //    var countries = await service.GetAllAsync();
-                //    await context.Response.WriteAsync(JsonConvert.SerializeObject(countries));
-                //});
             });
         }
     }

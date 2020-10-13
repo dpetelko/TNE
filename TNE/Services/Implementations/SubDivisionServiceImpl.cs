@@ -12,13 +12,8 @@ namespace TNE.Services.Implementations
     public class SubDivisionServiceImpl : ISubDivisionService
     {
         private readonly ISubDivisionRepository _repo;
-        private readonly ILeadDivisionService _leadDivisionService;
 
-        public SubDivisionServiceImpl(ISubDivisionRepository repo, ILeadDivisionService leadDivisionService)
-        {
-            _repo = repo;
-            _leadDivisionService = leadDivisionService;
-        }
+        public SubDivisionServiceImpl(ISubDivisionRepository repo) {  _repo = repo; }
 
         public void CheckExistsById(Guid id) { _repo.CheckExistsById(id); }
 
@@ -88,10 +83,6 @@ namespace TNE.Services.Implementations
         {
             var entity = new SubDivision();
             entity.Id = dto.Id;
-            //if (!dto.Id.Equals(Guid.Empty))
-            //{
-            //    entity = _repo.GetById(dto.Id);
-            //}
             entity.Name = dto.Name;
             entity.AddressId = dto.AddressId;
             entity.Address.PostCode = dto.PostCode;
@@ -101,13 +92,6 @@ namespace TNE.Services.Implementations
             entity.Address.Street = dto.Street;
             entity.Address.Building = dto.Building;
             entity.Deleted = dto.Deleted;
-
-            //if (!Equals(entity.LeadDivisionId, Guid.Empty) &&
-            //    !Equals(dto.LeadDivisionId, Guid.Empty) &&
-            //    !entity.LeadDivisionId.Equals(dto.LeadDivisionId))
-            //{
-            //    entity.LeadDivision = _leadDivisionService.GetById(dto.LeadDivisionId);
-            //}
             entity.LeadDivisionId = dto.LeadDivisionId;
             return entity;
         }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using Serilog;
 using TNEClient.Dtos;
 using TNEClient.Services;
@@ -13,26 +14,34 @@ namespace TNEClient.Controllers
 {
     public class ProvidersController : Controller
     {
-        private readonly IProviderService _ProviderService;
+        private readonly IProviderService _providerService;
         private readonly ISubDivisionService _subDivisionService;
+        private readonly IControlPointService _controlPointService;
+        private readonly IDeliveryPointService _deliveryPointService;
 
-        public ProvidersController(IProviderService ProviderService, ISubDivisionService subDivisionService)
+        public ProvidersController(IProviderService providerService,
+            ISubDivisionService subDivisionService,
+            IControlPointService controlPointService,
+            IDeliveryPointService deliveryPointService)
         {
-            _ProviderService = ProviderService;
+            _providerService = providerService;
             _subDivisionService = subDivisionService;
+            _controlPointService = controlPointService;
+            _deliveryPointService = deliveryPointService;
         }
-
 
         // GET: ProvidersController
         public async Task<IActionResult> Index()
         {
-            return View(await _ProviderService.GetAllAsync());
+            return View(await _providerService.GetAllAsync());
         }
 
         // GET: ProvidersController/Details/5
         public async Task<ActionResult> Details(Guid id)
         {
-            return View(await _ProviderService.GetAsync(id));
+            ViewBag.ControlPointList = await _controlPointService.GetAllDtoByProviderIdAsync(id);
+            ViewBag.DeliveryPointList = await _deliveryPointService.GetAllDtoByProviderIdAsync(id);
+            return View(await _providerService.GetAsync(id));
         }
 
         // GET: ProvidersController/Create
@@ -49,7 +58,7 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _ProviderService.CreateAsync(form);
+                await _providerService.CreateAsync(form);
                 return RedirectToAction(nameof(Index));
             }
             await GetSubDivisionList();
@@ -60,7 +69,7 @@ namespace TNEClient.Controllers
         public async Task<ActionResult> Edit(Guid id)
         {
             await GetSubDivisionList();
-            return View(await _ProviderService.GetAsync(id));
+            return View(await _providerService.GetAsync(id));
         }
 
         // POST: ProvidersController/Edit/5
@@ -70,7 +79,7 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _ProviderService.UpdateAsync(form);
+                await _providerService.UpdateAsync(form);
                 return RedirectToAction(nameof(Index));
             }
             await GetSubDivisionList();
@@ -80,7 +89,7 @@ namespace TNEClient.Controllers
         // GET: ProvidersController/Delete/5
         public async Task<ActionResult> Undelete(Guid id)
         {
-            await _ProviderService.UndeleteAsync(id);
+            await _providerService.UndeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -89,7 +98,7 @@ namespace TNEClient.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Guid id)
         {
-            await _ProviderService.DeleteAsync(id);
+            await _providerService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
 
         }

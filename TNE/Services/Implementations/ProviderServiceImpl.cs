@@ -12,15 +12,10 @@ namespace TNE.Services.Implementations
     public class ProviderServiceImpl : IProviderService
     {
         private readonly IProviderRepository _repo;
-        private readonly ISubDivisionService _subDivisionService;
 
-        public ProviderServiceImpl(IProviderRepository repo, ISubDivisionService subDivisionService)
-        {
-            _repo = repo;
-            _subDivisionService = subDivisionService;
-        }
+        public ProviderServiceImpl(IProviderRepository repo) { _repo = repo; }
 
-        public void CheckExistsById(Guid id) { _repo.CheckExistsById(id); }
+        public void CheckExistsById(Guid id) => _repo.CheckExistsById(id);
 
         public async Task<ProviderDto> CreateAsync(ProviderDto dto)
         {
@@ -36,9 +31,11 @@ namespace TNE.Services.Implementations
             return await _repo.DeleteAsync(id);
         }
 
-        public async Task<List<ProviderDto>> GetAllActiveDtoAsync() { return await _repo.GetAllActiveDtoAsync(); }
+        public async Task<List<ProviderDto>> GetAllActiveDtoAsync() => await _repo.GetAllActiveDtoAsync();
 
-        public async Task<List<ProviderDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
+        public async Task<List<ProviderDto>> GetAllDtoAsync() => await _repo.GetAllDtoAsync();
+
+        public async Task<List<ProviderDto>> GetAllDtoBySubDivisionIdAsync(Guid id) => await _repo.GetAllDtoBySubDivisionIdAsync(id);
 
         public Provider GetById(Guid id) 
         {
@@ -82,10 +79,7 @@ namespace TNE.Services.Implementations
         private Provider ConvertToEntity(ProviderDto dto)
         {
             var entity = new Provider();
-            if (!dto.Id.Equals(Guid.Empty))
-            {
-                entity = _repo.GetById(dto.Id);
-            }
+            entity.Id = dto.Id;
             entity.Name = dto.Name;
             entity.AddressId = dto.AddressId;
             entity.Address.PostCode = dto.PostCode;
@@ -95,10 +89,7 @@ namespace TNE.Services.Implementations
             entity.Address.Street = dto.Street;
             entity.Address.Building = dto.Building;
             entity.Deleted = dto.Deleted;
-            if (!Equals(dto.SubDivisionId, Guid.Empty) && !entity.SubDivisionId.Equals(dto.SubDivisionId))
-            {
-                entity.SubDivision = _subDivisionService.GetById(dto.SubDivisionId);
-            }
+            entity.SubDivisionId = dto.SubDivisionId;
             return entity;
         }
     }
