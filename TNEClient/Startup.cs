@@ -25,7 +25,6 @@ namespace TNEClient
         public void ConfigureServices(IServiceCollection services)
         {
             
-            
             services.AddRefitClient<ILeadDivisionRepository>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
 

@@ -72,25 +72,25 @@ namespace TNE.Data.Implementations
 
         public CurrentTransformer GetById(Guid id)
         {
-            Log.Debug("Get CurrentTransformer by Id: '{Id}'", id);
+            Log.Debug("Get CurrentTransformer by Id: '{id}'", id);
             var result = _context.CurrentTransformers
                 .AsNoTracking()
                 .Include(b => b.ControlPoint)
                 .SingleOrDefault(b => b.Id == id);
             return (result is null)
-                ? throw new EntityNotFoundException($"CurrentTransformer with Id='{id}' not found!")
+                ? throw new EntityNotFoundException($"CurrentTransformer with id='{id}' not found!")
                 : result;
         }
 
         public async Task<CurrentTransformer> GetByIdAsync(Guid id)
         {
-            Log.Debug("Get CurrentTransformer by Id: '{Id}'", id);
+            Log.Debug("Get CurrentTransformer by Id: '{id}'", id);
             var result = await _context.CurrentTransformers
                 .AsNoTracking()
                 .Include(b => b.ControlPoint)
                 .SingleOrDefaultAsync(b => b.Id == id);
             return (result is null)
-                ? throw new EntityNotFoundException($"CurrentTransformer with Id='{id}' not found!")
+                ? throw new EntityNotFoundException($"CurrentTransformer with id='{id}' not found!")
                 : result;
         }
 

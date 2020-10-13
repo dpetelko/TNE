@@ -81,6 +81,7 @@ namespace TNE.Services.Implementations
                 Id = dto.Id,
                 Name = dto.Name,
                 Deleted = dto.Deleted,
+                ProviderId = dto.ProviderId,
                 CurrentTransformerId = dto.CurrentTransformerId,
                 VoltageTransformerId = dto.VoltageTransformerId,
                 ElectricityMeterId = dto.ElectricityMeterId

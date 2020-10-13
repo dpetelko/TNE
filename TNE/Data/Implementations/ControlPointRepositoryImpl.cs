@@ -30,6 +30,18 @@ namespace TNE.Data.Implementations
             Log.Debug("Creating ControlPoint: {entity}", entity);
             _context.ControlPoints.Add(entity);
             await _context.SaveChangesAsync();
+            _context.Entry(entity)
+                .Reference(c => c.Provider)
+                .Load();
+            _context.Entry(entity)
+                .Reference(c => c.CurrentTransformer)
+                .Load();
+            _context.Entry(entity)
+                .Reference(c => c.VoltageTransformer)
+                .Load();
+            _context.Entry(entity)
+                .Reference(c => c.ElectricityMeter)
+                .Load();
             return entity;
         }
 
@@ -148,6 +160,18 @@ namespace TNE.Data.Implementations
             Log.Debug("Updating ControlPoint: '{entity}'", entity);
             _context.ControlPoints.Update(entity);
             await _context.SaveChangesAsync();
+            _context.Entry(entity)
+               .Reference(c => c.Provider)
+               .Load();
+            _context.Entry(entity)
+                .Reference(c => c.CurrentTransformer)
+                .Load();
+            _context.Entry(entity)
+                .Reference(c => c.VoltageTransformer)
+                .Load();
+            _context.Entry(entity)
+                .Reference(c => c.ElectricityMeter)
+                .Load();
             return entity;
         }
 

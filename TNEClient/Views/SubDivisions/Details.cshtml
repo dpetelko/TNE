@@ -110,7 +110,7 @@
 
 
 
-
+    <input type="button" class="btn btn-secondary" value="« Назад" onclick="history.back()">
     <a asp-action="Index" asp-controller="SubDivisions" class="btn btn-secondary">К списку »</a>
     <a asp-action="Edit" asp-controller="SubDivisions" asp-route-id="@Model.Id" class="btn btn-warning">Редактировать</a>
     <a asp-action="Delete" asp-controller="SubDivisions" asp-route-id="@Model.Id" class="btn btn-danger" id="deleteButton">Удалить</a>
