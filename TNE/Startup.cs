@@ -34,6 +34,7 @@ namespace TNE
             services.AddScoped<ISubDivisionService, SubDivisionServiceImpl>();
             services.AddScoped<IProviderService, ProviderServiceImpl>();
             services.AddScoped<IDeliveryPointService, DeliveryPointServiceImpl>();
+            services.AddScoped<IBillingPointService, BillingPointServiceImpl>();
             services.AddScoped<ICurrentTransformerService, CurrentTransformerServiceImpl>();
             services.AddScoped<IVoltageTransformerService, VoltageTransformerServiceImpl>();
             services.AddScoped<IControlPointService, ControlPointServiceImpl>();
@@ -43,6 +44,7 @@ namespace TNE
             services.AddScoped<ISubDivisionRepository, SubDivisionRepositoryImpl>();
             services.AddScoped<IProviderRepository, ProviderRepositoryImpl>();
             services.AddScoped<IDeliveryPointRepository, DeliveryPointRepositoryImpl>();
+            services.AddScoped<IBillingPointRepository, BillingPointRepositoryImpl>();
             services.AddScoped<ICurrentTransformerRepository, CurrentTransformerRepositoryImpl>();
             services.AddScoped<IVoltageTransformerRepository, VoltageTransformerRepositoryImpl>();
             services.AddScoped<IControlPointRepository, ControlPointRepositoryImpl>();

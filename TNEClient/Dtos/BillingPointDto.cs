@@ -7,14 +7,19 @@ namespace TNEClient.Dtos
     {
         public Guid Id { get; set; }
         [Required]
+        [Display(Name = "Дата старта учета")]
+        [DataType(DataType.Date, ErrorMessage = "Неверное значение поля")]
         public DateTime StartTime { get; set; }
-        [Required]
-        public DateTime EndTime { get; set; }
+        [DataType(DataType.Date, ErrorMessage = "Неверное значение поля")]
+        [Display(Name = "Дата окончания учета")]
+        public DateTime? EndTime { get; set; } = DateTime.MaxValue;
         [Required]
         public Guid ControlPointId { get; set; }
+        [Display(Name = "Имя точки измерения")]
         public string ControlPointName { get; set; }
         [Required]
         public Guid DeliveryPointId { get; set; }
+        [Display(Name = "Имя точки поставки")]
         public string DeliveryPointName { get; set; }
 
         public BillingPointDto() { }

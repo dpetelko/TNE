@@ -1,0 +1,39 @@
+﻿@using TNEClient.Dtos
+@model List<BillingPointDto>
+@{
+    ViewData["Title"] = "ТрансНефтьЭнерго - Расчетный прибор учета электроэнергии";
+}
+
+<div class="container-sm">
+    <h3 align="center">Расчетные приборы учета</h3>
+    <br />
+    <a asp-action="Create" asp-controller="BillingPoints" class="btn btn-secondary">Добавить расчетный прибор</a>
+    <p></p>
+    <table class="table table-stripped table-hover">
+        <tr>
+            <td>Точка измерения</td>
+            <td>Точка поставки</td>
+            <td>Старт контроля</td>
+            <td>Финиш контроля</td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>@item.ControlPointName</td>
+        <td>@item.DeliveryPointName</td>
+        <td>@item.StartTime</td>
+        <td>@item.EndTime</td>
+        <td>
+            <div class="btn-group" role="group">
+
+                <a asp-action="Details" asp-controller="BillingPoints" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">Подробности</a>
+                <a asp-action="Edit" asp-controller="BillingPoints" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm">Редактировать</a>
+
+            </div>
+        </td>
+    </tr>
+        }
+    </table>
+</div>
+
