@@ -85,20 +85,16 @@ namespace TNE.Services.Implementations
 
         private ElectricityMeter ConvertToEntity(ElectricityMeterDto dto)
         {
-            var entity = new ElectricityMeter();
-            if (!dto.Id.Equals(Guid.Empty))
+            var entity = new ElectricityMeter
             {
-                entity = _repo.GetById(dto.Id);
-            }
-            entity.Number = dto.Number;
-            entity.Type = dto.Type;
-            entity.LastVerificationDate = dto.LastVerificationDate;
-            entity.InterTestingPeriodInDays = dto.InterTestingPeriodInDays;
-            entity.Status = dto.Status;
-            if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPointId, dto.ControlPointId))
-            {
-                entity.ControlPoint = _controlPointRepository.GetById(dto.ControlPointId);
-            }
+                Id = dto.Id,
+                Number = dto.Number,
+                Type = dto.Type,
+                LastVerificationDate = dto.LastVerificationDate,
+                InterTestingPeriodInDays = dto.InterTestingPeriodInDays,
+                Status = dto.Status,
+                ControlPointId = dto.ControlPointId
+            };
             return entity;
         }
     }

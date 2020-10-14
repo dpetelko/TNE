@@ -55,7 +55,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _DeliveryPointService.CreateAsync(form);
-                TempData["SuccessMessage"] = "Точка контроля электроэнергии успешно создана!";
+                TempData["SuccessMessage"] = "Точка поставки электроэнергии успешно создана!";
                 return RedirectToAction(nameof(Index));
             }
             await GetProviderList();
@@ -77,7 +77,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _DeliveryPointService.UpdateAsync(form);
-                TempData["SuccessMessage"] = "Точка контроля электроэнергии успешно изменена!";
+                TempData["SuccessMessage"] = "Точка поставки электроэнергии успешно изменена!";
                 return RedirectToAction(nameof(Index));
             }
             await GetProviderList();

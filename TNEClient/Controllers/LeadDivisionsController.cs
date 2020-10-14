@@ -13,6 +13,9 @@ namespace TNEClient.Controllers
 {
     public class LeadDivisionsController : Controller
     {
+        private const string SuccessMessage = "SuccessMessage";
+        private const string CreateSuccess = "Головное подразделение успешно создано!";
+        private const string UpdateSuccess = "Головное подразделение успешно изменено!";
         private readonly ILeadDivisionService _service;
         private readonly ISubDivisionRepository _subRepo;
 
@@ -50,7 +53,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _service.CreateAsync(form);
-                TempData["SuccessMessage"] = "Головное подразделение успешно создано!";
+                TempData[SuccessMessage] = CreateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -70,7 +73,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _service.UpdateAsync(form);
-                TempData["SuccessMessage"] = "Головное подразделение успешно изменено!";
+                TempData[SuccessMessage] = UpdateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             return View();

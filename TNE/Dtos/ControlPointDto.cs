@@ -18,19 +18,19 @@ namespace TNE.Dtos
         public Guid ProviderId { get; set; }
         public string ProviderName { get; set; }
         [Required]
-        public Guid ElectricityMeterId { get; set; }
+        public Guid? ElectricityMeterId { get; set; }
         public string ElectricityMeterNumber { get; set; }
         public string ElectricityMeterType { get; set; }
         [Required]
         public DateTime ElectricityMeterLastVerificationDate { get; set; }
         [Required]
-        public Guid CurrentTransformerId { get; set; }
+        public Guid? CurrentTransformerId { get; set; }
         public string CurrentTransformerNumber { get; set; }
         public string CurrentTransformerType { get; set; }
         public DateTime CurrentTransformerLastVerificationDate { get; set; }
         public int CurrentTransformerTransformationRate { get; set; }
         [Required]
-        public Guid VoltageTransformerId { get; set; }
+        public Guid? VoltageTransformerId { get; set; }
         public string VoltageTransformerNumber { get; set; }
         public string VoltageTransformerType { get; set; }
         public DateTime VoltageTransformerLastVerificationDate { get; set; }

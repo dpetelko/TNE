@@ -14,7 +14,7 @@ namespace TNE.Models
         public string Type { get; set; }
         public DateTime LastVerificationDate { get; set; }
         public int InterTestingPeriodInDays { get; set; } = 365;
-        public Guid ControlPointId { get; set; }
+        public Guid? ControlPointId { get; set; }
         public virtual ControlPoint ControlPoint { get; set; }
         [DefaultValue(Status.InStorage)]
         public Status Status { get; set; }

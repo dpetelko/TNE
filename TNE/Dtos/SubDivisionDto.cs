@@ -7,7 +7,7 @@ namespace TNE.Dto
     public class SubDivisionDto : DivisionDto, IEquatable<SubDivisionDto>
     {
         [Required]
-        public Guid LeadDivisionId { get; set; }
+        public Guid? LeadDivisionId { get; set; }
         public string LeadDivisionName { get; set; }
 
         public SubDivisionDto() { }

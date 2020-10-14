@@ -14,6 +14,9 @@ namespace TNEClient.Controllers
 {
     public class ControlPointsController : Controller
     {
+        private const string CreateSuccess = "Точка контроля электроэнергии успешно создана!";
+        private const string UpdateSuccess = "Точка контроля электроэнергии успешно изменена!";
+        private const string SuccessMessage = "SuccessMessage";
         private readonly IControlPointService _controlPointService;
         private readonly IProviderService _providerService;
         private readonly IVoltageTransformerService _voltageTransformerService;
@@ -42,9 +45,6 @@ namespace TNEClient.Controllers
         // GET: ControlPointsController/Details/5
         public async Task<ActionResult> Details(Guid id)
         {
-            //ViewBag.VoltageTransformer = await _voltageTransformerService.GetDtoByControlPointId(id);
-            //ViewBag.Currentransformer = await _currentTransformerService.GetDtoByControlPointId(id);
-            //ViewBag.ElectricityMeter = await _electricityMeterService.GetDtoByControlPointId(id);
             return View(await _controlPointService.GetAsync(id));
         }
 
@@ -63,7 +63,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _controlPointService.CreateAsync(form);
-                TempData["SuccessMessage"] = "Точка контроля электроэнергии успешно создана!";
+                TempData[SuccessMessage] = CreateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             await GetDevicesList();
@@ -85,7 +85,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _controlPointService.UpdateAsync(form);
-                TempData["SuccessMessage"] = "Точка контроля электроэнергии успешно изменена!";
+                TempData[SuccessMessage] = UpdateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             await GetDevicesList();

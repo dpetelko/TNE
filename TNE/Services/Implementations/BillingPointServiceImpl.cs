@@ -75,21 +75,14 @@ namespace TNE.Services.Implementations
 
         private BillingPoint ConvertToEntity(BillingPointDto dto)
         {
-            var entity = new BillingPoint();
-            if (!dto.Id.Equals(Guid.Empty))
+            var entity = new BillingPoint
             {
-                entity = _repo.GetById(dto.Id);
-            }
-            entity.StartTime = dto.StartTime;
-            entity.EndTime = dto.EndTime;
-            if (!Equals(dto.ControlPointId, Guid.Empty) && !Equals(entity.ControlPointId, dto.ControlPointId))
-            {
-                entity.ControlPoint = _controlPointRepository.GetById(dto.ControlPointId);
-            }
-            if (!Equals(dto.DeliveryPointId, Guid.Empty) && !Equals(entity.DeliveryPointId, dto.DeliveryPointId))
-            {
-                entity.DeliveryPoint = _deliveryPointRepository.GetById(dto.ControlPointId);
-            }
+                Id = dto.Id,
+                StartTime = dto.StartTime,
+                EndTime = dto.EndTime,
+                ControlPointId = dto.ControlPointId,
+                DeliveryPointId = dto.DeliveryPointId
+            };
             return entity;
         }
     }

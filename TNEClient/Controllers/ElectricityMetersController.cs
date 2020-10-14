@@ -10,6 +10,9 @@ namespace TNEClient.Controllers
 {
     public class ElectricityMetersController : Controller
     {
+        private const string CreateSuccess = "Счетчик электроэнергии успешно создан!";
+        private const string SuccessMessage = "SuccessMessage";
+        private const string UpdateSuccess = "Счетчик электроэнергии успешно изменен!";
         private readonly IElectricityMeterService _service;
 
         public ElectricityMetersController(IElectricityMeterService service) { _service = service; }
@@ -41,7 +44,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _service.CreateAsync(form);
-                TempData["SuccessMessage"] = "Счетчик электроэнергии успешно создан!";
+                TempData[SuccessMessage] = CreateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -61,7 +64,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _service.UpdateAsync(form);
-                TempData["SuccessMessage"] = "Счетчик электроэнергии успешно изменен!";
+                TempData[SuccessMessage] = UpdateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             return View();

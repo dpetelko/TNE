@@ -27,7 +27,7 @@ namespace TNE.Models
         public virtual VoltageTransformer VoltageTransformer { get; set; }
         public Guid? ProviderId { get; set; }
         public virtual Provider Provider { get; set; }
-        public List<BillingPoint> BillingPoints { get; set; }
+        //public List<BillingPoint> BillingPoints { get; set; }
         [DefaultValue(false)]
         public bool Deleted { get; set; }
 

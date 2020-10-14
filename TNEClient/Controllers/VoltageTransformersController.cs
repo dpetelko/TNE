@@ -10,6 +10,9 @@ namespace TNEClient.Controllers
 {
     public class VoltageTransformersController : Controller
     {
+        private const string SuccessMessage = "SuccessMessage";
+        private const string CreateSuccess = "Трансформатор напряжения успешно создан!";
+        private const string UpdateSuccess = "Трансформатор напряжения успешно изменен!";
         private readonly IVoltageTransformerService _service;
 
         public VoltageTransformersController(IVoltageTransformerService service) { _service = service; }
@@ -41,7 +44,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _service.CreateAsync(form);
-                TempData["SuccessMessage"] = "Трансформатор напряжения успешно создан!";
+                TempData[SuccessMessage] = CreateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -61,7 +64,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _service.UpdateAsync(form);
-                TempData["SuccessMessage"] = "Трансформатор напряжения успешно изменен!";
+                TempData[SuccessMessage] = UpdateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             return View();

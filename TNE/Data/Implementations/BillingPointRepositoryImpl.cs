@@ -28,6 +28,12 @@ namespace TNE.Data.Implementations
             Log.Debug("Creating BillingPoint: {entity}", entity);
             _context.BillingPoints.Add(entity);
             await _context.SaveChangesAsync();
+            _context.Entry(entity)
+               .Reference(c => c.ControlPoint)
+               .Load();
+            _context.Entry(entity)
+                .Reference(c => c.DeliveryPoint)
+                .Load();
             return entity;
         }
 
@@ -103,6 +109,12 @@ namespace TNE.Data.Implementations
             Log.Debug("Updating BillingPoint: '{entity}'", entity);
             _context.BillingPoints.Update(entity);
             await _context.SaveChangesAsync();
+            _context.Entry(entity)
+               .Reference(c => c.ControlPoint)
+               .Load();
+            _context.Entry(entity)
+                .Reference(c => c.DeliveryPoint)
+                .Load();
             return entity;
         }
     }

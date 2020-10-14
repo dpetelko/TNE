@@ -13,6 +13,9 @@ namespace TNEClient.Controllers
 {
     public class SubDivisionsController : Controller
     {
+        private const string SuccessMessage = "SuccessMessage";
+        private const string CreateSuccess = "Дочернее подразделение успешно создано!";
+        private const string UpdateSuccess = "Дочернее подразделение успешно изменено!";
         private readonly ISubDivisionService _subDivisionService;
         private readonly ILeadDivisionService _leadDivisionService;
         private readonly IProviderService _providerService;
@@ -52,7 +55,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _subDivisionService.CreateAsync(form);
-                TempData["SuccessMessage"] = "Дочернее подразделение успешно создано!";
+                TempData[SuccessMessage] = CreateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             await GetLeadDivisionList();
@@ -74,7 +77,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _subDivisionService.UpdateAsync(form);
-                TempData["SuccessMessage"] = "Дочернее подразделение успешно изменено!";
+                TempData[SuccessMessage] = UpdateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             await GetLeadDivisionList();

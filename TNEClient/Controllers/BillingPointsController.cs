@@ -14,6 +14,9 @@ namespace TNEClient.Controllers
 {
     public class BillingPointsController : Controller
     {
+        private const string CreateSuccess = "Расчетный прибор учета успешно создан!";
+        private const string UpdateSuccess = "Расчетный прибор учета успешно изменён!";
+        private const string SuccessMessage = "SuccessMessage";
         private readonly IBillingPointService _BillingPointService;
         private readonly IControlPointService _controlPointService;
         private readonly IDeliveryPointService _deliveryPointService;
@@ -56,7 +59,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _BillingPointService.CreateAsync(form);
-                TempData["SuccessMessage"] = "Точка контроля электроэнергии успешно создана!";
+                TempData[SuccessMessage] = CreateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             await GetPointList();
@@ -78,7 +81,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _BillingPointService.UpdateAsync(form);
-                TempData["SuccessMessage"] = "Точка контроля электроэнергии успешно изменена!";
+                TempData[SuccessMessage] = UpdateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             await GetPointList();

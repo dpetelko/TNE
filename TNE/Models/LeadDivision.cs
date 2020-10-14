@@ -8,7 +8,7 @@ namespace TNE.Models
 {
     public class LeadDivision : Division, IEquatable<LeadDivision>
     {
-        public List<SubDivision> SubDivisions { get; set; }
+        //public List<SubDivision> SubDivisions { get; set; }
 
         public LeadDivision() { }
 

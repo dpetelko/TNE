@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,9 +8,10 @@ namespace TNE.Models
 {
     public class SubDivision : Division, IEquatable<SubDivision>
     {
-        public Guid LeadDivisionId { get; set; }
+        public Guid? LeadDivisionId { get; set; }
+        [ForeignKey("LeadDivisionId")]
         public LeadDivision LeadDivision { get; set; }
-        public List<Provider> Providers { get; set; }
+        //public List<Provider> Providers { get; set; }
 
         public SubDivision() { }
 

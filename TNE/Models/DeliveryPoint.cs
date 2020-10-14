@@ -17,7 +17,7 @@ namespace TNE.Models
         public int MaxPower { get; set; }
         public Guid? ProviderId { get; set; }
         public virtual Provider Provider { get; set; }// = new Provider();
-        public List<BillingPoint> BillingPoints { get; set; }
+        //public List<BillingPoint> BillingPoints { get; set; }
         [DefaultValue(false)]
         public bool Deleted { get; set; }
 

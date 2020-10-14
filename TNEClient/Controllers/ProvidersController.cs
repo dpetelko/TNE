@@ -14,6 +14,9 @@ namespace TNEClient.Controllers
 {
     public class ProvidersController : Controller
     {
+        private const string SuccessMessage = "SuccessMessage";
+        private const string CreateSuccess = "Объект потребления успешно создан!";
+        private const string UpdateSuccess = "Объект потребления успешно изменен!";
         private readonly IProviderService _providerService;
         private readonly ISubDivisionService _subDivisionService;
         private readonly IControlPointService _controlPointService;
@@ -59,7 +62,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _providerService.CreateAsync(form);
-                TempData["SuccessMessage"] = "Объект потребления успешно создан!";
+                TempData[SuccessMessage] = CreateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             await GetSubDivisionList();
@@ -81,7 +84,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _providerService.UpdateAsync(form);
-                TempData["SuccessMessage"] = "Объект потребления успешно изменен!";
+                TempData[SuccessMessage] = UpdateSuccess;
                 return RedirectToAction(nameof(Index));
             }
             await GetSubDivisionList();

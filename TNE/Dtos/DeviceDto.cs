@@ -14,7 +14,7 @@ namespace TNE.Dtos
         //[Required]
         public DateTime LastVerificationDate { get; set; }
         public int InterTestingPeriodInDays { get; set; } = 365;
-        public Guid ControlPointId { get; set; }
+        public Guid? ControlPointId { get; set; }
         public string ControlPointName { get; set; }
         //[EnumDataType(typeof(Status), ErrorMessage = "Invalid Status value")]
         public Status Status { get; set; } = Status.InStorage;
