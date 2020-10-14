@@ -50,6 +50,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _service.CreateAsync(form);
+                TempData["SuccessMessage"] = "Головное подразделение успешно создано!";
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -69,6 +70,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _service.UpdateAsync(form);
+                TempData["SuccessMessage"] = "Головное подразделение успешно изменено!";
                 return RedirectToAction(nameof(Index));
             }
             return View();

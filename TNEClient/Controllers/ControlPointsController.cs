@@ -63,6 +63,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _controlPointService.CreateAsync(form);
+                TempData["SuccessMessage"] = "Точка контроля электроэнергии успешно создана!";
                 return RedirectToAction(nameof(Index));
             }
             await GetDevicesList();
@@ -84,6 +85,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _controlPointService.UpdateAsync(form);
+                TempData["SuccessMessage"] = "Точка контроля электроэнергии успешно изменена!";
                 return RedirectToAction(nameof(Index));
             }
             await GetDevicesList();

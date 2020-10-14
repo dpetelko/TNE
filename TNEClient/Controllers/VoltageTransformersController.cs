@@ -41,6 +41,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _service.CreateAsync(form);
+                TempData["SuccessMessage"] = "Трансформатор напряжения успешно создан!";
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -60,6 +61,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _service.UpdateAsync(form);
+                TempData["SuccessMessage"] = "Трансформатор напряжения успешно изменен!";
                 return RedirectToAction(nameof(Index));
             }
             return View();

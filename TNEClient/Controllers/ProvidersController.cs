@@ -59,6 +59,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _providerService.CreateAsync(form);
+                TempData["SuccessMessage"] = "Объект потребления успешно создан!";
                 return RedirectToAction(nameof(Index));
             }
             await GetSubDivisionList();
@@ -80,6 +81,7 @@ namespace TNEClient.Controllers
             if (ModelState.IsValid)
             {
                 await _providerService.UpdateAsync(form);
+                TempData["SuccessMessage"] = "Объект потребления успешно изменен!";
                 return RedirectToAction(nameof(Index));
             }
             await GetSubDivisionList();
