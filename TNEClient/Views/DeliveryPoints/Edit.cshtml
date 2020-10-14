@@ -1,0 +1,40 @@
+﻿@using System;
+@model DeliveryPointDto
+
+@{
+    ViewData["Title"] = "ТрансНефтьЭнерго - Точки поставки электроэнергии";
+}
+
+<div class="container-lg">
+    <br>
+    <h3 align="center">Редактирование точки поставки электроэнергии</h3>
+    <br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <form id="delete" asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="ProviderName" class="control-label"></label>
+                    <select asp-for="ProviderId" class="form-control" asp-items="ViewBag.ProviderList"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MaxPower" class="control-label"></label>
+                    <input asp-for="MaxPower" class="form-control" />
+                    <span asp-validation-for="MaxPower" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a asp-action="Index" onclick="return confirm('Изменения не будут сохранены. Уверены, что хотите покинуть страницу?')" class="btn btn-danger">К списку »</a>
+                    <input type="submit" value="Сохранить" onclick="return confirm('Сохранить изменения?')" class="btn btn-warning" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

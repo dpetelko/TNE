@@ -23,7 +23,7 @@
                         <div class="dropdown-menu bg-info">
                             <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="LeadDivisions">Головные организации</a>
                             <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="SubDivisions">Дочерние организации</a>
-                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="SubDivisions">Объекты потребления</a>
+                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="Providers">Объекты потребления</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="ControlPoints">Точки измерения</a>
                             <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="DeliveryPoints">Точки поставки</a>
@@ -63,7 +63,7 @@
 
     </div>
 
-    <footer>
+    @*<footer>
         @if (IsSectionDefined("Footer"))
         {
             @RenderSection("Footer")
@@ -76,6 +76,6 @@
 
             </div>
         }
-    </footer>
+    </footer>*@
 </body>
 </html>

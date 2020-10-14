@@ -28,6 +28,9 @@ namespace TNE.Data.Implementations
             Log.Debug("Creating DeliveryPoint: {entity}", entity);
             _context.DeliveryPoints.Add(entity);
             await _context.SaveChangesAsync();
+            _context.Entry(entity)
+              .Reference(c => c.Provider)
+              .Load();
             return entity;
         }
 
@@ -145,6 +148,9 @@ namespace TNE.Data.Implementations
             Log.Debug("Updating DeliveryPoint: '{entity}'", entity);
             _context.DeliveryPoints.Update(entity);
             await _context.SaveChangesAsync();
+            _context.Entry(entity)
+              .Reference(c => c.Provider)
+              .Load();
             return entity;
         }
     }

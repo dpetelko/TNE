@@ -11,7 +11,7 @@ namespace TNE.Dtos
         public Guid Id { get; set; }
         [Required]
         [StringLength(10, MinimumLength = 3, ErrorMessage = "The {0} length must be between {2} and {1} characters")]
-        [UniqueField]
+        //[UniqueField]
         public string Name { get; set; }
         [Required]
         public int MaxPower { get; set; }
