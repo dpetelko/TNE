@@ -43,6 +43,16 @@ namespace TNE.Services.Implementations
             return await _repo.GetAllDtoAsync();
         }
 
+        public async Task<List<BillingPointDto>> GetAllDtoByControlPointIdAsync(Guid id)
+        {
+            return await _repo.GetAllDtoByControlPointIdAsync(id);
+        }
+
+        public async Task<List<BillingPointDto>> GetAllDtoByDeliveryPointIdAsync(Guid id)
+        {
+            return await _repo.GetAllDtoByDeliveryPointIdAsync(id);
+        }
+
         public BillingPoint GetById(Guid id)
         {
             return _repo.GetById(id);

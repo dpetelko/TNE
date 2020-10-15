@@ -8,9 +8,9 @@ namespace TNEClient.Dtos
         public Guid Id { get; set; }
         [Required]
         [Display(Name = "Дата старта учета")]
-        [DataType(DataType.Date, ErrorMessage = "Неверное значение поля")]
+        //[DataType(DataType.Date, ErrorMessage = "Неверное значение поля")]
         public DateTime StartTime { get; set; }
-        [DataType(DataType.Date, ErrorMessage = "Неверное значение поля")]
+        //[DataType(DataType.Date, ErrorMessage = "Неверное значение поля")]
         [Display(Name = "Дата окончания учета")]
         public DateTime? EndTime { get; set; }
         [Required]

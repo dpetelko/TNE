@@ -64,6 +64,34 @@ namespace TNE.Data.Implementations
             return result;
         }
 
+        public async Task<List<BillingPointDto>> GetAllDtoByControlPointIdAsync(Guid id)
+        {
+            Log.Debug("Get GetAllDtoByControlPointIdAsync by ID: '{id}'", id);
+            var result = await _context.BillingPoints
+                .AsNoTracking()
+                .Include(b => b.ControlPoint)
+                .Include(b => b.DeliveryPoint)
+                .Where(s => s.ControlPointId == id)
+                .Select(s => new BillingPointDto(s))
+                .ToListAsync();
+            result.TrimExcess();
+            return result;
+        }
+
+        public async Task<List<BillingPointDto>> GetAllDtoByDeliveryPointIdAsync(Guid id)
+        {
+            Log.Debug("Get GetAllDtoByDeliveryPointIdAsync by ID: '{id}'", id);
+            var result = await _context.BillingPoints
+                .AsNoTracking()
+                .Include(b => b.ControlPoint)
+                .Include(b => b.DeliveryPoint)
+                .Where(s => s.DeliveryPointId == id)
+                .Select(s => new BillingPointDto(s))
+                .ToListAsync();
+            result.TrimExcess();
+            return result;
+        }
+
         public BillingPoint GetById(Guid id)
         {
             Log.Debug("Get BillingPoint by Id: '{Id}'", id);

@@ -18,18 +18,21 @@ namespace TNEClient.Controllers
         private const string UpdateSuccess = "Точка контроля электроэнергии успешно изменена!";
         private const string SuccessMessage = "SuccessMessage";
         private readonly IControlPointService _controlPointService;
+        private readonly IBillingPointService _billingPointService;
         private readonly IProviderService _providerService;
         private readonly IVoltageTransformerService _voltageTransformerService;
         private readonly ICurrentTransformerService _currentTransformerService;
         private readonly IElectricityMeterService _electricityMeterService;
 
         public ControlPointsController(IControlPointService controlPointService,
+            IBillingPointService billingPointService,
             IProviderService providerService,
             IVoltageTransformerService voltageTransformerService,
             ICurrentTransformerService currentTransformerService,
             IElectricityMeterService electricityMeterService)
         {
             _controlPointService = controlPointService;
+            _billingPointService = billingPointService;
             _providerService = providerService;
             _voltageTransformerService = voltageTransformerService;
             _currentTransformerService = currentTransformerService;
@@ -45,6 +48,7 @@ namespace TNEClient.Controllers
         // GET: ControlPointsController/Details/5
         public async Task<ActionResult> Details(Guid id)
         {
+            ViewBag.BillingPointList = await _billingPointService.GetAllDtoByControlPointIdAsync(id);
             return View(await _controlPointService.GetAsync(id));
         }
 

@@ -24,6 +24,12 @@ namespace TNE.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BillingPointDto>> GetById(Guid id) { return Ok(await _service.GetDtoByIdAsync(id)); }
 
+        [HttpGet("ControlPoint/{id}")]
+        public async Task<List<BillingPointDto>> GetByControlPointId(Guid id) { return await _service.GetAllDtoByControlPointIdAsync(id); }
+
+        [HttpGet("DeliveryPoint/{id}")]
+        public async Task<List<BillingPointDto>> GetByDeliveryPointId(Guid id) { return await _service.GetAllDtoByDeliveryPointIdAsync(id); }
+
         [HttpPost]
         public async Task<ActionResult<BillingPointDto>> Create([FromBody] BillingPointDto dto)
         {

@@ -1,106 +1,55 @@
 ﻿@using TNEClient.Dtos
-@model ControlPointDto
+@model BillingPointDto
 @{
-    ViewData["Title"] = "ТНЭ - " + @Model.Name;
+    ViewData["Title"] = "ТНЭ - Точка учета электроэнергии";
 }
 
 <div class="container-sm">
-    <h3 align="center">Объект потребления - подробности</h3>
+    <h3 align="center">Точка учета электроэнергии - подробности</h3>
     <br />
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Наименование</label>
+        <label class="col-sm-2 col-form-label">Старт учета</label>
         <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext" value=@Model.Name>
+            <input type="text" readonly class="form-control-plaintext" value=@Model.StartTime>
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Наименование объекта потребления</label>
+        <label class="col-sm-2 col-form-label">Финиш учета</label>
         <div class="col-sm-10">
-            <input type="text" readonly class="form-control-plaintext" value=@Model.ProviderName>
+            <input type="text" readonly class="form-control-plaintext" value=@Model.EndTime>
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Приборы</label>
-    </div>
+        <label class="col-sm-8 col-form-label">Точки измерения и поставки электроэнергии</label>
+        </div>
     <div>
         <table class="table table-stripped table-hover">
             <tr>
                 <td>Вид</td>
-                <td>Тип</td>
-                <td>Номер</td>
-                <td>КТ</td>
-                <td>Дата последней поверки</td>
+                <td>Наименование</td>
                 <td></td>
             </tr>
 
             <tr>
-                <td>Трансформатор тока</td>
-                <td>@Model.CurrentTransformerType</td>
-                <td>@Model.CurrentTransformerNumber</td>
-                <td>@Model.CurrentTransformerTransformationRate</td>
-                <td>@Model.CurrentTransformerLastVerificationDate.Date.ToShortDateString()</td>
+                <td>Точка измерения</td>
+                <td>@Model.ControlPointName</td>
                 <td>
-                    <a asp-action="Details" asp-controller="CurrentTransformers" asp-route-id="@Model.CurrentTransformerId" class="btn btn-outline-success btn-sm">Подробности</a>
+                    <a asp-action="Details" asp-controller="ControlPoints" asp-route-id="@Model.ControlPointId" class="btn btn-outline-success btn-sm">Подробности</a>
                 </td>
             </tr>
 
             <tr>
-                <td>Трансформатор напряжения</td>
-                <td>@Model.VoltageTransformerType</td>
-                <td>@Model.VoltageTransformerNumber</td>
-                <td>@Model.VoltageTransformerTransformationRate</td>
-                <td>@Model.VoltageTransformerLastVerificationDate.Date.ToShortDateString()</td>
+                <td>Точка поставки</td>
+                <td>@Model.DeliveryPointName</td>
                 <td>
-                    <a asp-action="Details" asp-controller="VoltageTransformers" asp-route-id="@Model.VoltageTransformerId" class="btn btn-outline-success btn-sm">Подробности</a>
+                    <a asp-action="Details" asp-controller="VoltageTransformers" asp-route-id="@Model.DeliveryPointId" class="btn btn-outline-success btn-sm">Подробности</a>
                 </td>
             </tr>
-
-            <tr>
-                <td>Счетчик элекрической энергии</td>
-                <td>@Model.ElectricityMeterType</td>
-                <td>@Model.ElectricityMeterNumber</td>
-                <td></td>
-                <td>@Model.ElectricityMeterLastVerificationDate.Date.ToShortDateString()</td>
-                <td>
-                    <a asp-action="Details" asp-controller="ElectricityMeters" asp-route-id="@Model.ElectricityMeterId" class="btn btn-outline-success btn-sm">Подробности</a>
-                </td>
-            </tr>
-
         </table>
     </div>
+        
     <input type="button" class="btn btn-secondary" value="« Назад" onclick="history.back()">
-    <a asp-action="Index" asp-controller="ControlPoints" class="btn btn-secondary">К списку »</a>
-    <a asp-action="Edit" asp-controller="ControlPoints" asp-route-id="@Model.Id" class="btn btn-warning">Редактировать</a>
+    <a asp-action="Index" asp-controller="BillingPoints" class="btn btn-danger">К списку »</a>
+    <a asp-action="Edit" asp-controller="BillingPoints" asp-route-id="@Model.Id" class="btn btn-warning">Редактировать</a>
 
 </div>
-
-<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Подтверждение удаления</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Вы уверены, что хотите удалить эту запись?</p>
-            </div>
-            <div class="modal-footer">
-                <a href="" class="btn btn-danger" id="delRef">Да, конечно</a>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    $('document').ready(function () {
-        $('#deleteButton').on('click', function (event) {
-            event.preventDefault();
-            var href = $(this).attr('href');
-            $('#deleteModal #delRef').attr('href', href);
-            $('#deleteModal').modal();
-        });
-    });
-</script>

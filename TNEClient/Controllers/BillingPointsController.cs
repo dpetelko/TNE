@@ -46,7 +46,7 @@ namespace TNEClient.Controllers
         public async Task<ActionResult> Create()
         {
             await GetPointList();
-            return View(new BillingPointDto());
+            return View();
         }
 
         // POST: BillingPointsController/Create

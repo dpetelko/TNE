@@ -11,5 +11,7 @@ namespace TNEClient.Services
         Task<BillingPointDto> GetAsync(Guid id);
         Task<BillingPointDto> CreateAsync(BillingPointDto dto);
         Task<BillingPointDto> UpdateAsync(BillingPointDto dto);
+        Task<List<BillingPointDto>> GetAllDtoByControlPointIdAsync(Guid id);
+        Task<List<BillingPointDto>> GetAllDtoByDeliveryPointIdAsync(Guid id);
     }
 }
