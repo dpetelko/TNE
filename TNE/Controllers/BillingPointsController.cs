@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TNE.Dto;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Services;
 
 namespace TNE.Controllers
@@ -29,6 +30,9 @@ namespace TNE.Controllers
 
         [HttpGet("DeliveryPoint/{id}")]
         public async Task<List<BillingPointDto>> GetByDeliveryPointId(Guid id) { return await _service.GetAllDtoByDeliveryPointIdAsync(id); }
+
+        [HttpGet("filter")]
+        public async Task<List<BillingPointDto>> GetByFilterId([FromBody] BillingPointFilter filter) { return await _service.GetAllDtoByFilterAsync(filter); }
 
         [HttpPost]
         public async Task<ActionResult<BillingPointDto>> Create([FromBody] BillingPointDto dto)

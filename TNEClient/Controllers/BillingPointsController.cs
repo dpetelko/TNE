@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Serilog;
 using TNEClient.Dtos;
+using TNEClient.Dtos.SearchFilters;
 using TNEClient.Services;
 
 namespace TNEClient.Controllers
@@ -31,9 +33,19 @@ namespace TNEClient.Controllers
         }
 
         // GET: BillingPointsController
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(BillingPointFilter filter)
         {
-            return View(await _BillingPointService.GetAllAsync());
+            //Log.Error("!!!!!!!!!!!Filter is {filter}", filter);
+            //await GetPointList();
+            //return (!filter.IsEmpty())
+            //    ? View(await _BillingPointService.GetAllAsync()) 
+            //    : View(await _BillingPointService.GetAllDtoByFilterAsync(filter));
+
+
+            Log.Error("!!!!!!!!!!!Filter is {filter}", filter);
+            await GetPointList();
+            return View(await _BillingPointService.GetAllDtoByFilterAsync(filter));
+                
         }
 
         // GET: BillingPointsController/Details/5

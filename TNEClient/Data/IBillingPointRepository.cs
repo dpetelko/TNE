@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TNEClient.Dtos;
+using TNEClient.Dtos.SearchFilters;
 
 namespace TNEClient.Data
 {
@@ -19,6 +20,9 @@ namespace TNEClient.Data
 
         [Get("/api/v1/BillingPoints/DeliveryPoint/{id}")]
         Task<List<BillingPointDto>> GetByDeliveryPointAsync(Guid id);
+
+        [Get("/api/v1/BillingPoints/filter")]
+        Task<List<BillingPointDto>> GetByFilterAsync([Body] BillingPointFilter filter);
 
         [Post("/api/v1/BillingPoints")]
         Task<BillingPointDto> CreateAsync([Body] BillingPointDto dto);

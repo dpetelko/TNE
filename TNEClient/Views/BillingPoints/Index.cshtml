@@ -1,5 +1,6 @@
-﻿@using TNEClient.Dtos
+﻿@using TNEClient.Dtos.SearchFilters
 @model List<BillingPointDto>
+
 @{
     ViewData["Title"] = "ТрансНефтьЭнерго - Расчетный прибор учета электроэнергии";
 }
@@ -9,30 +10,61 @@
     <br />
     <a asp-action="Create" asp-controller="BillingPoints" class="btn btn-secondary">Добавить расчетный прибор</a>
     <p></p>
+
+    <div class="col-md-10">
+        <form asp-action="Index" method="get" >
+
+            <div class="form-group">
+                <label class="control-label">Точка контроля</label>
+                <select name="ControlPointId" class="form-control" value=@Guid.Empty asp-items="ViewBag.ControlPointList">
+                    <option value=@Guid.Empty selected>Не выбрано</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Точка поставки</label>
+                <select name="DeliveryPointId" class="form-control" asp-items="ViewBag.DeliveryPointList">
+                    <option value=@Guid.Empty selected>Не выбрано</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Дата начала</label>
+                <input type="date" name="StartTime" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Дата окончания</label>
+                <input type="date" name="EndTime" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Поиск по фильтру" class="btn btn-warning" />
+            </div>
+        </form>
+    </div>
+
+    <p></p>
     <table class="table table-stripped table-hover">
         <tr>
-            <td>Точка измерения</td>
-            <td>Точка поставки</td>
-            <td>Старт контроля</td>
-            <td>Финиш контроля</td>
+            <td><strong>Точка измерения</strong></td>
+            <td><strong>Точка поставки</strong></td>
+            <td><strong>Старт контроля</strong></td>
+            <td><strong>Финиш контроля</strong></td>
             <td></td>
         </tr>
         @foreach (var item in Model)
         {
-    <tr>
-        <td>@item.ControlPointName</td>
-        <td>@item.DeliveryPointName</td>
-        <td>@item.StartTime</td>
-        <td>@item.EndTime</td>
-        <td>
-            <div class="btn-group" role="group">
+            <tr>
+                <td>@item.ControlPointName</td>
+                <td>@item.DeliveryPointName</td>
+                <td>@item.StartTime</td>
+                <td>@item.EndTime</td>
+                <td>
+                    <div class="btn-group" role="group">
 
-                <a asp-action="Details" asp-controller="BillingPoints" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">Подробности</a>
-                <a asp-action="Edit" asp-controller="BillingPoints" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm">Редактировать</a>
+                        <a asp-action="Details" asp-controller="BillingPoints" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">Подробности</a>
+                        <a asp-action="Edit" asp-controller="BillingPoints" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm">Редактировать</a>
 
-            </div>
-        </td>
-    </tr>
+                    </div>
+                </td>
+            </tr>
         }
     </table>
 </div>

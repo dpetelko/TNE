@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TNE.Data;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Models;
 
 namespace TNE.Services.Implementations
@@ -12,23 +13,10 @@ namespace TNE.Services.Implementations
     public class BillingPointServiceImpl : IBillingPointService
     {
         private readonly IBillingPointRepository _repo;
-        private readonly IControlPointRepository _controlPointRepository;
-        private readonly IDeliveryPointRepository _deliveryPointRepository;
 
-        public BillingPointServiceImpl(
-            IBillingPointRepository repo,
-            IControlPointRepository controlPointRepository,
-            IDeliveryPointRepository deliveryPointRepository)
-        {
-            _repo = repo;
-            _controlPointRepository = controlPointRepository;
-            _deliveryPointRepository = deliveryPointRepository;
-        }
+        public BillingPointServiceImpl(IBillingPointRepository repo) => _repo = repo;
 
-        public void CheckExistsById(Guid id)
-        {
-            _repo.CheckExistsById(id);
-        }
+        public void CheckExistsById(Guid id) => _repo.CheckExistsById(id);
 
         public async Task<BillingPointDto> CreateAsync(BillingPointDto dto)
         {
@@ -38,35 +26,19 @@ namespace TNE.Services.Implementations
             return new BillingPointDto(result);
         }
 
-        public async Task<List<BillingPointDto>> GetAllDtoAsync()
-        {
-            return await _repo.GetAllDtoAsync();
-        }
+        public async Task<List<BillingPointDto>> GetAllDtoAsync() => await _repo.GetAllDtoAsync();
 
-        public async Task<List<BillingPointDto>> GetAllDtoByControlPointIdAsync(Guid id)
-        {
-            return await _repo.GetAllDtoByControlPointIdAsync(id);
-        }
+        public async Task<List<BillingPointDto>> GetAllDtoByControlPointIdAsync(Guid id) => await _repo.GetAllDtoByControlPointIdAsync(id);
 
-        public async Task<List<BillingPointDto>> GetAllDtoByDeliveryPointIdAsync(Guid id)
-        {
-            return await _repo.GetAllDtoByDeliveryPointIdAsync(id);
-        }
+        public async Task<List<BillingPointDto>> GetAllDtoByDeliveryPointIdAsync(Guid id) => await _repo.GetAllDtoByDeliveryPointIdAsync(id);
 
-        public BillingPoint GetById(Guid id)
-        {
-            return _repo.GetById(id);
-        }
+        public async Task<List<BillingPointDto>> GetAllDtoByFilterAsync(BillingPointFilter filter) => await _repo.GetAllDtoByFilterAsync(filter);
 
-        public async Task<BillingPoint> GetByIdAsync(Guid id)
-        {
-            return await _repo.GetByIdAsync(id);
-        }
+        public BillingPoint GetById(Guid id) => _repo.GetById(id);
 
-        public async Task<BillingPointDto> GetDtoByIdAsync(Guid id)
-        {
-            return await _repo.GetDtoByIdAsync(id);
-        }
+        public async Task<BillingPoint> GetByIdAsync(Guid id) => await _repo.GetByIdAsync(id);
+
+        public async Task<BillingPointDto> GetDtoByIdAsync(Guid id) => await _repo.GetDtoByIdAsync(id);
 
         public bool IsFieldUnique(Guid id, string fieldName, object fieldValue)
         {

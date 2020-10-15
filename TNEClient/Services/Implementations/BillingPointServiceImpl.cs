@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TNEClient.Data;
 using TNEClient.Dtos;
+using TNEClient.Dtos.SearchFilters;
 
 namespace TNEClient.Services.Implementations
 {
@@ -20,6 +21,8 @@ namespace TNEClient.Services.Implementations
         public async Task<List<BillingPointDto>> GetAllDtoByControlPointIdAsync(Guid id) => await _repo.GetByControlPointAsync(id);
 
         public async Task<List<BillingPointDto>> GetAllDtoByDeliveryPointIdAsync(Guid id) => await _repo.GetByControlPointAsync(id);
+
+        public async Task<List<BillingPointDto>> GetAllDtoByFilterAsync(BillingPointFilter filter) => await _repo.GetByFilterAsync(filter);
 
         public async Task<BillingPointDto> GetAsync(Guid id) => await _repo.GetAsync(id);
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LinqKit;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Models;
 
 namespace TNE.Data.Implementations
@@ -145,5 +147,45 @@ namespace TNE.Data.Implementations
                 .Load();
             return entity;
         }
+
+        public async Task<List<BillingPointDto>> GetAllDtoByFilterAsync(BillingPointFilter searchFilter)
+        {
+            Log.Debug("GetAllDtoByFilterAsync BillingPointDto by Filter: {searchFilter}", searchFilter);
+
+
+
+
+                var predicate = PredicateBuilder.New<BillingPoint>();
+
+                if (searchFilter.ControlPointId != Guid.Empty)
+                    predicate = predicate.And(s => s.ControlPointId == searchFilter.ControlPointId);
+
+                if (searchFilter.DeliveryPointId != Guid.Empty)
+                    predicate = predicate.And(s => s.DeliveryPointId == searchFilter.DeliveryPointId);
+
+                if (searchFilter.StartTime.HasValue)
+                    predicate = predicate.And(s => DateTime.Compare(s.StartTime, (DateTime)searchFilter.StartTime) >= 0);
+
+
+                if (searchFilter.EndTime.HasValue)
+                    predicate = predicate.And(s => DateTime.Compare(s.EndTime, (DateTime)searchFilter.EndTime) <= 0);
+
+                 var result = await _context.BillingPoints
+                .AsNoTracking()
+                .Include(s => s.ControlPoint)
+                .Include(s => s.DeliveryPoint)
+                .Where(predicate)
+                .Select(s => new BillingPointDto(s))
+                .ToListAsync();
+ 
+
+
+
+           
+
+
+            return result;
+        }
+
     }
 }
