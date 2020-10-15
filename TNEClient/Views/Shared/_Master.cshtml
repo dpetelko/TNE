@@ -46,14 +46,14 @@
 
         @if (TempData["SuccessMessage"] != null)
         {
-    <div class="container-sm">
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <span>@TempData["SuccessMessage"]</span>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </div>
+            <div class="container-sm">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span>@TempData["SuccessMessage"]</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
         }
 
 
@@ -64,18 +64,18 @@
     </div>
 
     @*<footer>
-        @if (IsSectionDefined("Footer"))
-        {
-            @RenderSection("Footer")
-        }
-        else
-        {
-           <div style="bottom:0; position: fixed; width:100%;">
-                <hr style="width:100%;" />
-                <p align="center">Copyright @DateTime.Now.Year by TNE</p>
+            @if (IsSectionDefined("Footer"))
+            {
+                @RenderSection("Footer")
+            }
+            else
+            {
+               <div style="bottom:0; position: fixed; width:100%;">
+                    <hr style="width:100%;" />
+                    <p align="center">Copyright @DateTime.Now.Year by TNE</p>
 
-            </div>
-        }
-    </footer>*@
+                </div>
+            }
+        </footer>*@
 </body>
 </html>

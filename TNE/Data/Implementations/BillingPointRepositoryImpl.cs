@@ -157,10 +157,10 @@ namespace TNE.Data.Implementations
 
                 var predicate = PredicateBuilder.New<BillingPoint>();
 
-                if (searchFilter.ControlPointId != Guid.Empty)
+                if (searchFilter.ControlPointId != Guid.Empty && searchFilter.ControlPointId != null)
                     predicate = predicate.And(s => s.ControlPointId == searchFilter.ControlPointId);
 
-                if (searchFilter.DeliveryPointId != Guid.Empty)
+                if (searchFilter.DeliveryPointId != Guid.Empty && searchFilter.DeliveryPointId != null)
                     predicate = predicate.And(s => s.DeliveryPointId == searchFilter.DeliveryPointId);
 
                 if (searchFilter.StartTime.HasValue)

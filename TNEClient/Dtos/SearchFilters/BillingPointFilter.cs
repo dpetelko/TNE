@@ -13,10 +13,10 @@ namespace TNEClient.Dtos.SearchFilters
 
         public bool IsEmpty()
         {
-            return !(StartTime.HasValue) &&
-                (EndTime.HasValue) &&
-                (ControlPointId.HasValue) &&
-                (DeliveryPointId.HasValue);
+            return (this.StartTime is null) &&
+                (this.EndTime is null) &&
+                (this.ControlPointId is null) &&
+                (this.DeliveryPointId is null);
         }
 
         public override bool Equals(object obj)

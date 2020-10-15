@@ -32,7 +32,12 @@ namespace TNE.Services.Implementations
 
         public async Task<List<BillingPointDto>> GetAllDtoByDeliveryPointIdAsync(Guid id) => await _repo.GetAllDtoByDeliveryPointIdAsync(id);
 
-        public async Task<List<BillingPointDto>> GetAllDtoByFilterAsync(BillingPointFilter filter) => await _repo.GetAllDtoByFilterAsync(filter);
+        public async Task<List<BillingPointDto>> GetAllDtoByFilterAsync(BillingPointFilter filter)
+        {
+            return filter.IsEmpty()
+               ? await GetAllDtoAsync()
+               : await _repo.GetAllDtoByFilterAsync(filter);
+        }
 
         public BillingPoint GetById(Guid id) => _repo.GetById(id);
 
@@ -42,7 +47,7 @@ namespace TNE.Services.Implementations
 
         public bool IsFieldUnique(Guid id, string fieldName, object fieldValue)
         {
-            return (id.Equals(Guid.Empty))
+            return id.Equals(Guid.Empty)
                 ? _repo.ExistsByField(fieldName, fieldValue)
                 : _repo.ExistsByFieldAndNotId(id, fieldName, fieldValue);
         }

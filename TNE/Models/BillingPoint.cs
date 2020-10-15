@@ -20,6 +20,7 @@ namespace TNE.Models
 
         public BillingPoint() { }
 
+
         public override bool Equals(object obj)
         {
             return Equals(obj as BillingPoint);
