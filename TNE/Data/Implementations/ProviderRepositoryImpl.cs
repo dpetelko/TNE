@@ -46,17 +46,22 @@ namespace TNE.Data.Implementations
         public bool ExistsByField(string fieldName, object fieldValue)
         {
             Log.Debug("ExistsByField Provider: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
-            return fieldName.Equals("Name")
-                ? _context.Providers.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}'").Count() == 0
-                : _context.Addresses.FromSqlRaw($"SELECT * FROM dbo.Addresses WHERE {fieldName}='{fieldValue}'").Count() == 0;
+            return _context.Providers
+                .AsNoTracking()
+                .Include(s => s.Address)
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
+                .ToList().Contains(fieldValue);
         }
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByFieldAndNotId Provider: Id - 'id', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
-            return fieldName.Equals("Name")
-            ? _context.Providers.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}' AND Id <> '{id}'").Count() == 0
-            : _context.Addresses.FromSqlRaw($"SELECT * FROM dbo.Divisions WHERE {fieldName}='{fieldValue}' AND Id <> '{id}'").Count() == 0;
+            Log.Debug("ExistsByFieldAndNotId Provider: Id - '{id}', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
+            return _context.Providers
+                .AsNoTracking()
+                .Include(s => s.Address)
+                .Where(s => s.Id != id)
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
+                .ToList().Contains(fieldValue);
         }
 
         public async Task<List<ProviderDto>> GetAllActiveDtoAsync()

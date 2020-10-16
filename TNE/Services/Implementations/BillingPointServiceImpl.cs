@@ -48,8 +48,8 @@ namespace TNE.Services.Implementations
         public bool IsFieldUnique(Guid id, string fieldName, object fieldValue)
         {
             return id.Equals(Guid.Empty)
-                ? _repo.ExistsByField(fieldName, fieldValue)
-                : _repo.ExistsByFieldAndNotId(id, fieldName, fieldValue);
+                ? !_repo.ExistsByField(fieldName, fieldValue)
+                : !_repo.ExistsByFieldAndNotId(id, fieldName, fieldValue);
         }
 
         public async Task<BillingPointDto> UpdateAsync(BillingPointDto dto)

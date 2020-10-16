@@ -41,6 +41,7 @@ namespace TNEClient.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CurrentTransformerDto form)
         {
+            Log.Error("!!!!!!!!!!!!!!Incomming form {form}", form);
             if (ModelState.IsValid)
             {
                 await _service.CreateAsync(form);

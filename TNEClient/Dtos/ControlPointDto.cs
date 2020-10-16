@@ -6,28 +6,27 @@ namespace TNEClient.Dtos
     public class ControlPointDto : IEquatable<ControlPointDto>
     {
         public Guid Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Введите значение")]
         [StringLength(10, MinimumLength = 3, ErrorMessage = "The {0} length must be between {2} and {1} characters.")]
-        //[UniqueField]
+        [Display(Name = "Наименование точки контроля")]
         public string Name { get; set; }
-        [Required]
+        
         public bool Deleted { get; set; }
-        [Required]
         public Guid ProviderId { get; set; }
+        [Display(Name = "Объект потребления")]
         public string ProviderName { get; set; }
-        [Required]
+        [NotEmptyGuid("Выберите значение")]
         public Guid ElectricityMeterId { get; set; }
         public string ElectricityMeterNumber { get; set; }
         public string ElectricityMeterType { get; set; }
-        [Required]
         public DateTime ElectricityMeterLastVerificationDate { get; set; }
-        [Required]
+        [NotEmptyGuid("Выберите значение")]
         public Guid CurrentTransformerId { get; set; }
         public string CurrentTransformerNumber { get; set; }
         public string CurrentTransformerType { get; set; }
         public DateTime CurrentTransformerLastVerificationDate { get; set; }
         public int CurrentTransformerTransformationRate { get; set; }
-        [Required]
+        [NotEmptyGuid("Выберите значение")]
         public Guid VoltageTransformerId { get; set; }
         public string VoltageTransformerNumber { get; set; }
         public string VoltageTransformerType { get; set; }

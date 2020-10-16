@@ -6,18 +6,19 @@ namespace TNEClient.Dtos
     public class BillingPointDto : IEquatable<BillingPointDto>
     {
         public Guid Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Дата старта учета")]
         //[DataType(DataType.Date, ErrorMessage = "Неверное значение поля")]
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
         //[DataType(DataType.Date, ErrorMessage = "Неверное значение поля")]
         [Display(Name = "Дата окончания учета")]
+        [Required(ErrorMessage = "Введите значение")]
         public DateTime? EndTime { get; set; }
-        [Required]
+        [NotEmptyGuid("Выберите значение")]
         public Guid ControlPointId { get; set; }
         [Display(Name = "Имя точки измерения")]
         public string ControlPointName { get; set; }
-        [Required]
+        [NotEmptyGuid("Выберите значение")]
         public Guid DeliveryPointId { get; set; }
         [Display(Name = "Имя точки поставки")]
         public string DeliveryPointName { get; set; }

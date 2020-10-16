@@ -5,7 +5,7 @@ namespace TNEClient.Dtos
 {
     public class SubDivisionDto : DivisionDto, IEquatable<SubDivisionDto>
     {
-        [Required]
+        [NotEmptyGuid("Выберите значение")]
         public Guid LeadDivisionId { get; set; }
         [Display(Name = "Головная огранизация")]
         public string LeadDivisionName { get; set; }

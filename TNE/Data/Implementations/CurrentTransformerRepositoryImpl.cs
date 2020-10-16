@@ -34,15 +34,20 @@ namespace TNE.Data.Implementations
         public bool ExistsByField(string fieldName, object fieldValue)
         {
             Log.Debug("ExistsByField CurrentTransformer: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
-            return _context.CurrentTransformers.FromSqlRaw($"SELECT * FROM dbo.Transformers WHERE {fieldName}='{fieldValue}'").Count() == 0;
+            return _context.CurrentTransformers
+                .AsNoTracking()
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
+                .ToList().Contains(fieldValue);
         }
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByFieldAndNotId CurrentTransformer: Id - 'id', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
-            return _context.CurrentTransformers.FromSqlRaw($"SELECT * FROM dbo.Transformers WHERE {fieldName}='{fieldValue}' AND Id <> '{id}'").Count() == 0;
-
-
+            Log.Debug("ExistsByFieldAndNotId CurrentTransformer: Id - '{id}', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
+            return _context.CurrentTransformers
+                .AsNoTracking()
+                .Where(s => s.Id != id)
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
+                .ToList().Contains(fieldValue);
         }
 
         public async Task<List<CurrentTransformerDto>> GetAllDtoAsync()

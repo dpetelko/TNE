@@ -34,15 +34,20 @@ namespace TNE.Data.Implementations
         public bool ExistsByField(string fieldName, object fieldValue)
         {
             Log.Debug("ExistsByField ElectricityMeter: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
-            return _context.ElectricityMeters.FromSqlRaw($"SELECT * FROM dbo.Transformers WHERE {fieldName}='{fieldValue}'").Count() == 0;
+            return _context.ElectricityMeters
+                .AsNoTracking()
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
+                .ToList().Contains(fieldValue);
         }
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByFieldAndNotId ElectricityMeter: Id - 'id', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
-            return _context.ElectricityMeters.FromSqlRaw($"SELECT * FROM dbo.Transformers WHERE {fieldName}='{fieldValue}' AND Id <> '{id}'").Count() == 0;
-
-
+            Log.Debug("ExistsByFieldAndNotId ElectricityMeter: Id - '{id}', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
+            return _context.ElectricityMeters
+                .AsNoTracking()
+                .Where(s => s.Id != id)
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
+                .ToList().Contains(fieldValue);
         }
 
         public async Task<List<ElectricityMeterDto>> GetAllDtoAsync()

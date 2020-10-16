@@ -6,16 +6,15 @@ namespace TNEClient.Dtos
     public class DeliveryPointDto : IEquatable<DeliveryPointDto>
     {
         public Guid Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Введите значение")]
         [StringLength(10, MinimumLength = 3, ErrorMessage = "The {0} length must be between {2} and {1} characters")]
-        //[UniqueField]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Введите значение")]
+        [Range(1, Int32.MaxValue, ErrorMessage = "Неверное значение поля")]
         public int MaxPower { get; set; }
-        [Required]
+        [NotEmptyGuid("Выберите значение")]
         public Guid ProviderId { get; set; }
         public string ProviderName { get; set; }
-        [Required]
         public bool Deleted { get; set; }
 
         public DeliveryPointDto() { }

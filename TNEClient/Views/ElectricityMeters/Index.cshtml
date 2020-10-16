@@ -23,7 +23,7 @@
             <tr>
                 <td>@item.Number</td>
                 <td>@item.Type</td>
-                <td>@item.LastVerificationDate.Date.ToShortDateString()</td>
+                <td>@item.LastVerificationDate.ToShortDateString()</td>
                 <td>@item.LastVerificationDate.AddDays(@item.InterTestingPeriodInDays).ToShortDateString() </td>
 
                 @if (@String.IsNullOrEmpty(item.ControlPointName))

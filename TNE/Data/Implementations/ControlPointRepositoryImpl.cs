@@ -59,14 +59,20 @@ namespace TNE.Data.Implementations
         public bool ExistsByField(string fieldName, object fieldValue)
         {
             Log.Debug("ExistsByField ControlPoint: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
-            return _context.ControlPoints.FromSqlRaw($"SELECT * FROM dbo.ControlPoints WHERE {fieldName}='{fieldValue}'").Count() == 0;
+            return _context.ControlPoints
+                .AsNoTracking()
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
+                .ToList().Contains(fieldValue);
         }
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByFieldAndNotId ControlPoint: Id - 'id', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
-            return _context.ControlPoints.FromSqlRaw($"SELECT * FROM dbo.ControlPoints WHERE {fieldName}='{fieldValue}'").Count() == 0;
-
+            Log.Debug("ExistsByFieldAndNotId ControlPoint: Id - '{id}', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
+            return _context.ControlPoints
+                .AsNoTracking()
+                .Where(s => s.Id != id)
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
+                .ToList().Contains(fieldValue);
         }
 
         public async Task<List<ControlPointDto>> GetAllActiveDtoAsync()

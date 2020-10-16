@@ -42,15 +42,20 @@ namespace TNE.Data.Implementations
         public bool ExistsByField(string fieldName, object fieldValue)
         {
             Log.Debug("ExistsByField BillingPoint: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
-            return _context.BillingPoints.FromSqlRaw($"SELECT * FROM dbo.BillingPoints WHERE {fieldName}='{fieldValue}'").Count() == 0;
-
+            return _context.BillingPoints
+                .AsNoTracking()
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
+                .ToList().Contains(fieldValue);
         }
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByFieldAndNotId BillingPoint: Id - 'id', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
-            return _context.BillingPoints.FromSqlRaw($"SELECT * FROM dbo.BillingPoints WHERE {fieldName}='{fieldValue}' AND Id <> '{id}'").Count() == 0;
-
+            Log.Debug("ExistsByFieldAndNotId BillingPoint: Id - '{id}', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
+            return _context.BillingPoints
+                .AsNoTracking()
+                .Where(s => s.Id != id)
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
+                .ToList().Contains(fieldValue);
         }
 
         public async Task<List<BillingPointDto>> GetAllDtoAsync()

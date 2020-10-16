@@ -33,11 +33,10 @@ namespace TNE.Services.Validators
 
         private bool Validate(Guid id, string fieldName, object fieldValue)
         {
-            bool result = false;
+            bool result;
             switch (_validationContext.ObjectInstance.GetType().Name)
             {
                 case "LeadDivisionDto":
-                    if (!fieldName.Equals("Name")) id = GetIdValue("AddressId");
                     result = _validationContext.GetService<ILeadDivisionService>().IsFieldUnique(id, fieldName, fieldValue);
                     break;
                 case "SubDivisionDto":
