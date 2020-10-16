@@ -23,9 +23,6 @@ namespace TNEClient.Controllers
 
             if (exception is ValidationApiException exception1) 
             {
-                var ex = HttpContext.Features.Get<ValidationApiException>();
-                //Refit.ProblemDetails problem = ex.Content;
-
                 var qq = exception1;
                 Refit.ProblemDetails problem = qq.Content;
 
@@ -46,7 +43,6 @@ namespace TNEClient.Controllers
             if (exception is ApiException)
             {
                 ViewBag.Error = exception.Message;
-
 
             }
 
