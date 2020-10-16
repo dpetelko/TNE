@@ -15,7 +15,7 @@ namespace TNEClient.Services.Implementations
 
         public LeadDivisionServiceImpl(ILeadDivisionRepository repo) { _repo = repo; }
 
-        public async Task<HttpResponseMessage> CreateAsync(LeadDivisionDto dto) => await _repo.CreateAsync(dto);
+        public async Task<LeadDivisionDto> CreateAsync(LeadDivisionDto dto) => await _repo.CreateAsync(dto);
 
         public async Task<bool> DeleteAsync(Guid id) => await _repo.DeleteAsync(id);
 

@@ -9,7 +9,7 @@ using TNEClient.Dtos;
 
 namespace TNEClient.Controllers
 {
-    [ApiExplorerSettings(IgnoreApi = true)]
+   // [ApiExplorerSettings(IgnoreApi = true)]
     public class ErrorController : Controller
     {
         [Route("/error")]
@@ -21,10 +21,14 @@ namespace TNEClient.Controllers
             var source = exception.GetType().Name;
             Log.Warning("Handling {source} - {message}...", source, message);
 
-            if (exception is ValidationApiException) 
+            if (exception is ValidationApiException exception1) 
             {
                 var ex = HttpContext.Features.Get<ValidationApiException>();
-                Refit.ProblemDetails problem = ex.Content;
+                //Refit.ProblemDetails problem = ex.Content;
+
+                var qq = exception1;
+                Refit.ProblemDetails problem = qq.Content;
+
                 foreach (var pair in problem.Errors)
                 {
                     var w1 = pair.Key;

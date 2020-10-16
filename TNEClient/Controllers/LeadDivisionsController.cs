@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGeneration;
-using Newtonsoft.Json;
-using Serilog;
-using Superpower.Model;
 using TNEClient.Data;
 using TNEClient.Dtos;
 using TNEClient.Services;
@@ -55,22 +48,23 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                var response = await _service.CreateAsync(form);
-                if (response.IsSuccessStatusCode)
-                {
-                    TempData[SuccessMessage] = CreateSuccess;
-                    return RedirectToAction(nameof(Index));
-                }
+                //var response = await _service.CreateAsync(form);
+                //if (response.IsSuccessStatusCode)
+                //{
+                await _service.CreateAsync(form);
+                TempData[SuccessMessage] = CreateSuccess;
+                return RedirectToAction(nameof(Index));
+                //}
 
-                var q1 = await response.Content.ReadAsStringAsync();
-                var q111 = JsonConvert.DeserializeObject<ResponseResult>(q1);
-                foreach (var pair in q111.Errors) 
-                {
-                    var w1 = pair.Key;
-                    var w2 = pair.Value;
-                    ModelState.AddModelError(w1, w2[0]);
-                    Log.Error("!!!!!!! ERROR IS {w1} - {w2}", w1, w2);
-                }
+                //var q1 = await response.Content.ReadAsStringAsync();
+                //var q111 = JsonConvert.DeserializeObject<ResponseResult>(q1);
+                //foreach (var pair in q111.Errors) 
+                //{
+                //    var w1 = pair.Key;
+                //    var w2 = pair.Value;
+                //    ModelState.AddModelError(w1, w2[0]);
+                //    Log.Error("!!!!!!! ERROR IS {w1} - {w2}", w1, w2);
+                //}
             }
             return View();
         }

@@ -44,7 +44,7 @@ namespace TNEClient
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
 
             services.AddRefitClient<IVoltageTransformerRepository>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value)).Add;
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
 
             services.AddRefitClient<ICurrentTransformerRepository>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));

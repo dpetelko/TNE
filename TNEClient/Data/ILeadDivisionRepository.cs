@@ -19,7 +19,7 @@ namespace TNEClient.Data
         Task<LeadDivisionDto> GetAsync(Guid id);
 
         [Post("/api/v1/LeadDivisions")]
-        Task<HttpResponseMessage> CreateAsync([Body] LeadDivisionDto dto);
+        Task<LeadDivisionDto> CreateAsync([Body] LeadDivisionDto dto);
 
         [Put("/api/v1/LeadDivisions")]
         Task<LeadDivisionDto> UpdateAsync([Body] LeadDivisionDto dto);
