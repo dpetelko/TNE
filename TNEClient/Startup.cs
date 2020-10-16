@@ -44,7 +44,7 @@ namespace TNEClient
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
 
             services.AddRefitClient<IVoltageTransformerRepository>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value)).Add;
 
             services.AddRefitClient<ICurrentTransformerRepository>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
@@ -66,11 +66,12 @@ namespace TNEClient
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
 
-            }
+            //}
+            app.UseExceptionHandler("/error");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

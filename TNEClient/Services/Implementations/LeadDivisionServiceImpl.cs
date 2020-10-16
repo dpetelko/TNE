@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Refit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using TNEClient.Data;
 using TNEClient.Dtos;
@@ -13,7 +15,7 @@ namespace TNEClient.Services.Implementations
 
         public LeadDivisionServiceImpl(ILeadDivisionRepository repo) { _repo = repo; }
 
-        public async Task<LeadDivisionDto> CreateAsync(LeadDivisionDto dto) => await _repo.CreateAsync(dto);
+        public async Task<HttpResponseMessage> CreateAsync(LeadDivisionDto dto) => await _repo.CreateAsync(dto);
 
         public async Task<bool> DeleteAsync(Guid id) => await _repo.DeleteAsync(id);
 

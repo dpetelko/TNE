@@ -1,6 +1,7 @@
 ﻿using Refit;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using TNEClient.Dtos;
 
@@ -18,7 +19,7 @@ namespace TNEClient.Data
         Task<LeadDivisionDto> GetAsync(Guid id);
 
         [Post("/api/v1/LeadDivisions")]
-        Task<LeadDivisionDto> CreateAsync([Body] LeadDivisionDto dto);
+        Task<HttpResponseMessage> CreateAsync([Body] LeadDivisionDto dto);
 
         [Put("/api/v1/LeadDivisions")]
         Task<LeadDivisionDto> UpdateAsync([Body] LeadDivisionDto dto);
