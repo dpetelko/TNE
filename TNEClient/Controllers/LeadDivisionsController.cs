@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Refit;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TNEClient.Data;
 using TNEClient.Dtos;
 using TNEClient.Services;
-using System.Linq;
 
 namespace TNEClient.Controllers
 {

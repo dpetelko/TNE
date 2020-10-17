@@ -10,7 +10,6 @@ namespace TNEClient.Dtos
         [StringLength(10, MinimumLength = 3, ErrorMessage = "The {0} length must be between {2} and {1} characters.")]
         [Display(Name = "Наименование точки контроля")]
         public string Name { get; set; }
-        
         public bool Deleted { get; set; }
         public Guid ProviderId { get; set; }
         [Display(Name = "Объект потребления")]

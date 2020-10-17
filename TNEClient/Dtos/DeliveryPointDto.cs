@@ -19,7 +19,6 @@ namespace TNEClient.Dtos
 
         public DeliveryPointDto() { }
 
-        
         public override bool Equals(object obj)
         {
             return Equals(obj as DeliveryPointDto);

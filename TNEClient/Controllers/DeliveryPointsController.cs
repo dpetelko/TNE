@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Refit;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
-using Refit;
-using Serilog;
 using TNEClient.Dtos;
 using TNEClient.Services;
 
@@ -18,7 +14,7 @@ namespace TNEClient.Controllers
         private const string UpdateSuccess = "Точка поставки успешно изменена!";
         private const string CreateSuccess = "Точка поставки тока успешно создана!";
         private const string SuccessMessage = "SuccessMessage";
-        private readonly IDeliveryPointService _DeliveryPointService;
+        private readonly IDeliveryPointService _deliveryPointService;
         private readonly IProviderService _providerService;
         private readonly IBillingPointService _billingPointService;
 
@@ -26,7 +22,7 @@ namespace TNEClient.Controllers
             IProviderService providerService,
             IBillingPointService billingPointService)
         {
-            _DeliveryPointService = deliveryPointService;
+            _deliveryPointService = deliveryPointService;
             _providerService = providerService;
             _billingPointService = billingPointService;
         }
@@ -34,14 +30,14 @@ namespace TNEClient.Controllers
         // GET: DeliveryPointsController
         public async Task<IActionResult> Index()
         {
-            return View(await _DeliveryPointService.GetAllAsync());
+            return View(await _deliveryPointService.GetAllAsync());
         }
 
         // GET: DeliveryPointsController/Details/5
         public async Task<ActionResult> Details(Guid id)
         {
             //ViewBag.BillingPointList = await _billingPointService.GetAllDtoByDeliveryPointId(id);
-            return View(await _DeliveryPointService.GetAsync(id));
+            return View(await _deliveryPointService.GetAsync(id));
         }
 
         // GET: DeliveryPointsController/Create
@@ -60,7 +56,7 @@ namespace TNEClient.Controllers
             {
                 try
                 {
-                    await _DeliveryPointService.CreateAsync(form);
+                    await _deliveryPointService.CreateAsync(form);
                     TempData[SuccessMessage] = CreateSuccess;
                     return RedirectToAction(nameof(Index));
                 }
@@ -77,7 +73,7 @@ namespace TNEClient.Controllers
         public async Task<ActionResult> Edit(Guid id)
         {
             await GetProviderList();
-            return View(await _DeliveryPointService.GetAsync(id));
+            return View(await _deliveryPointService.GetAsync(id));
         }
 
         // POST: DeliveryPointsController/Edit/5
@@ -89,7 +85,7 @@ namespace TNEClient.Controllers
             {
                 try
                 {
-                    await _DeliveryPointService.UpdateAsync(form);
+                    await _deliveryPointService.UpdateAsync(form);
                     TempData[SuccessMessage] = UpdateSuccess;
                     return RedirectToAction(nameof(Index));
                 }
@@ -105,7 +101,7 @@ namespace TNEClient.Controllers
         // GET: DeliveryPointsController/Delete/5
         public async Task<ActionResult> Undelete(Guid id)
         {
-            await _DeliveryPointService.UndeleteAsync(id);
+            await _deliveryPointService.UndeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -114,7 +110,7 @@ namespace TNEClient.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Guid id)
         {
-            await _DeliveryPointService.DeleteAsync(id);
+            await _deliveryPointService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
 
         }

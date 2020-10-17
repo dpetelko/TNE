@@ -11,7 +11,7 @@ namespace TNEClient.Dtos
         public string SubDivisionName { get; set; }
 
         public ProviderDto() { }
-        
+
         public override string ToString()
         {
             return $"ProviderDto" +

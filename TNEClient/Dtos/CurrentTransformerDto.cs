@@ -10,7 +10,7 @@ namespace TNEClient.Dtos
         [Range(1, Int32.MaxValue, ErrorMessage = "Неверное значение поля")]
         public int TransformationRate { get; set; }
         public CurrentTransformerDto() { }
-        
+
         public override string ToString()
         {
             return $"CurrentTransformerDto" +

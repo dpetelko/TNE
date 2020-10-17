@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Refit;
-using Serilog;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
