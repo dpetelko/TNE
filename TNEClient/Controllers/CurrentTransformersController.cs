@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Refit;
 using Serilog;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TNEClient.Dtos;
 using TNEClient.Services;
@@ -41,12 +43,18 @@ namespace TNEClient.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CurrentTransformerDto form)
         {
-            Log.Error("!!!!!!!!!!!!!!Incomming form {form}", form);
             if (ModelState.IsValid)
             {
-                await _service.CreateAsync(form);
-                TempData[SuccessMessage] = CreateSuccess;
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _service.CreateAsync(form);
+                    TempData[SuccessMessage] = CreateSuccess;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationApiException ex)
+                {
+                    GetRestValidationErrors(ex);
+                }
             }
             return View();
         }
@@ -64,11 +72,31 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _service.UpdateAsync(form);
-                TempData[SuccessMessage] = UpdateSuccess;
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _service.UpdateAsync(form);
+                    TempData[SuccessMessage] = UpdateSuccess;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationApiException ex)
+                {
+                    GetRestValidationErrors(ex);
+                }
             }
             return View();
+        }
+
+        private void GetRestValidationErrors(ValidationApiException ex)
+        {
+            var errors = ex.Content.Errors;
+            foreach (var (key, value) in from pair in errors
+                                         let key = pair.Key
+                                         let values = pair.Value
+                                         from value in values
+                                         select (key, value))
+            {
+                ModelState.AddModelError(key, value);
+            }
         }
     }
 }

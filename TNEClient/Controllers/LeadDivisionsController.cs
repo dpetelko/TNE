@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Refit;
 using System;
 using System.Threading.Tasks;
 using TNEClient.Data;
 using TNEClient.Dtos;
 using TNEClient.Services;
+using System.Linq;
 
 namespace TNEClient.Controllers
 {
@@ -48,23 +50,16 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var response = await _service.CreateAsync(form);
-                //if (response.IsSuccessStatusCode)
-                //{
-                await _service.CreateAsync(form);
-                TempData[SuccessMessage] = CreateSuccess;
-                return RedirectToAction(nameof(Index));
-                //}
-
-                //var q1 = await response.Content.ReadAsStringAsync();
-                //var q111 = JsonConvert.DeserializeObject<ResponseResult>(q1);
-                //foreach (var pair in q111.Errors) 
-                //{
-                //    var w1 = pair.Key;
-                //    var w2 = pair.Value;
-                //    ModelState.AddModelError(w1, w2[0]);
-                //    Log.Error("!!!!!!! ERROR IS {w1} - {w2}", w1, w2);
-                //}
+                try
+                {
+                    await _service.CreateAsync(form);
+                    TempData[SuccessMessage] = CreateSuccess;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationApiException ex)
+                {
+                    GetRestValidationErrors(ex);
+                }
             }
             return View();
         }
@@ -82,9 +77,16 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _service.UpdateAsync(form);
-                TempData[SuccessMessage] = UpdateSuccess;
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _service.UpdateAsync(form);
+                    TempData[SuccessMessage] = UpdateSuccess;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationApiException ex)
+                {
+                    GetRestValidationErrors(ex);
+                }
             }
             return View();
         }
@@ -98,12 +100,25 @@ namespace TNEClient.Controllers
 
         // POST: LeadDivisionsController/Delete/5
         [HttpGet]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(Guid id)
         {
             await _service.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
 
+        }
+
+        private void GetRestValidationErrors(ValidationApiException ex)
+        {
+            var errors = ex.Content.Errors;
+            foreach (var (key, value) in from pair in errors
+                                         let key = pair.Key
+                                         let values = pair.Value
+                                         from value in values
+                                         select (key, value))
+            {
+                ModelState.AddModelError(key, value);
+            }
         }
     }
 }

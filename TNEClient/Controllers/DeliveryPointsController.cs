@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Refit;
 using Serilog;
 using TNEClient.Dtos;
 using TNEClient.Services;
@@ -14,6 +15,9 @@ namespace TNEClient.Controllers
 {
     public class DeliveryPointsController : Controller
     {
+        private const string UpdateSuccess = "Точка поставки успешно изменена!";
+        private const string CreateSuccess = "Точка поставки тока успешно создана!";
+        private const string SuccessMessage = "SuccessMessage";
         private readonly IDeliveryPointService _DeliveryPointService;
         private readonly IProviderService _providerService;
         private readonly IBillingPointService _billingPointService;
@@ -54,9 +58,16 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _DeliveryPointService.CreateAsync(form);
-                TempData["SuccessMessage"] = "Точка поставки электроэнергии успешно создана!";
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _DeliveryPointService.CreateAsync(form);
+                    TempData[SuccessMessage] = CreateSuccess;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationApiException ex)
+                {
+                    GetRestValidationErrors(ex);
+                }
             }
             await GetProviderList();
             return View();
@@ -76,9 +87,16 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _DeliveryPointService.UpdateAsync(form);
-                TempData["SuccessMessage"] = "Точка поставки электроэнергии успешно изменена!";
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _DeliveryPointService.UpdateAsync(form);
+                    TempData[SuccessMessage] = UpdateSuccess;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationApiException ex)
+                {
+                    GetRestValidationErrors(ex);
+                }
             }
             await GetProviderList();
             return View();
@@ -104,6 +122,19 @@ namespace TNEClient.Controllers
         private async Task GetProviderList()
         {
             ViewBag.ProviderList = new SelectList(await _providerService.GetAllAsync(), "Id", "Name");
+        }
+
+        private void GetRestValidationErrors(ValidationApiException ex)
+        {
+            var errors = ex.Content.Errors;
+            foreach (var (key, value) in from pair in errors
+                                         let key = pair.Key
+                                         let values = pair.Value
+                                         from value in values
+                                         select (key, value))
+            {
+                ModelState.AddModelError(key, value);
+            }
         }
     }
 }

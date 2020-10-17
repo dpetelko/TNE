@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Refit;
 using Serilog;
 using TNEClient.Dtos;
 using TNEClient.Services;
@@ -66,9 +67,16 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _controlPointService.CreateAsync(form);
-                TempData[SuccessMessage] = CreateSuccess;
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _controlPointService.CreateAsync(form);
+                    TempData[SuccessMessage] = CreateSuccess;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationApiException ex)
+                {
+                    GetRestValidationErrors(ex);
+                }
             }
             await GetDevicesList();
             return View();
@@ -88,9 +96,16 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _controlPointService.UpdateAsync(form);
-                TempData[SuccessMessage] = UpdateSuccess;
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _controlPointService.UpdateAsync(form);
+                    TempData[SuccessMessage] = UpdateSuccess;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationApiException ex)
+                {
+                    GetRestValidationErrors(ex);
+                }
             }
             await GetDevicesList();
             return View();
@@ -119,6 +134,19 @@ namespace TNEClient.Controllers
             ViewBag.VoltageTransformerList = await _voltageTransformerService.GetAllByStatusAsync(Status.InStorage);
             ViewBag.CurrentTransformerList = await _currentTransformerService.GetAllByStatusAsync(Status.InStorage);
             ViewBag.ElectricityMeterList = await _electricityMeterService.GetAllByStatusAsync(Status.InStorage);
+        }
+
+        private void GetRestValidationErrors(ValidationApiException ex)
+        {
+            var errors = ex.Content.Errors;
+            foreach (var (key, value) in from pair in errors
+                                         let key = pair.Key
+                                         let values = pair.Value
+                                         from value in values
+                                         select (key, value))
+            {
+                ModelState.AddModelError(key, value);
+            }
         }
     }
 }

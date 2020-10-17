@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGeneration;
 using Refit;
 using Serilog;
-using System.Collections;
-using TNEClient.Dtos;
 
 namespace TNEClient.Controllers
 {
-   // [ApiExplorerSettings(IgnoreApi = true)]
     public class ErrorController : Controller
     {
         [Route("/error")]
@@ -21,31 +17,20 @@ namespace TNEClient.Controllers
             var source = exception.GetType().Name;
             Log.Warning("Handling {source} - {message}...", source, message);
 
-            if (exception is ValidationApiException exception1) 
+            if (exception is ApiException apiEx)
             {
-                var qq = exception1;
-                Refit.ProblemDetails problem = qq.Content;
-
-                foreach (var pair in problem.Errors)
+                ViewBag.StatusCode = apiEx.StatusCode switch
                 {
-                    var w1 = pair.Key;
-                    var w2 = pair.Value;
-                    foreach (var item in w2)
-                    {
-                        ModelState.AddModelError(w1, item);
-                        Log.Error("!!!!!!! ERROR IS {w1} - {w2}", w1, w2);
-                    }
-                    
-                }
-                return Redirect(Request.Headers["Referer"].ToString());
+                    System.Net.HttpStatusCode.NotFound => "Запрашиваемые данные не найдены",
+                    System.Net.HttpStatusCode.BadRequest => "Неверный запрос на сервер",
+                    System.Net.HttpStatusCode.InternalServerError => "Внутренняя ошибка на сервере",
+                    _ => "Неизвестная ошибка",
+                };
             }
-
-            if (exception is ApiException)
+            else
             {
-                ViewBag.Error = exception.Message;
-
+                ViewBag.StatusCode = "Неизвестная ошибка";
             }
-
             return View();
         }
     }

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Refit;
 using Serilog;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TNEClient.Dtos;
 using TNEClient.Dtos.SearchFilters;
@@ -59,9 +61,16 @@ namespace TNEClient.Controllers
             Log.Error("Incomming model is - {qq}", qq);
             if (ModelState.IsValid)
             {
-                await _BillingPointService.CreateAsync(form);
-                TempData[SuccessMessage] = CreateSuccess;
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _BillingPointService.CreateAsync(form);
+                    TempData[SuccessMessage] = CreateSuccess;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationApiException ex)
+                {
+                    GetRestValidationErrors(ex);
+                }
             }
             await GetPointList();
             return View();
@@ -81,9 +90,16 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _BillingPointService.UpdateAsync(form);
-                TempData[SuccessMessage] = UpdateSuccess;
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _BillingPointService.UpdateAsync(form);
+                    TempData[SuccessMessage] = UpdateSuccess;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationApiException ex)
+                {
+                    GetRestValidationErrors(ex);
+                }
             }
             await GetPointList();
             return View();
@@ -93,6 +109,19 @@ namespace TNEClient.Controllers
         {
             ViewBag.ControlPointList = new SelectList(await _controlPointService.GetAllAsync(), "Id", "Name");
             ViewBag.DeliveryPointList = new SelectList(await _deliveryPointService.GetAllAsync(), "Id", "Name");
+        }
+
+        private void GetRestValidationErrors(ValidationApiException ex)
+        {
+            var errors = ex.Content.Errors;
+            foreach (var (key, value) in from pair in errors
+                                         let key = pair.Key
+                                         let values = pair.Value
+                                         from value in values
+                                         select (key, value))
+            {
+                ModelState.AddModelError(key, value);
+            }
         }
     }
 }

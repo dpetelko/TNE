@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Refit;
 using Serilog;
 using TNEClient.Dtos;
 using TNEClient.Services;
@@ -61,9 +62,16 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _providerService.CreateAsync(form);
-                TempData[SuccessMessage] = CreateSuccess;
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _providerService.CreateAsync(form);
+                    TempData[SuccessMessage] = CreateSuccess;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationApiException ex)
+                {
+                    GetRestValidationErrors(ex);
+                }
             }
             await GetSubDivisionList();
             return View();
@@ -83,9 +91,16 @@ namespace TNEClient.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _providerService.UpdateAsync(form);
-                TempData[SuccessMessage] = UpdateSuccess;
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _providerService.UpdateAsync(form);
+                    TempData[SuccessMessage] = UpdateSuccess;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (ValidationApiException ex)
+                {
+                    GetRestValidationErrors(ex);
+                }
             }
             await GetSubDivisionList();
             return View();
@@ -111,6 +126,19 @@ namespace TNEClient.Controllers
         private async Task GetSubDivisionList()
         {
             ViewBag.SubDivisionList = new SelectList(await _subDivisionService.GetAllAsync(), "Id", "Name");
+        }
+
+        private void GetRestValidationErrors(ValidationApiException ex)
+        {
+            var errors = ex.Content.Errors;
+            foreach (var (key, value) in from pair in errors
+                                         let key = pair.Key
+                                         let values = pair.Value
+                                         from value in values
+                                         select (key, value))
+            {
+                ModelState.AddModelError(key, value);
+            }
         }
     }
 }
