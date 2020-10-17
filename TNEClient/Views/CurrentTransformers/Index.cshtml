@@ -5,9 +5,50 @@
 }
 <div class="container-md">
     <h3 align="center">Трансформаторы тока</h3>
-    <br />
-    <a asp-action="Create" asp-controller="CurrentTransformers" class="btn btn-secondary">Добавить новый трансформатор тока</a>
-    <p></p>
+
+
+
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <a asp-action="Create" asp-controller="CurrentTransformers" class="btn btn-secondary btn-sm">Добавить новый трансформатор тока</a>
+                <button class="btn btn-warning btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Контроль поверки приборов </button>
+                <input type="button" class="btn btn-secondary btn-sm" value="Print" onclick="window.print();" />
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <form asp-action="Index" method="get">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label class="control-label">Объект потребления</label>
+                                    <select name="ProviderId" class="form-control form-control-sm" asp-items="ViewBag.ProviderList">
+                                        <option value=null selected>Не выбрано</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label class="control-label">Контрольная дата</label>
+                                    <input type="date" name="CheckDate" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="submit" value="Применить" class="btn btn-warning btn-sm" />
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
     <table class="table table-stripped table-hover">
         <tr>
             <td><strong>Номер</strong></td>
@@ -36,7 +77,7 @@
                 {
                     <td>@item.ControlPointName</td>
                 }
-            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                <td>@Html.DisplayFor(modelItem => item.Status)</td>
 
                 <td>
                     <div class="btn-group" role="group">

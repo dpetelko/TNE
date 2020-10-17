@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Models;
 using TNE.Services;
 
@@ -27,6 +28,9 @@ namespace TNE.Controllers
 
         [HttpGet("status/{status}")]
         public async Task<List<CurrentTransformerDto>> GetAllByStatus(Status status) { return await _service.GetAllDtoByStatusAsync(status); }
+
+        [HttpGet("checkCalibration")]
+        public async Task<List<CurrentTransformerDto>> GetAllByFilter([FromBody] DeviceCalibrationControlDto filter) { return await _service.GetAllDtoByFilterAsync(filter); }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<CurrentTransformerDto>> GetById(Guid id) { return Ok(await _service.GetDtoByIdAsync(id)); }

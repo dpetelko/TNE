@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using TNEClient.Data;
 using TNEClient.Dtos;
+using TNEClient.Dtos.SearchFilters;
 
 namespace TNEClient.Services.Implementations
 {
@@ -27,5 +28,7 @@ namespace TNEClient.Services.Implementations
         public async Task<bool> SetStatus(Guid id, Status status) => await _repo.SetStatus(id, status);
 
         public async Task<CurrentTransformerDto> GetDtoByControlPointId(Guid id) => await _repo.GetByControlPointIdAsync(id);
+
+        public async Task<List<CurrentTransformerDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter) => await _repo.GetAllDtoByFilterAsync(filter);
     }
 }

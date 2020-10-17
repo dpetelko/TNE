@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Refit;
+using Serilog;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using TNEClient.Dtos;
+using TNEClient.Dtos.SearchFilters;
 using TNEClient.Services;
 
 namespace TNEClient.Controllers
@@ -14,14 +17,23 @@ namespace TNEClient.Controllers
         private const string CreateSuccess = "Трансформатор тока успешно создан!";
         private const string SuccessMessage = "SuccessMessage";
         private readonly ICurrentTransformerService _service;
+        private readonly IProviderService _providerService;
 
-        public CurrentTransformersController(ICurrentTransformerService service) { _service = service; }
+        public CurrentTransformersController(ICurrentTransformerService service, IProviderService providerService)
+        {
+            _service = service;
+            _providerService = providerService;
+        }
 
         // GET: CurrentTransformersController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(DeviceCalibrationControlDto filter)
         {
-            var list = await _service.GetAllAsync();
-            return View(list);
+            Log.Error("!!!! {filter}", filter);
+            Log.Error("!!!! EMPTY? {filter}", filter.IsEmpty());
+            await GetProviderList();
+            return (filter.IsEmpty())
+                ? View(await _service.GetAllAsync())
+                : View(await _service.GetAllDtoByFilterAsync(filter));
         }
 
         // GET: CurrentTransformersController/Details/5
@@ -95,6 +107,12 @@ namespace TNEClient.Controllers
             {
                 ModelState.AddModelError(key, value);
             }
+        }
+
+        private async Task GetProviderList()
+        {
+            ViewBag.ProviderList = new SelectList(await _providerService.GetAllAsync(), "Id", "Name");
+            
         }
     }
 }

@@ -208,18 +208,18 @@ namespace TNE.Data.Implementations
             if (IsNotEmptyOrNull(providerId))
                 predicate = predicate.And(s => s.Provider.Id == providerId);
 
-            DateTime? electricityMeterCheckDate = filter.ElectricityMeterCheckDate;
-            if (electricityMeterCheckDate.HasValue)
-                predicate = predicate.And(s => DateTime.Compare(s.ElectricityMeter.LastVerificationDate.AddDays(s.ElectricityMeter.InterTestingPeriodInDays), (DateTime)electricityMeterCheckDate) <= 0);
+            //DateTime? electricityMeterCheckDate = filter.ElectricityMeterCheckDate;
+            //if (electricityMeterCheckDate.HasValue)
+            //    predicate = predicate.And(s => DateTime.Compare(s.ElectricityMeter.LastVerificationDate.AddDays(s.ElectricityMeter.InterTestingPeriodInDays), (DateTime)electricityMeterCheckDate) <= 0);
 
-            DateTime? currentTransformerCheckDate = filter.CurrentTransformerCheckDate;
-            if (currentTransformerCheckDate.HasValue)
-                predicate = predicate.And(s => DateTime.Compare(s.CurrentTransformer.LastVerificationDate.AddDays(s.CurrentTransformer.InterTestingPeriodInDays), (DateTime)currentTransformerCheckDate) <= 0);
+            //DateTime? currentTransformerCheckDate = filter.CurrentTransformerCheckDate;
+            //if (currentTransformerCheckDate.HasValue)
+            //    predicate = predicate.And(s => DateTime.Compare(s.CurrentTransformer.LastVerificationDate.AddDays(s.CurrentTransformer.InterTestingPeriodInDays), (DateTime)currentTransformerCheckDate) <= 0);
 
 
-            DateTime? voltageTransformerCheckDate = filter.VoltageTransformerCheckDate;
-            if (voltageTransformerCheckDate.HasValue)
-                predicate = predicate.And(s => DateTime.Compare(s.VoltageTransformer.LastVerificationDate.AddDays(s.VoltageTransformer.InterTestingPeriodInDays), (DateTime)voltageTransformerCheckDate) <= 0);
+            //DateTime? voltageTransformerCheckDate = filter.VoltageTransformerCheckDate;
+            //if (voltageTransformerCheckDate.HasValue)
+            //    predicate = predicate.And(s => DateTime.Compare(s.VoltageTransformer.LastVerificationDate.AddDays(s.VoltageTransformer.InterTestingPeriodInDays), (DateTime)voltageTransformerCheckDate) <= 0);
 
             var result = await _context.ControlPoints
                 .AsNoTracking()

@@ -23,6 +23,6 @@ namespace TNEClient.Dtos.SearchFilters
                 $"CheckDate:{CheckDate} ]";
         }
 
-        private static bool IsEmptyOrNull(Guid? id) => id == null && id == Guid.Empty;
+        private static bool IsEmptyOrNull(Guid? id) => id == null || id == Guid.Empty;
     }
 }

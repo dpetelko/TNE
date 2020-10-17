@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Models;
 
 namespace TNE.Data.Implementations
@@ -64,7 +65,7 @@ namespace TNE.Data.Implementations
 
         public async Task<List<CurrentTransformerDto>> GetAllDtoByStatusAsync(Status status)
         {
-            Log.Debug("GetAll CurrentTransformerDto");
+            Log.Debug("GetAllDtoByStatusAsync CurrentTransformerDto");
             var result = await _context.CurrentTransformers
                 .AsNoTracking()
                 .Include(s => s.ControlPoint)
@@ -75,14 +76,14 @@ namespace TNE.Data.Implementations
             return result;
         }
 
-        public async Task<List<CurrentTransformerDto>> GetAllDtoByStatusAsync2(Guid id, DateTime checkDate)
+        public async Task<List<CurrentTransformerDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter)
         {
             Log.Debug("GetAll CurrentTransformerDto");
             var result = await _context.CurrentTransformers
                 .AsNoTracking()
                 .Include(s => s.ControlPoint)
-                .Where(s => s.ControlPoint.ProviderId == id)
-                .Where(s => (DateTime.Compare(s.LastVerificationDate.AddDays(s.InterTestingPeriodInDays), checkDate) < 0))
+                .Where(s => s.ControlPoint.ProviderId == filter.ProviderId)
+                .Where(s => (DateTime.Compare(s.LastVerificationDate.AddDays(s.InterTestingPeriodInDays), (DateTime)filter.CheckDate) < 0))
                 .Select(s => new CurrentTransformerDto(s))
                 .ToListAsync();
             result.TrimExcess();

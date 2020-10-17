@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Models;
 
 namespace TNE.Data
@@ -13,5 +14,6 @@ namespace TNE.Data
         Task<List<CurrentTransformerDto>> GetAllDtoAsync();
         Task<List<CurrentTransformerDto>> GetAllDtoByStatusAsync(Status status);
         Task<CurrentTransformerDto> GetDtoByControlPointId(Guid id);
+        Task<List<CurrentTransformerDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter);
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TNEClient.Dtos;
+using TNEClient.Dtos.SearchFilters;
 
 namespace TNEClient.Data
 {
@@ -19,6 +20,9 @@ namespace TNEClient.Data
 
         [Get("/api/v1/CurrentTransformers/ControlPoint/{id}")]
         Task<CurrentTransformerDto> GetByControlPointIdAsync(Guid id);
+
+        [Get("/api/v1/CurrentTransformers/checkCalibration")]
+        Task<List<CurrentTransformerDto>> GetAllDtoByFilterAsync([Body] DeviceCalibrationControlDto filter);
 
         [Post("/api/v1/CurrentTransformers")]
         Task<CurrentTransformerDto> CreateAsync([Body] CurrentTransformerDto dto);
