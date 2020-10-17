@@ -16,7 +16,7 @@ namespace TNE.Data.Implementations
     {
         private readonly DatabaseContext _context;
 
-        public BillingPointRepositoryImpl(DatabaseContext context) {  _context = context; }
+        public BillingPointRepositoryImpl(DatabaseContext context) { _context = context; }
 
         public void CheckExistsById(Guid id)
         {
@@ -160,37 +160,35 @@ namespace TNE.Data.Implementations
 
 
 
-                var predicate = PredicateBuilder.New<BillingPoint>();
+            var predicate = PredicateBuilder.New<BillingPoint>();
 
-                if (searchFilter.ControlPointId != Guid.Empty && searchFilter.ControlPointId != null)
-                    predicate = predicate.And(s => s.ControlPointId == searchFilter.ControlPointId);
+            Guid? controlPointId = searchFilter.ControlPointId;
+            if (IsNotEmptyOrNull(controlPointId))
+                predicate = predicate.And(s => s.ControlPointId == controlPointId);
 
-                if (searchFilter.DeliveryPointId != Guid.Empty && searchFilter.DeliveryPointId != null)
-                    predicate = predicate.And(s => s.DeliveryPointId == searchFilter.DeliveryPointId);
+            Guid? deliveryPointId = searchFilter.DeliveryPointId;
+            if (IsNotEmptyOrNull(deliveryPointId))
+                predicate = predicate.And(s => s.DeliveryPointId == deliveryPointId);
 
-                if (searchFilter.StartTime.HasValue)
-                    predicate = predicate.And(s => DateTime.Compare(s.StartTime, (DateTime)searchFilter.StartTime) >= 0);
+            DateTime? startTime = searchFilter.StartTime;
+            if (startTime.HasValue)
+                predicate = predicate.And(s => DateTime.Compare(s.StartTime, (DateTime)startTime) >= 0);
 
+            DateTime? endTime = searchFilter.EndTime;
+            if (endTime.HasValue)
+                predicate = predicate.And(s => DateTime.Compare(s.EndTime, (DateTime)endTime) <= 0);
 
-                if (searchFilter.EndTime.HasValue)
-                    predicate = predicate.And(s => DateTime.Compare(s.EndTime, (DateTime)searchFilter.EndTime) <= 0);
-
-                 var result = await _context.BillingPoints
-                .AsNoTracking()
-                .Include(s => s.ControlPoint)
-                .Include(s => s.DeliveryPoint)
-                .Where(predicate)
-                .Select(s => new BillingPointDto(s))
-                .ToListAsync();
- 
-
-
-
-           
-
-
+            var result = await _context.BillingPoints
+           .AsNoTracking()
+           .Include(s => s.ControlPoint)
+           .Include(s => s.DeliveryPoint)
+           .Where(predicate)
+           .Select(s => new BillingPointDto(s))
+           .ToListAsync();
+            result.TrimExcess();
             return result;
         }
 
+        private static bool IsNotEmptyOrNull(Guid? id) => id != null && id != Guid.Empty;
     }
 }

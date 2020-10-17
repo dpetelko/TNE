@@ -181,36 +181,7 @@ namespace TNE.Data.Implementations
             return entity;
         }
 
-        public async Task<List<ControlPointDto>> GetAllDtoByFilterAsync(InterTestingFilter searchFilter)
-        {
-            Log.Debug("GetAllDtoByFilterAsync ControlPointDto by Filter: {searchFilter}", searchFilter);
-
-            var predicate = PredicateBuilder.New<ControlPoint>();
-
-            if (searchFilter.ProviderId.HasValue)
-                predicate = predicate.And(s => s.Provider.Id == searchFilter.ProviderId);
-
-            if (searchFilter.ElectricityMeterVerificationDate.HasValue)
-                predicate = predicate.And(s => DateTime.Compare(s.ElectricityMeter.LastVerificationDate.AddDays(s.ElectricityMeter.InterTestingPeriodInDays), (DateTime)searchFilter.ElectricityMeterVerificationDate) <= 0);
-
-            if (searchFilter.CurrentTransformerVerificationDate.HasValue)
-                predicate = predicate.And(s => DateTime.Compare(s.CurrentTransformer.LastVerificationDate.AddDays(s.CurrentTransformer.InterTestingPeriodInDays), (DateTime)searchFilter.CurrentTransformerVerificationDate) <= 0);
-
-
-            if (searchFilter.CurrentTransformerVerificationDate.HasValue)
-                predicate = predicate.And(s => DateTime.Compare(s.VoltageTransformer.LastVerificationDate.AddDays(s.VoltageTransformer.InterTestingPeriodInDays), (DateTime)searchFilter.VoltageTransformerVerificationDate) <= 0);
-
-            var result = await _context.ControlPoints
-                .AsNoTracking()
-                .Include(s => s.Provider)
-                .Include(s => s.CurrentTransformer)
-                .Include(s => s.VoltageTransformer)
-                .Include(s => s.ElectricityMeter)
-                .Where(predicate)
-                .Select(s => new ControlPointDto(s))
-                .ToListAsync();
-            return result;
-        }
+        
 
         public async Task<List<ControlPointDto>> GetAllDtoByProviderIdAsync(Guid id)
         {
@@ -226,5 +197,42 @@ namespace TNE.Data.Implementations
             result.TrimExcess();
             return result;
         }
+
+        public async Task<List<ControlPointDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter)
+        {
+            Log.Debug("GetAllDtoByFilterAsync ControlPointDto by Filter: {searchFilter}", filter);
+
+            var predicate = PredicateBuilder.New<ControlPoint>();
+
+            Guid? providerId = filter.ProviderId;
+            if (IsNotEmptyOrNull(providerId))
+                predicate = predicate.And(s => s.Provider.Id == providerId);
+
+            DateTime? electricityMeterCheckDate = filter.ElectricityMeterCheckDate;
+            if (electricityMeterCheckDate.HasValue)
+                predicate = predicate.And(s => DateTime.Compare(s.ElectricityMeter.LastVerificationDate.AddDays(s.ElectricityMeter.InterTestingPeriodInDays), (DateTime)electricityMeterCheckDate) <= 0);
+
+            DateTime? currentTransformerCheckDate = filter.CurrentTransformerCheckDate;
+            if (currentTransformerCheckDate.HasValue)
+                predicate = predicate.And(s => DateTime.Compare(s.CurrentTransformer.LastVerificationDate.AddDays(s.CurrentTransformer.InterTestingPeriodInDays), (DateTime)currentTransformerCheckDate) <= 0);
+
+
+            DateTime? voltageTransformerCheckDate = filter.VoltageTransformerCheckDate;
+            if (voltageTransformerCheckDate.HasValue)
+                predicate = predicate.And(s => DateTime.Compare(s.VoltageTransformer.LastVerificationDate.AddDays(s.VoltageTransformer.InterTestingPeriodInDays), (DateTime)voltageTransformerCheckDate) <= 0);
+
+            var result = await _context.ControlPoints
+                .AsNoTracking()
+                .Include(s => s.Provider)
+                .Include(s => s.CurrentTransformer)
+                .Include(s => s.VoltageTransformer)
+                .Include(s => s.ElectricityMeter)
+                .Where(predicate)
+                .Select(s => new ControlPointDto(s))
+                .ToListAsync();
+            return result;
+        }
+
+        private static bool IsNotEmptyOrNull(Guid? id) => id != null && id != Guid.Empty;
     }
 }

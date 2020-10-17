@@ -17,7 +17,7 @@ namespace TNE.Services
         Task<List<ControlPointDto>> GetAllActiveDtoAsync();
         Task<bool> DeleteAsync(Guid id);
         Task<bool> UndeleteAsync(Guid id);
-        Task<List<ControlPointDto>> GetAllDtoByFilterAsync(InterTestingFilter filter);
+        Task<List<ControlPointDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter);
         Task<List<ControlPointDto>> GetAllDtoByProviderIdAsync(Guid id);
     }
 }

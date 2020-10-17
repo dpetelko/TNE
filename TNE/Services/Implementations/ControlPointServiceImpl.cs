@@ -47,7 +47,7 @@ namespace TNE.Services.Implementations
 
         public async Task<List<ControlPointDto>> GetAllDtoAsync() => await _repo.GetAllDtoAsync();
 
-        public async Task<List<ControlPointDto>> GetAllDtoByFilterAsync(InterTestingFilter filter) => await _repo.GetAllDtoByFilterAsync(filter);
+        public async Task<List<ControlPointDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter) => await _repo.GetAllDtoByFilterAsync(filter);
 
         public async Task<List<ControlPointDto>> GetAllDtoByProviderIdAsync(Guid id) => await _repo.GetAllDtoByProviderIdAsync(id);
 

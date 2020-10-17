@@ -1,0 +1,64 @@
+﻿@using TNEClient.Dtos.SearchFilters
+@model List<BillingPointDto>
+
+@{
+    ViewData["Title"] = "ТрансНефтьЭнерго - Расчетный прибор учета электроэнергии";
+}
+
+<div class="container-sm">
+    <h3 align="center">Расчетные приборы учета</h3>
+    <br />
+
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <button class="btn btn-warning btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Фильтр </button>
+            </div>
+
+            <div id="collapseOne" class="collapse  show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <form asp-action="Index" method="get">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label class="control-label">Выберите объект потребления</label>
+                                    <select name="ProviderId" class="form-control form-control-sm" asp-items="ViewBag.ProviderList">
+                                        <option value=null selected>Не выбрано</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label class="control-label">Контрольная дата поверки трансформаторов тока</label>
+                                    <input type="date" name="CurrentTransformerCheckDate" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label class="control-label">Контрольная дата поверки трансформаторов напряжения</label>
+                                    <input type="date" name="VoltageTransformerCheckDate" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label class="control-label">Контрольная дата поверки счетчиков электроэнергии</label>
+                                    <input type="date" name="ElectricityMeterCheckDate" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+                            <input type="submit" value="Применить" class="btn btn-warning btn-sm" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+ 
+    
+</div>
+

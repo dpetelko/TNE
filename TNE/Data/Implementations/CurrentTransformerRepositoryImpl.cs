@@ -75,6 +75,20 @@ namespace TNE.Data.Implementations
             return result;
         }
 
+        public async Task<List<CurrentTransformerDto>> GetAllDtoByStatusAsync2(Guid id, DateTime checkDate)
+        {
+            Log.Debug("GetAll CurrentTransformerDto");
+            var result = await _context.CurrentTransformers
+                .AsNoTracking()
+                .Include(s => s.ControlPoint)
+                .Where(s => s.ControlPoint.ProviderId == id)
+                .Where(s => (DateTime.Compare(s.LastVerificationDate.AddDays(s.InterTestingPeriodInDays), checkDate) < 0))
+                .Select(s => new CurrentTransformerDto(s))
+                .ToListAsync();
+            result.TrimExcess();
+            return result;
+        }
+
         public CurrentTransformer GetById(Guid id)
         {
             Log.Debug("Get CurrentTransformer by Id: '{id}'", id);

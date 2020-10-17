@@ -15,7 +15,7 @@ namespace TNE.Data
         Task<ControlPointDto> GetDtoByIdAsync(Guid Id);
         Task<List<ControlPointDto>> GetAllDtoAsync();
         Task<List<ControlPointDto>> GetAllActiveDtoAsync();
-        Task<List<ControlPointDto>> GetAllDtoByFilterAsync(InterTestingFilter filter);
+        Task<List<ControlPointDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter);
         Task<List<ControlPointDto>> GetAllDtoByProviderIdAsync(Guid id);
     }
 }

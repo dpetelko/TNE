@@ -25,7 +25,7 @@ namespace TNE.Controllers
         public async Task<ActionResult<ControlPointDto>> GetById(Guid id) => Ok(await _service.GetDtoByIdAsync(id));
 
         [HttpGet("filter")]
-        public async Task<List<ControlPointDto>> GetByFilter([FromBody] InterTestingFilter filter) => await _service.GetAllDtoByFilterAsync(filter);
+        public async Task<List<ControlPointDto>> GetByFilter([FromBody] DeviceCalibrationControlDto filter) => await _service.GetAllDtoByFilterAsync(filter);
 
         [HttpGet("byProvider/{id}")]
         public async Task<List<ControlPointDto>> GetAllBySubDivisionId(Guid id) => await _service.GetAllDtoByProviderIdAsync(id);
