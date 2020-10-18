@@ -28,8 +28,6 @@ namespace TNEClient.Controllers
         // GET: CurrentTransformersController
         public async Task<ActionResult> Index(DeviceCalibrationControlDto filter)
         {
-            Log.Error("!!!! {filter}", filter);
-            Log.Error("!!!! EMPTY? {filter}", filter.IsEmpty());
             await GetProviderList();
             return (filter.IsEmpty())
                 ? View(await _service.GetAllAsync())
@@ -109,10 +107,6 @@ namespace TNEClient.Controllers
             }
         }
 
-        private async Task GetProviderList()
-        {
-            ViewBag.ProviderList = new SelectList(await _providerService.GetAllAsync(), "Id", "Name");
-            
-        }
+        private async Task GetProviderList() => ViewBag.ProviderList = new SelectList(await _providerService.GetAllAsync(), "Id", "Name");
     }
 }

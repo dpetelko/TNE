@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Models;
 using TNE.Services;
 
@@ -17,24 +18,27 @@ namespace TNE.Controllers
     {
         private readonly IVoltageTransformerService _service;
 
-        public VoltageTransformersController(IVoltageTransformerService service) { _service = service; }
+        public VoltageTransformersController(IVoltageTransformerService service) => _service = service;
 
         [HttpGet]
-        public async Task<List<VoltageTransformerDto>> GetAll() { return await _service.GetAllDtoAsync(); }
+        public async Task<List<VoltageTransformerDto>> GetAll() => await _service.GetAllDtoAsync();
 
         [HttpGet("status/{status}")]
-        public async Task<List<VoltageTransformerDto>> GetAllByStatus(Status status) { return await _service.GetAllDtoByStatusAsync(status); }
+        public async Task<List<VoltageTransformerDto>> GetAllByStatus(Status status) => await _service.GetAllDtoByStatusAsync(status);
 
         [HttpGet("ControlPoint/{id}")]
-        public async Task<VoltageTransformerDto> GetByControlPointId(Guid id) { return await _service.GetDtoByControlPointId(id); }
+        public async Task<VoltageTransformerDto> GetByControlPointId(Guid id) => await _service.GetDtoByControlPointId(id);
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<VoltageTransformerDto>> GetById(Guid id) { return Ok(await _service.GetDtoByIdAsync(id)); }
+        public async Task<ActionResult<VoltageTransformerDto>> GetById(Guid id) => Ok(await _service.GetDtoByIdAsync(id));
+
+        [HttpGet("checkCalibration")]
+        public async Task<List<VoltageTransformerDto>> GetAllByFilter([FromBody] DeviceCalibrationControlDto filter) => await _service.GetAllDtoByFilterAsync(filter);
+
 
         [HttpPost]
         public async Task<ActionResult<VoltageTransformerDto>> Create([FromBody] VoltageTransformerDto dto)
         {
-            Log.Error("IncommingD DTO: {dto}", dto);
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var result = await _service.CreateAsync(dto);
             return CreatedAtAction(nameof(Create), new { id = result.Id }, result);
@@ -43,7 +47,6 @@ namespace TNE.Controllers
         [HttpPut]
         public async Task<ActionResult<VoltageTransformerDto>> Update([FromBody] VoltageTransformerDto dto)
         {
-            Log.Error("IncommingD DTO: {dto}", dto);
             return ModelState.IsValid
                 ? (ActionResult<VoltageTransformerDto>)Ok(await _service.UpdateAsync(dto))
                 : BadRequest(ModelState);

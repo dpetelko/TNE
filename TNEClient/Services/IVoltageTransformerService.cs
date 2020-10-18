@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TNEClient.Dtos;
+using TNEClient.Dtos.SearchFilters;
 
 namespace TNEClient.Services
 {
@@ -16,5 +17,6 @@ namespace TNEClient.Services
         Task<VoltageTransformerDto> UpdateAsync(VoltageTransformerDto dto);
         Task<bool> SetStatus(Guid id, Status status);
         Task<VoltageTransformerDto> GetDtoByControlPointId(Guid id);
+        Task<List<VoltageTransformerDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter);
     }
 }

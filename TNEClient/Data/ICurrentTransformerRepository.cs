@@ -7,6 +7,7 @@ using TNEClient.Dtos.SearchFilters;
 
 namespace TNEClient.Data
 {
+    [Headers("Accept: application/json")]
     public interface ICurrentTransformerRepository
     {
         [Get("/api/v1/CurrentTransformers")]

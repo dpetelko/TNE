@@ -6,6 +6,7 @@ using TNEClient.Dtos;
 
 namespace TNEClient.Data
 {
+    [Headers("Accept: application/json")]
     public interface IProviderRepository
     {
         [Get("/api/v1/Providers")]

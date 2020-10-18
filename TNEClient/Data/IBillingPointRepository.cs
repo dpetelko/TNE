@@ -7,6 +7,7 @@ using TNEClient.Dtos.SearchFilters;
 
 namespace TNEClient.Data
 {
+    [Headers("Accept: application/json")]
     public interface IBillingPointRepository
     {
         [Get("/api/v1/BillingPoints")]

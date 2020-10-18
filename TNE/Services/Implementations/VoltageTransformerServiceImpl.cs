@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TNE.Data;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Models;
 
 namespace TNE.Services.Implementations
@@ -20,10 +21,7 @@ namespace TNE.Services.Implementations
             _controlPointRepository = controlPointRepository;
         }
 
-        public void CheckExistsById(Guid id)
-        {
-            _repo.CheckExistsById(id);
-        }
+        public void CheckExistsById(Guid id) => _repo.CheckExistsById(id);
 
         public async Task<VoltageTransformerDto> CreateAsync(VoltageTransformerDto dto)
         {
@@ -33,35 +31,20 @@ namespace TNE.Services.Implementations
             return new VoltageTransformerDto(result);
         }
 
-        public async Task<List<VoltageTransformerDto>> GetAllDtoAsync()
-        {
-            return await _repo.GetAllDtoAsync();
-        }
+        public async Task<List<VoltageTransformerDto>> GetAllDtoAsync() => await _repo.GetAllDtoAsync();
 
-        public async Task<List<VoltageTransformerDto>> GetAllDtoByStatusAsync(Status status)
-        {
-            return await _repo.GetAllDtoByStatusAsync(status);
-        }
+        public async Task<List<VoltageTransformerDto>> GetAllDtoByStatusAsync(Status status) => await _repo.GetAllDtoByStatusAsync(status);
 
-        public VoltageTransformer GetById(Guid id)
-        {
-            return _repo.GetById(id);
-        }
+        public VoltageTransformer GetById(Guid id) => _repo.GetById(id);
 
-        public async Task<VoltageTransformer> GetByIdAsync(Guid id)
-        {
-            return await _repo.GetByIdAsync(id);
-        }
+        public async Task<List<VoltageTransformerDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter) => await _repo.GetAllDtoByFilterAsync(filter);
 
-        public async Task<VoltageTransformerDto> GetDtoByControlPointId(Guid id)
-        {
-            return await _repo.GetDtoByControlPointId(id);
-        }
 
-        public async Task<VoltageTransformerDto> GetDtoByIdAsync(Guid id)
-        {
-            return await _repo.GetDtoByIdAsync(id);
-        }
+        public async Task<VoltageTransformer> GetByIdAsync(Guid id) => await _repo.GetByIdAsync(id);
+
+        public async Task<VoltageTransformerDto> GetDtoByControlPointId(Guid id) => await _repo.GetDtoByControlPointId(id);
+
+        public async Task<VoltageTransformerDto> GetDtoByIdAsync(Guid id) => await _repo.GetDtoByIdAsync(id);
 
         public bool IsFieldUnique(Guid id, string fieldName, object fieldValue)
         {
@@ -70,10 +53,7 @@ namespace TNE.Services.Implementations
                 : !_repo.ExistsByFieldAndNotId(id, fieldName, fieldValue);
         }
 
-        public async Task<bool> SetStatus(Guid id, Status newStatus)
-        {
-            return await _repo.SetStatus(id, newStatus);
-        }
+        public async Task<bool> SetStatus(Guid id, Status newStatus) => await _repo.SetStatus(id, newStatus);
 
         public async Task<VoltageTransformerDto> UpdateAsync(VoltageTransformerDto dto)
         {

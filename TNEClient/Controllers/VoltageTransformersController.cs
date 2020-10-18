@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Refit;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using TNEClient.Dtos;
+using TNEClient.Dtos.SearchFilters;
 using TNEClient.Services;
 
 namespace TNEClient.Controllers
@@ -14,27 +16,28 @@ namespace TNEClient.Controllers
         private const string CreateSuccess = "Трансформатор напряжения успешно создан!";
         private const string UpdateSuccess = "Трансформатор напряжения успешно изменен!";
         private readonly IVoltageTransformerService _service;
+        private readonly IProviderService _providerService;
 
-        public VoltageTransformersController(IVoltageTransformerService service) { _service = service; }
+        public VoltageTransformersController(IVoltageTransformerService service, IProviderService providerService)
+        {
+            _service = service;
+            _providerService = providerService;
+        }
 
         // GET: VoltageTransformersController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(DeviceCalibrationControlDto filter)
         {
-            var list = await _service.GetAllAsync();
-            return View(list);
+            await GetProviderList();
+            return (filter.IsEmpty())
+                ? View(await _service.GetAllAsync())
+                : View(await _service.GetAllDtoByFilterAsync(filter));
         }
 
         // GET: VoltageTransformersController/Details/5
-        public async Task<ActionResult> Details(Guid id)
-        {
-            return View(await _service.GetAsync(id));
-        }
+        public async Task<ActionResult> Details(Guid id) => View(await _service.GetAsync(id));
 
         // GET: VoltageTransformersController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        public ActionResult Create() => View();
 
         // POST: VoltageTransformersController/Create
         [HttpPost]
@@ -58,10 +61,7 @@ namespace TNEClient.Controllers
         }
 
         // GET: VoltageTransformersController/Edit/5
-        public async Task<ActionResult> Edit(Guid id)
-        {
-            return View(await _service.GetAsync(id));
-        }
+        public async Task<ActionResult> Edit(Guid id) => View(await _service.GetAsync(id));
 
         // POST: VoltageTransformersController/Edit/5
         [HttpPost]
@@ -96,5 +96,7 @@ namespace TNEClient.Controllers
                 ModelState.AddModelError(key, value);
             }
         }
+
+        private async Task GetProviderList() => ViewBag.ProviderList = new SelectList(await _providerService.GetAllAsync(), "Id", "Name");
     }
 }

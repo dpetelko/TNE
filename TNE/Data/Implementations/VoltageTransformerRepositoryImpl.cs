@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Models;
 
 namespace TNE.Data.Implementations
@@ -69,6 +70,20 @@ namespace TNE.Data.Implementations
                 .AsNoTracking()
                 .Include(s => s.ControlPoint)
                 .Where(s => s.Status == status)
+                .Select(s => new VoltageTransformerDto(s))
+                .ToListAsync();
+            result.TrimExcess();
+            return result;
+        }
+
+        public async Task<List<VoltageTransformerDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter)
+        {
+            Log.Debug("GetAllDtoByFilterAsync VoltageTransformerDto");
+            var result = await _context.VoltageTransformers
+                .AsNoTracking()
+                .Include(s => s.ControlPoint)
+                .Where(s => s.ControlPoint.ProviderId == filter.ProviderId)
+                .Where(s => (DateTime.Compare(s.LastVerificationDate.AddDays(s.InterTestingPeriodInDays), (DateTime)filter.CheckDate) < 0))
                 .Select(s => new VoltageTransformerDto(s))
                 .ToListAsync();
             result.TrimExcess();
