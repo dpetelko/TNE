@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LinqKit;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
 using TNE.Dtos.SearchFilters;
@@ -78,12 +79,32 @@ namespace TNE.Data.Implementations
 
         public async Task<List<CurrentTransformerDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter)
         {
-            Log.Debug("GetAll CurrentTransformerDto");
+            // Log.Debug("GetAllDtoByFilterAsync GetAllDtoByFilterAsync by Filter: {filter}", filter);
+            // var result = await _context.CurrentTransformers
+            //     .AsNoTracking()
+            //     .Include(s => s.ControlPoint)
+            //     .Where(s => s.ControlPoint.ProviderId == filter.ProviderId)
+            //     .Where(s => (DateTime.Compare(s.LastVerificationDate.AddDays(s.InterTestingPeriodInDays), (DateTime)filter.CheckDate) < 0))
+            //     .Select(s => new CurrentTransformerDto(s))
+            //     .ToListAsync();
+            // result.TrimExcess();
+            
+            Log.Debug("GetAllDtoByFilterAsync CurrentTransformerDto by Filter: {filter}", filter);
+
+            var predicate = PredicateBuilder.New<CurrentTransformer>(true);
+
+            var providerId = filter.ProviderId;
+            if (IsNotEmptyOrNull(providerId))
+                predicate = predicate.And(s => s.ControlPoint.Provider.Id == filter.ProviderId);
+
+            var checkDate = filter.CheckDate;
+            if (checkDate.HasValue)
+                predicate = predicate.And(s => (DateTime.Compare(s.LastVerificationDate.AddDays(s.InterTestingPeriodInDays), (DateTime)filter.CheckDate) < 0));
+
             var result = await _context.CurrentTransformers
                 .AsNoTracking()
                 .Include(s => s.ControlPoint)
-                .Where(s => s.ControlPoint.ProviderId == filter.ProviderId)
-                .Where(s => (DateTime.Compare(s.LastVerificationDate.AddDays(s.InterTestingPeriodInDays), (DateTime)filter.CheckDate) < 0))
+                .Where(predicate)
                 .Select(s => new CurrentTransformerDto(s))
                 .ToListAsync();
             result.TrimExcess();
@@ -157,5 +178,7 @@ namespace TNE.Data.Implementations
             if (result is null) throw new EntityNotFoundException($"CurrentTransformer with ControlPointId = '{id}' not found!");
             return result;
         }
+        
+        private static bool IsNotEmptyOrNull(Guid? id) => id != null && id != Guid.Empty;
     }
 }

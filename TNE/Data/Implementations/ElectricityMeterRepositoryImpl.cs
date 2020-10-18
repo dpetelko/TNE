@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LinqKit;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
 using TNE.Dtos.SearchFilters;
@@ -65,12 +66,22 @@ namespace TNE.Data.Implementations
         
         public async Task<List<ElectricityMeterDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter)
         {
-            Log.Debug("GetAllDtoByFilterAsync ElectricityMeterDto");
+            Log.Debug("GetAllDtoByFilterAsync ElectricityMeterDto by Filter: {filter}", filter);
+
+            var predicate = PredicateBuilder.New<ElectricityMeter>(true);
+
+            var providerId = filter.ProviderId;
+            if (IsNotEmptyOrNull(providerId))
+                predicate = predicate.And(s => s.ControlPoint.Provider.Id == filter.ProviderId);
+
+            var checkDate = filter.CheckDate;
+            if (checkDate.HasValue)
+                predicate = predicate.And(s => (DateTime.Compare(s.LastVerificationDate.AddDays(s.InterTestingPeriodInDays), (DateTime)filter.CheckDate) < 0));
+
             var result = await _context.ElectricityMeters
                 .AsNoTracking()
                 .Include(s => s.ControlPoint)
-                .Where(s => s.ControlPoint.ProviderId == filter.ProviderId)
-                .Where(s => (DateTime.Compare(s.LastVerificationDate.AddDays(s.InterTestingPeriodInDays), (DateTime)filter.CheckDate) < 0))
+                .Where(predicate)
                 .Select(s => new ElectricityMeterDto(s))
                 .ToListAsync();
             result.TrimExcess();
@@ -158,5 +169,7 @@ namespace TNE.Data.Implementations
             await _context.SaveChangesAsync();
             return entity;
         }
+        
+        private static bool IsNotEmptyOrNull(Guid? id) => id != null && id != Guid.Empty;
     }
 }

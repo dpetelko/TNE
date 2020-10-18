@@ -1,10 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TNEClient.Dtos.SearchFilters
 {
     public class DeviceCalibrationControlDto
     {
+        [Required]
         public Guid? ProviderId { get; set; }
+        [Required]
         public DateTime? CheckDate { get; set; }
         
 
