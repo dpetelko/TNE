@@ -34,9 +34,7 @@ namespace TNEClient.Controllers
         public async Task<IActionResult> Index(BillingPointFilter filter)
         {
             await GetPointList();
-            return (filter.IsEmpty())
-                ? View(await _BillingPointService.GetAllAsync())
-                : View(await _BillingPointService.GetAllDtoByFilterAsync(filter));
+            return View(await _BillingPointService.GetAllDtoByFilterAsync(filter));
         }
 
         // GET: BillingPointsController/Details/5

@@ -16,13 +16,19 @@ namespace TNE.Data.Implementations
     {
         private readonly DatabaseContext _context;
 
-        public BillingPointRepositoryImpl(DatabaseContext context) { _context = context; }
+        public BillingPointRepositoryImpl(DatabaseContext context)
+        {
+            _context = context;
+        }
 
         public void CheckExistsById(Guid id)
         {
             Log.Debug("Check exists BillingPoint by Id: '{Id}'", id);
             bool result = _context.BillingPoints.Any(b => b.Id == id);
-            if (!result) { throw new EntityNotFoundException($"BillingPoint with Id='{id}' not exist!"); }
+            if (!result)
+            {
+                throw new EntityNotFoundException($"BillingPoint with Id='{id}' not exist!");
+            }
         }
 
         public async Task<BillingPoint> CreateAsync(BillingPoint entity)
@@ -31,8 +37,8 @@ namespace TNE.Data.Implementations
             _context.BillingPoints.Add(entity);
             await _context.SaveChangesAsync();
             _context.Entry(entity)
-               .Reference(c => c.ControlPoint)
-               .Load();
+                .Reference(c => c.ControlPoint)
+                .Load();
             _context.Entry(entity)
                 .Reference(c => c.DeliveryPoint)
                 .Load();
@@ -41,7 +47,8 @@ namespace TNE.Data.Implementations
 
         public bool ExistsByField(string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByField BillingPoint: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
+            Log.Debug("ExistsByField BillingPoint: field name - '{fieldName}', value = '{fieldValue}' ", fieldName,
+                fieldValue);
             return _context.BillingPoints
                 .AsNoTracking()
                 .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
@@ -50,7 +57,9 @@ namespace TNE.Data.Implementations
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByFieldAndNotId BillingPoint: Id - '{id}', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
+            Log.Debug(
+                "ExistsByFieldAndNotId BillingPoint: Id - '{id}', field name - '{fieldName}', value = '{fieldValue}' ",
+                id, fieldName, fieldValue);
             return _context.BillingPoints
                 .AsNoTracking()
                 .Where(s => s.Id != id)
@@ -145,8 +154,8 @@ namespace TNE.Data.Implementations
             _context.BillingPoints.Update(entity);
             await _context.SaveChangesAsync();
             _context.Entry(entity)
-               .Reference(c => c.ControlPoint)
-               .Load();
+                .Reference(c => c.ControlPoint)
+                .Load();
             _context.Entry(entity)
                 .Reference(c => c.DeliveryPoint)
                 .Load();
@@ -157,10 +166,7 @@ namespace TNE.Data.Implementations
         {
             Log.Debug("GetAllDtoByFilterAsync BillingPointDto by Filter: {searchFilter}", searchFilter);
 
-
-
-
-            var predicate = PredicateBuilder.New<BillingPoint>();
+            var predicate = PredicateBuilder.New<BillingPoint>(true);
 
             Guid? controlPointId = searchFilter.ControlPointId;
             if (IsNotEmptyOrNull(controlPointId))
@@ -172,19 +178,19 @@ namespace TNE.Data.Implementations
 
             DateTime? startTime = searchFilter.StartTime;
             if (startTime.HasValue)
-                predicate = predicate.And(s => DateTime.Compare(s.StartTime, (DateTime)startTime) >= 0);
+                predicate = predicate.And(s => DateTime.Compare(s.StartTime, (DateTime) startTime) >= 0);
 
             DateTime? endTime = searchFilter.EndTime;
             if (endTime.HasValue)
-                predicate = predicate.And(s => DateTime.Compare(s.EndTime, (DateTime)endTime) <= 0);
+                predicate = predicate.And(s => DateTime.Compare(s.EndTime, (DateTime) endTime) <= 0);
 
             var result = await _context.BillingPoints
-           .AsNoTracking()
-           .Include(s => s.ControlPoint)
-           .Include(s => s.DeliveryPoint)
-           .Where(predicate)
-           .Select(s => new BillingPointDto(s))
-           .ToListAsync();
+                .AsNoTracking()
+                .Include(s => s.ControlPoint)
+                .Include(s => s.DeliveryPoint)
+                .Where(predicate)
+                .Select(s => new BillingPointDto(s))
+                .ToListAsync();
             result.TrimExcess();
             return result;
         }
