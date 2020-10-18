@@ -3,7 +3,9 @@ using Refit;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using TNEClient.Dtos;
+using TNEClient.Dtos.SearchFilters;
 using TNEClient.Services;
 
 namespace TNEClient.Controllers
@@ -14,14 +16,21 @@ namespace TNEClient.Controllers
         private const string SuccessMessage = "SuccessMessage";
         private const string UpdateSuccess = "Счетчик электроэнергии успешно изменен!";
         private readonly IElectricityMeterService _service;
+        private readonly IProviderService _providerService;
 
-        public ElectricityMetersController(IElectricityMeterService service) { _service = service; }
+        public ElectricityMetersController(IElectricityMeterService service, IProviderService providerService)
+        {
+            _service = service;
+            _providerService = providerService;
+        }
 
         // GET: ElectricityMetersController
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(DeviceCalibrationControlDto filter)
         {
-            var list = await _service.GetAllAsync();
-            return View(list);
+            await GetProviderList();
+            return (filter.IsEmpty())
+                ? View(await _service.GetAllAsync())
+                : View(await _service.GetAllDtoByFilterAsync(filter));
         }
 
         // GET: ElectricityMetersController/Details/5
@@ -96,5 +105,7 @@ namespace TNEClient.Controllers
                 ModelState.AddModelError(key, value);
             }
         }
+        
+        private async Task GetProviderList() => ViewBag.ProviderList = new SelectList(await _providerService.GetAllAsync(), "Id", "Name");
     }
 }

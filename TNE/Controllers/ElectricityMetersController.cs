@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TNE.Dtos;
+using TNE.Dtos.SearchFilters;
 using TNE.Models;
 using TNE.Services;
 
@@ -27,6 +28,9 @@ namespace TNE.Controllers
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ElectricityMeterDto>> GetById(Guid id) { return Ok(await _service.GetDtoByIdAsync(id)); }
+        
+        [HttpGet("checkCalibration")]
+        public async Task<List<ElectricityMeterDto>> GetAllByFilter([FromBody] DeviceCalibrationControlDto filter) => await _service.GetAllDtoByFilterAsync(filter);
 
         [HttpPost]
         public async Task<ActionResult<ElectricityMeterDto>> Create([FromBody] ElectricityMeterDto dto)
