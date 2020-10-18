@@ -6,7 +6,7 @@ using TNEClient.Dtos;
 
 namespace TNEClient.Data
 {
-    [Headers("Accept: application/json")]
+    //[Headers("Accept: application/json")]
     public interface ILeadDivisionRepository
     {
         [Get("/api/v1/LeadDivisions")]

@@ -7,7 +7,7 @@ using TNE.Services;
 
 namespace TNE.Controllers
 {
-    [Produces("application/json")]
+    //[Produces("application/json")]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class LeadDivisionsController : ControllerBase
@@ -20,6 +20,7 @@ namespace TNE.Controllers
         /// </summary>
         /// /// <returns>Returns list of LeadDivisions or EMPTY List, if no LeadDivisions are found</returns>
         /// <response code="200">Returns list of LeadDivisions or EMPTY List, if no LeadDivisions are found</response>
+        //[Produces("application/json", Type = typeof(List<LeadDivisionDto>))]
         [HttpGet]
         public async Task<List<LeadDivisionDto>> GetAll() { return await _service.GetAllDtoAsync(); }
 
@@ -67,7 +68,8 @@ namespace TNE.Controllers
         /// <param name="dto"></param>
         /// <returns>A newly created LeadDivision</returns>
         /// <response code="201">Returns the newly created LeadDivision</response>
-        /// <response code="400">If the item is null or did not pass validation</response>       
+        /// <response code="400">If the item is null or did not pass validation</response>     
+        
         [HttpPost]
         public async Task<ActionResult<LeadDivisionDto>> Create([FromBody] LeadDivisionDto dto)
         {

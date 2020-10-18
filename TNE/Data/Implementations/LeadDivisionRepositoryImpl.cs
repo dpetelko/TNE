@@ -101,8 +101,8 @@ namespace TNE.Data.Implementations
             return _context.LeadDivisions
                 .AsNoTracking()
                 .Include(s => s.Address)
-                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
-                .ToList().Contains(fieldValue);
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x).Equals(fieldValue))
+                .ToList().Count != 0;
         }
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
