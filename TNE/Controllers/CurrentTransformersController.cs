@@ -96,7 +96,7 @@ namespace TNE.Controllers
         /// Setting new Status for the CurrentTransformer
         /// </summary>
         /// <param name="id"></param>
-        /// /// <param name="status"></param>
+        /// <param name="status"></param>
         /// <returns>True, if setting is done</returns>
         /// <response code="200">If setting is done</response>
         /// <response code="404">If no CurrentTransformers are found</response>
