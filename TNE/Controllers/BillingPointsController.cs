@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TNE.Dto;
 using TNE.Dtos;
 using TNE.Dtos.SearchFilters;
 using TNE.Services;
@@ -18,7 +15,7 @@ namespace TNE.Controllers
     {
         private readonly IBillingPointService _service;
 
-        public BillingPointsController(IBillingPointService service) {  _service = service; }
+        public BillingPointsController(IBillingPointService service) =>  _service = service;
 
         /// <summary>
         /// Get all BillingPoints
@@ -26,7 +23,7 @@ namespace TNE.Controllers
         /// /// <returns>Returns list of BillingPoints or EMPTY List, if no BillingPoints are found</returns>
         /// <response code="200">Returns list of BillingPoints or EMPTY List, if no BillingPoints are found</response>
         [HttpGet]
-        public async Task<List<BillingPointDto>> GetAll() { return await _service.GetAllDtoAsync(); }
+        public async Task<List<BillingPointDto>> GetAll() => await _service.GetAllDtoAsync();
 
         /// <summary>
         /// Get specific BillingPoint by ID 
@@ -36,7 +33,7 @@ namespace TNE.Controllers
         /// <response code="200">Returns the requested BillingPoint</response>
         /// <response code="404">If no BillingPoints are found</response>         
         [HttpGet("{id}")]
-        public async Task<ActionResult<BillingPointDto>> GetById(Guid id) { return Ok(await _service.GetDtoByIdAsync(id)); }
+        public async Task<ActionResult<BillingPointDto>> GetById(Guid id) => Ok(await _service.GetDtoByIdAsync(id));
 
         /// <summary>
         /// Get list of BillingPoints by ControlPoint ID 
@@ -46,23 +43,23 @@ namespace TNE.Controllers
         /// <response code="200">Returns the requested BillingPoint</response>
         /// <response code="400">If no BillingPoints are found</response>          
         [HttpGet("ControlPoint/{id}")]
-        public async Task<List<BillingPointDto>> GetByControlPointId(Guid id) { return await _service.GetAllDtoByControlPointIdAsync(id); }
+        public async Task<List<BillingPointDto>> GetByControlPointId(Guid id) => await _service.GetAllDtoByControlPointIdAsync(id);
 
         /// <summary>
         /// Get list of BillingPoints by DeliveryPoint ID 
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The requested BillingPoint</returns>
-        /// <response code="200">Returns the requested BillingPoint</response>
+        /// <response code="200">Returns the requested BillingPoints</response>
         /// <response code="404">If no BillingPoints are found</response>     
         [HttpGet("DeliveryPoint/{id}")]
-        public async Task<List<BillingPointDto>> GetByDeliveryPointId(Guid id) { return await _service.GetAllDtoByDeliveryPointIdAsync(id); }
+        public async Task<List<BillingPointDto>> GetByDeliveryPointId(Guid id) => await _service.GetAllDtoByDeliveryPointIdAsync(id);
 
         /// <summary>
         /// Get list of BillingPoints by BillingPointFilter 
         /// </summary>
-        /// <returns>The requested BillingPoint</returns>
-        /// <response code="200">Returns the requested BillingPoint</response>
+        /// <returns>The requested list of BillingPoints</returns>
+        /// <response code="200">Returns the requested BillingPoints</response>
         /// <response code="404">If no BillingPoints are found</response>      
         [HttpGet("filter")]
         public async Task<List<BillingPointDto>> GetByFilterId([FromBody] BillingPointFilter filter) { return await _service.GetAllDtoByFilterAsync(filter); }
