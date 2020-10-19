@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width"/>
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -10,57 +10,93 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div>
-        <div id="menu">
-            <nav class="navbar navbar-expand-sm bg-info navbar-dark fixed-top">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">Главная</a>
-                    </li>
-                    <li class="nav-item active dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">Разделы</a>
-                        <div class="dropdown-menu bg-info">
-                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="LeadDivisions">Головные организации</a>
-                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="SubDivisions">Дочерние организации</a>
-                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="Providers">Объекты потребления</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="ControlPoints">Точки измерения</a>
-                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="DeliveryPoints">Точки поставки</a>
-                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="BillingPoints">Расчетные приборы учета</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="ElectricityMeters">Счетчики ЭЭ</a>
-                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="CurrentTransformers">Трансформаторы тока</a>
-                            <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="VoltageTransformers">Трансформаторы напряжения</a>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-            <br />
-            <br />
-            <br />
-        </div>
-
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <div class="container-sm">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <span>@TempData["SuccessMessage"]</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        }
-
-
-
-        @RenderBody()
-
-
+<div>
+    <div id="menu">
+        <nav class="navbar navbar-expand-sm bg-info navbar-dark fixed-top">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Главная</a>
+                </li>
+                <li class="nav-item active dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        Разделы
+                    </a>
+                    <div class="dropdown-menu bg-info">
+                        <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="LeadDivisions">Головные организации</a>
+                        <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="SubDivisions">Дочерние организации</a>
+                        <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="Providers">Объекты потребления</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="ControlPoints">Точки измерения</a>
+                        <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="DeliveryPoints">Точки поставки</a>
+                        <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="BillingPoints">Расчетные приборы учета</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="ElectricityMeters">Счетчики ЭЭ</a>
+                        <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="CurrentTransformers">Трансформаторы тока</a>
+                        <a class="dropdown-item text-white bg-info" asp-action="Index" asp-controller="VoltageTransformers">Трансформаторы напряжения</a>
+                    </div>
+                </li>
+                <li class="nav-item active">
+                    
+                    <a class="nav-link" id="refillButton" href="/Home/DropAndRefillDb">Заполнить базу...</a>
+                </li>
+            </ul>
+        </nav>
+        <br/>
+        <br/>
+        <br/>
     </div>
 
-    @*<footer>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="container-sm">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span>@TempData["SuccessMessage"]</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    }
+
+    @RenderBody()
+
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="confirmDropAndRefilDB">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Подтверждение удаления</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Заполнение базы удалит все существующие записи</p>
+                <p>Вы уверены, что хотите совершить эту операцию?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="btn btn-danger" id="confirmRef">Да, конечно</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+        $('document').ready(function () {
+            $('#refillButton').on('click', function (event) {
+                event.preventDefault();
+                var href = $(this).attr('href');
+                $('#confirmDropAndRefilDB #confirmRef').attr('href', href);
+                $('#confirmDropAndRefilDB').modal();
+            });
+        });
+</script>
+
+
+@*<footer>
             @if (IsSectionDefined("Footer"))
             {
                 @RenderSection("Footer")

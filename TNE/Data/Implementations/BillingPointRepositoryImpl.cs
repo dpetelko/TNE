@@ -36,12 +36,12 @@ namespace TNE.Data.Implementations
             Log.Debug("Creating BillingPoint: {entity}", entity);
             _context.BillingPoints.Add(entity);
             await _context.SaveChangesAsync();
-            _context.Entry(entity)
+            await _context.Entry(entity)
                 .Reference(c => c.ControlPoint)
-                .Load();
-            _context.Entry(entity)
+                .LoadAsync();
+            await _context.Entry(entity)
                 .Reference(c => c.DeliveryPoint)
-                .Load();
+                .LoadAsync();
             return entity;
         }
 
@@ -153,12 +153,12 @@ namespace TNE.Data.Implementations
             Log.Debug("Updating BillingPoint: '{entity}'", entity);
             _context.BillingPoints.Update(entity);
             await _context.SaveChangesAsync();
-            _context.Entry(entity)
+            await _context.Entry(entity)
                 .Reference(c => c.ControlPoint)
-                .Load();
-            _context.Entry(entity)
+                .LoadAsync();
+            await _context.Entry(entity)
                 .Reference(c => c.DeliveryPoint)
-                .Load();
+                .LoadAsync();
             return entity;
         }
 
@@ -168,19 +168,19 @@ namespace TNE.Data.Implementations
 
             var predicate = PredicateBuilder.New<BillingPoint>(true);
 
-            Guid? controlPointId = searchFilter.ControlPointId;
+            var controlPointId = searchFilter.ControlPointId;
             if (IsNotEmptyOrNull(controlPointId))
                 predicate = predicate.And(s => s.ControlPointId == controlPointId);
 
-            Guid? deliveryPointId = searchFilter.DeliveryPointId;
+            var deliveryPointId = searchFilter.DeliveryPointId;
             if (IsNotEmptyOrNull(deliveryPointId))
                 predicate = predicate.And(s => s.DeliveryPointId == deliveryPointId);
 
-            DateTime? startTime = searchFilter.StartTime;
+            var startTime = searchFilter.StartTime;
             if (startTime.HasValue)
                 predicate = predicate.And(s => DateTime.Compare(s.StartTime, (DateTime) startTime) >= 0);
 
-            DateTime? endTime = searchFilter.EndTime;
+            var endTime = searchFilter.EndTime;
             if (endTime.HasValue)
                 predicate = predicate.And(s => DateTime.Compare(s.EndTime, (DateTime) endTime) <= 0);
 

@@ -21,7 +21,7 @@ namespace TNE.Data.Implementations
         public void CheckExistsById(Guid id)
         {
             Log.Debug("Check exists CurrentTransformer by Id: '{Id}'", id);
-            bool result = _context.CurrentTransformers.Any(b => b.Id == id);
+            var result = _context.CurrentTransformers.Any(b => b.Id == id);
             if (!result) { throw new EntityNotFoundException($"CurrentTransformer with Id='{id}' not exist!"); }
         }
 

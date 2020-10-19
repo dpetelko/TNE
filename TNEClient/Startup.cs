@@ -24,6 +24,7 @@ namespace TNEClient
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             
             services.AddRefitClient<ILeadDivisionRepository>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
@@ -51,6 +52,9 @@ namespace TNEClient
 
             services.AddRefitClient<IElectricityMeterRepository>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+            
+            services.AddRefitClient<IDbUtilsRepository>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
 
             services.AddScoped<ILeadDivisionService, LeadDivisionServiceImpl>();
             services.AddScoped<ISubDivisionService, SubDivisionServiceImpl>();
@@ -61,7 +65,7 @@ namespace TNEClient
             services.AddScoped<IVoltageTransformerService, VoltageTransformerServiceImpl>();
             services.AddScoped<ICurrentTransformerService, CurrentTransformerServiceImpl>();
             services.AddScoped<IElectricityMeterService, ElectricityMeterServiceImpl>();
-            services.AddMvc();
+            services.AddScoped<IDbUtilsService, DbUtilsServiceImpl>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

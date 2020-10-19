@@ -6,18 +6,17 @@ namespace TNEClient.Dtos
     public class DivisionDto
     {
         public Guid Id { get; set; }
-        [Required]
-        [StringLength(10, MinimumLength = 3, ErrorMessage = "The {0} length must be between {2} and {1} characters.")]
-        //[UniqueField]
+        [Required(ErrorMessage = "Введите значение")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "The {0} length must be between {2} and {1} characters.")]
         [Display(Name = "Наименование")]
         public string Name { get; set; }
         public Guid AddressId { get; set; }
         [Display(Name = "Индекс")]
         public int PostCode { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Страна")]
         public string Country { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Регион")]
         public string Region { get; set; }
         [Display(Name = "Населенный пункт")]

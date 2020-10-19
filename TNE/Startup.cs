@@ -14,6 +14,7 @@ using TNE.Data;
 using TNE.Data.Implementations;
 using TNE.Services;
 using TNE.Services.Implementations;
+using TNE.Services.Utils;
 
 namespace TNE
 {
@@ -45,12 +46,12 @@ namespace TNE
                         Email = "dpetelko@gmail.com"
                     }
                 });
-                // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
             services.AddSwaggerGenNewtonsoftSupport();
+            services.AddControllers();
 
             services.AddScoped<ILeadDivisionService, LeadDivisionServiceImpl>();
             services.AddScoped<ISubDivisionService, SubDivisionServiceImpl>();
@@ -61,6 +62,7 @@ namespace TNE
             services.AddScoped<IVoltageTransformerService, VoltageTransformerServiceImpl>();
             services.AddScoped<IControlPointService, ControlPointServiceImpl>();
             services.AddScoped<IElectricityMeterService, ElectricityMeterServiceImpl>();
+            services.AddScoped<IDbGenerator, DbGeneratorImpl>();
 
             services.AddScoped<ILeadDivisionRepository, LeadDivisionRepositoryImpl>();
             services.AddScoped<ISubDivisionRepository, SubDivisionRepositoryImpl>();
@@ -71,8 +73,9 @@ namespace TNE
             services.AddScoped<IVoltageTransformerRepository, VoltageTransformerRepositoryImpl>();
             services.AddScoped<IControlPointRepository, ControlPointRepositoryImpl>();
             services.AddScoped<IElectricityMeterRepository, ElectricityMeterRepositoryImpl>();
+            services.AddScoped<IDbUtils, DbUtilsImpl>();
 
-            services.AddControllers();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -25,7 +25,7 @@ namespace TNEClient.Dtos
         [Required(ErrorMessage = "Введите значение")]
         public int InterTestingPeriodInDays { get; set; } = 365;
 
-        public Guid ControlPointId { get; set; }
+        public Guid? ControlPointId { get; set; }
         [Display(Name = "Точка контроля электроэнергии")]
         public string ControlPointName { get; set; }
 
