@@ -51,8 +51,8 @@ namespace TNE.Data.Implementations
                 fieldValue);
             return _context.BillingPoints
                 .AsNoTracking()
-                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
-                .ToList().Contains(fieldValue);
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x).Equals(fieldValue))
+                .ToList().Count != 0;
         }
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
@@ -63,8 +63,8 @@ namespace TNE.Data.Implementations
             return _context.BillingPoints
                 .AsNoTracking()
                 .Where(s => s.Id != id)
-                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
-                .ToList().Contains(fieldValue);
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x).Equals(fieldValue))
+                .ToList().Count != 0;
         }
 
         public async Task<List<BillingPointDto>> GetAllDtoAsync()

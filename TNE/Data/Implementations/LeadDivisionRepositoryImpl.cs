@@ -112,8 +112,8 @@ namespace TNE.Data.Implementations
                 .AsNoTracking()
                 .Include(s => s.Address)
                 .Where(s => s.Id != id)
-                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x))
-                .ToList().Contains(fieldValue);
+                .Select(x => x.GetType().GetProperty(fieldName).GetValue(x).Equals(fieldValue))
+                .ToList().Count != 0;
         }
 
         public async Task<bool> DeleteAsync(Guid id)
