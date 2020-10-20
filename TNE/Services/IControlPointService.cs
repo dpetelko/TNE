@@ -39,7 +39,7 @@ namespace TNE.Services
         Task<ControlPointDto> UpdateAsync(ControlPointDto dto);
         
         /// <summary>
-        /// Get all ControlPointsDto. 
+        /// Get all ControlPoints with attribute Deleted = false
         /// Returns list of ControlPoints or EMPTY List, if no ControlPoints are found
         /// </summary>
         Task<List<ControlPointDto>> GetAllActiveDtoAsync();
