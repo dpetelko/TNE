@@ -10,55 +10,55 @@ using TNE.Models;
 namespace TNE.Services
 {
     /// <summary>
-    /// Performs operations on the CurrentTransformers 
+    /// Performs operations on the VoltageTransformers 
     /// </summary>
     public interface IVoltageTransformerService : IService<VoltageTransformer>
     {
         /// <summary>
-        /// Set new status for CurrentTransformer by ID 
+        /// Set new status for VoltageTransformer by ID 
         /// Returns true if done
         /// </summary>
-        /// <exception cref="EntityNotFoundException">If no CurrentTransformers are found</exception>
+        /// <exception cref="EntityNotFoundException">If no VoltageTransformers are found</exception>
         Task<bool> SetStatus(Guid id, Status newStatus);
         
         /// <summary>
-        /// Returns a specific CurrentTransformer by ID
+        /// Returns a specific VoltageTransformer by ID
         /// </summary>
-        /// <exception cref="EntityNotFoundException">If no CurrentTransformers are found</exception>
+        /// <exception cref="EntityNotFoundException">If no VoltageTransformers are found</exception>
         Task<VoltageTransformerDto> GetDtoByIdAsync(Guid id);
         
         /// <summary>
-        /// Get all CurrentTransformersDto. 
-        /// Returns list of CurrentTransformers or EMPTY List, if no CurrentTransformers are found
+        /// Get all VoltageTransformersDto. 
+        /// Returns list of VoltageTransformers or EMPTY List, if no VoltageTransformers are found
         /// </summary>
         Task<List<VoltageTransformerDto>> GetAllDtoAsync();
 
         /// <summary>
-        /// Creates a CurrentTransformer. 
-        /// Returns a newly created CurrentTransformer
+        /// Creates a VoltageTransformer. 
+        /// Returns a newly created VoltageTransformer
         /// </summary>
-        /// <exception cref="InvalidEntityException">If CurrentTransformer are invalid, e.g. ID is not Guid.Empty</exception>
+        /// <exception cref="InvalidEntityException">If VoltageTransformer are invalid, e.g. ID is not Guid.Empty</exception>
         Task<VoltageTransformerDto> CreateAsync(VoltageTransformerDto dto);
         
         /// <summary>
-        /// Updates a CurrentTransformer. Returns a updated CurrentTransformer
+        /// Updates a VoltageTransformer. Returns a updated VoltageTransformer
         /// </summary>
-        /// <exception cref="InvalidEntityException">If CurrentTransformer are invalid, e.g. ID is Guid.Empty</exception>
-        /// <exception cref="EntityNotFoundException">If CurrentTransformer are not found with this ID</exception>
+        /// <exception cref="InvalidEntityException">If VoltageTransformer are invalid, e.g. ID is Guid.Empty</exception>
+        /// <exception cref="EntityNotFoundException">If VoltageTransformer are not found with this ID</exception>
         Task<VoltageTransformerDto> UpdateAsync(VoltageTransformerDto dto);
         
         /// <summary>
-        /// Returns list of CurrentTransformers by Status or EMPTY List, if no CurrentTransformers are found
+        /// Returns list of VoltageTransformers by Status or EMPTY List, if no VoltageTransformers are found
         /// </summary>
         Task<List<VoltageTransformerDto>> GetAllDtoByStatusAsync(Status status);
         
         /// <summary>
-        /// Returns list of CurrentTransformers by ControlPoint ID or EMPTY List, if no CurrentTransformers are found
+        /// Returns list of VoltageTransformers by ControlPoint ID or EMPTY List, if no VoltageTransformers are found
         /// </summary>
         Task<VoltageTransformerDto> GetDtoByControlPointId(Guid id);
         
         /// <summary>
-        /// Returns list of CurrentTransformers by DeviceCalibrationControlDto or EMPTY List, if no CurrentTransformers are found
+        /// Returns list of VoltageTransformers by DeviceCalibrationControlDto or EMPTY List, if no VoltageTransformers are found
         /// </summary>
         Task<List<VoltageTransformerDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter);
     }

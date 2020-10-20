@@ -7,7 +7,7 @@ namespace TNE.Services
     public interface IService<T>
     {
         /// <summary>
-        /// Returns a specific <typeparamref name="T"/> by ID
+        /// Returns a specific Object by ID
         /// </summary>
         /// <exception cref="EntityNotFoundException">If no <typeparamref name="T"/>s are found</exception>
         Task<T> GetByIdAsync(Guid id);
@@ -25,7 +25,7 @@ namespace TNE.Services
         void CheckExistsById(Guid id);
         
         /// <summary>
-        /// Check unique field <typeparam name="T"/>
+        /// Check unique field 
         /// </summary>
         bool IsFieldUnique(Guid id, string fieldName, object fieldValue);
     }
