@@ -16,7 +16,7 @@ namespace TNE.Services
         /// <summary>
         /// Returns a specific BillingPoint by ID
         /// </summary>
-        /// <exception cref="EntityNotFoundException">If no BillingPoints are found</exception>
+        /// <exception cref="EntityNotFoundException">If no BillingPoint are found</exception>
         Task<BillingPointDto> GetDtoByIdAsync(Guid id);
 
         /// <summary>
@@ -29,15 +29,14 @@ namespace TNE.Services
         /// Creates a BillingPoint. 
         /// Returns a newly created BillingPoint
         /// </summary>
-        /// <exception cref="InvalidEntityException">If BillingPoints are invalid, e.g. ID is not Guid.Empty</exception>
+        /// <exception cref="InvalidEntityException">If BillingPoint are invalid, e.g. ID is not Guid.Empty</exception>
         Task<BillingPointDto> CreateAsync(BillingPointDto dto);
 
         /// <summary>
         /// Updates a BillingPoint. Returns a updated BillingPoint
         /// </summary>
-        /// <exception cref="InvalidEntityException">If BillingPoints are invalid, e.g. ID is Guid.Empty</exception>
-        /// <exception cref="EntityNotFoundException">If BillingPoints are not found with this ID</exception>
-
+        /// <exception cref="InvalidEntityException">If BillingPoint are invalid, e.g. ID is Guid.Empty</exception>
+        /// <exception cref="EntityNotFoundException">If BillingPoint are not found with this ID</exception>
         Task<BillingPointDto> UpdateAsync(BillingPointDto dto);
 
         /// <summary>
