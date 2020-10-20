@@ -12,10 +12,6 @@ namespace TNE.Data
     {
         
         Task<BillingPointDto> GetDtoByIdAsync(Guid id);
-        /// <summary>
-        /// Get all BillingPointsDto. 
-        /// Returns list of BillingPoints or EMPTY List, if no BillingPoints are found
-        /// </summary>
         Task<List<BillingPointDto>> GetAllDtoAsync();
         Task<List<BillingPointDto>> GetAllDtoByControlPointIdAsync(Guid id);
         Task<List<BillingPointDto>> GetAllDtoByDeliveryPointIdAsync(Guid id);
