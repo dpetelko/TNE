@@ -18,8 +18,8 @@ namespace TNE.Data.Implementations
 
         public void CheckExistsById(Guid id)
         {
-            Log.Debug("Check exists SubDivision by Id: '{Id}'", id);
-            bool result = _context.SubDivisions.Any(b => b.Id == id);
+            Log.Debug("Check exists SubDivision by Id: '{id}'", id);
+            var result = _context.SubDivisions.Any(b => b.Id == id);
             if (!result) { throw new EntityNotFoundException($"SubDivision with Id='{id}' not exist!"); }
         }
 
@@ -28,7 +28,9 @@ namespace TNE.Data.Implementations
             Log.Debug("Creating SubDivision: {entity}", entity);
             _context.SubDivisions.Add(entity);
             await _context.SaveChangesAsync();
-            _context.Entry(entity).Reference(c => c.LeadDivision).Load();
+            _context.Entry(entity)
+                .Reference(c => c.LeadDivision)
+                .Load();
             return entity;
         }
 

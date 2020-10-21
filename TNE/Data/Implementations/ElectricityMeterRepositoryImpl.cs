@@ -138,16 +138,16 @@ namespace TNE.Data.Implementations
             return result;
         }
 
-        public async Task<ElectricityMeterDto> GetDtoByIdAsync(Guid Id)
+        public async Task<ElectricityMeterDto> GetDtoByIdAsync(Guid id)
         {
-            Log.Debug("Get ElectricityMeterDto by Id: '{Id}'", Id);
+            Log.Debug("Get ElectricityMeterDto by Id: '{id}'", id);
             var result = await _context.ElectricityMeters
                 .AsNoTracking()
                 .Include(b => b.ControlPoint)
-                .Where(s => s.Id == Id)
+                .Where(s => s.Id == id)
                 .Select(s => new ElectricityMeterDto(s))
                 .SingleOrDefaultAsync();
-            if (result is null) throw new EntityNotFoundException($"ElectricityMeter with ID = '{Id}' not found!");
+            if (result is null) throw new EntityNotFoundException($"ElectricityMeter with ID = '{id}' not found!");
             return result;
         }
 

@@ -18,7 +18,7 @@ namespace TNE.Data.Implementations
 
         public void CheckExistsById(Guid id)
         {
-            Log.Debug("Check exists Provider by Id: '{Id}'", id);
+            Log.Debug("Check exists Provider by Id: '{id}'", id);
             bool result = _context.Providers.Any(b => b.Id == id);
             if (!result) { throw new EntityNotFoundException($"Provider with Id='{id}' not exist!"); }
         }

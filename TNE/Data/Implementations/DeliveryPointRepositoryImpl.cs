@@ -104,7 +104,7 @@ namespace TNE.Data.Implementations
 
         public DeliveryPoint GetById(Guid id)
         {
-            Log.Debug("Get DeliveryPoint by Id: '{Id}'", id);
+            Log.Debug("Get DeliveryPoint by Id: '{id}'", id);
             var result = _context.DeliveryPoints
                 .AsNoTracking()
                 .Include(b => b.Provider)
@@ -116,7 +116,7 @@ namespace TNE.Data.Implementations
 
         public async Task<DeliveryPoint> GetByIdAsync(Guid id)
         {
-            Log.Debug("Get DeliveryPoint by Id: '{Id}'", id);
+            Log.Debug("Get DeliveryPoint by Id: '{id}'", id);
             var result = await _context.DeliveryPoints
                 .AsNoTracking()
                 .Include(b => b.Provider)
@@ -126,16 +126,16 @@ namespace TNE.Data.Implementations
                 : result;
         }
 
-        public async Task<DeliveryPointDto> GetDtoByIdAsync(Guid Id)
+        public async Task<DeliveryPointDto> GetDtoByIdAsync(Guid id)
         {
-            Log.Debug("Get DeliveryPointDto by Id: '{Id}'", Id);
+            Log.Debug("Get DeliveryPointDto by ID: '{id}'", id);
             var result = await _context.DeliveryPoints
                 .AsNoTracking()
                 .Include(s => s.Provider)
-                .Where(s => s.Id == Id)
+                .Where(s => s.Id == id)
                 .Select(s => new DeliveryPointDto(s))
                 .SingleOrDefaultAsync();
-            if (result is null) throw new EntityNotFoundException($"DeliveryPoint with ID = '{Id}' not found!");
+            if (result is null) throw new EntityNotFoundException($"DeliveryPoint with ID = '{id}' not found!");
             return result;
         }
 

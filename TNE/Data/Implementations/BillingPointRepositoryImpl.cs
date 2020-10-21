@@ -134,17 +134,17 @@ namespace TNE.Data.Implementations
                 : result;
         }
 
-        public async Task<BillingPointDto> GetDtoByIdAsync(Guid Id)
+        public async Task<BillingPointDto> GetDtoByIdAsync(Guid id)
         {
-            Log.Debug("Get BillingPointDto by Id: '{Id}'", Id);
+            Log.Debug("Get BillingPointDto by Id: '{Id}'", id);
             var result = await _context.BillingPoints
                 .AsNoTracking()
                 .Include(b => b.ControlPoint)
                 .Include(b => b.DeliveryPoint)
-                .Where(s => s.Id == Id)
+                .Where(s => s.Id == id)
                 .Select(s => new BillingPointDto(s))
                 .SingleOrDefaultAsync();
-            if (result is null) throw new EntityNotFoundException($"BillingPoint with ID = '{Id}' not found!");
+            if (result is null) throw new EntityNotFoundException($"BillingPoint with ID = '{id}' not found!");
             return result;
         }
 

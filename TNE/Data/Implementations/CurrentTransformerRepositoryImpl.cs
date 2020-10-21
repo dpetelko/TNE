@@ -135,16 +135,16 @@ namespace TNE.Data.Implementations
                 : result;
         }
 
-        public async Task<CurrentTransformerDto> GetDtoByIdAsync(Guid Id)
+        public async Task<CurrentTransformerDto> GetDtoByIdAsync(Guid id)
         {
-            Log.Debug("Get CurrentTransformerDto by Id: '{Id}'", Id);
+            Log.Debug("Get CurrentTransformerDto by Id: '{Id}'", id);
             var result = await _context.CurrentTransformers
                 .AsNoTracking()
                 .Include(b => b.ControlPoint)
-                .Where(s => s.Id == Id)
+                .Where(s => s.Id == id)
                 .Select(s => new CurrentTransformerDto(s))
                 .SingleOrDefaultAsync();
-            if (result is null) throw new EntityNotFoundException($"CurrentTransformer with ID = '{Id}' not found!");
+            if (result is null) throw new EntityNotFoundException($"CurrentTransformer with ID = '{id}' not found!");
             return result;
         }
 

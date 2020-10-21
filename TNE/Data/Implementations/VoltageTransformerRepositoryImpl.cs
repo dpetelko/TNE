@@ -20,7 +20,7 @@ namespace TNE.Data.Implementations
 
         public void CheckExistsById(Guid id)
         {
-            Log.Debug("Check exists VoltageTransformer by Id: '{Id}'", id);
+            Log.Debug("Check exists VoltageTransformer by Id: '{id}'", id);
             bool result = _context.VoltageTransformers.Any(b => b.Id == id);
             if (!result) { throw new EntityNotFoundException($"VoltageTransformer with Id='{id}' not exist!"); }
         }
@@ -138,16 +138,16 @@ namespace TNE.Data.Implementations
             return result;
         }
 
-        public async Task<VoltageTransformerDto> GetDtoByIdAsync(Guid Id)
+        public async Task<VoltageTransformerDto> GetDtoByIdAsync(Guid id)
         {
-            Log.Debug("Get VoltageTransformerDto by Id: '{Id}'", Id);
+            Log.Debug("Get VoltageTransformerDto by Id: '{id}'", id);
             var result = await _context.VoltageTransformers
                 .AsNoTracking()
                 .Include(b => b.ControlPoint)
-                .Where(s => s.Id == Id)
+                .Where(s => s.Id == id)
                 .Select(s => new VoltageTransformerDto(s))
                 .SingleOrDefaultAsync();
-            if (result is null) throw new EntityNotFoundException($"VoltageTransformer with ID = '{Id}' not found!");
+            if (result is null) throw new EntityNotFoundException($"VoltageTransformer with ID = '{id}' not found!");
             return result;
         }
 

@@ -21,7 +21,7 @@ namespace TNE.Data.Implementations
         public void CheckExistsById(Guid id)
         {
             Log.Debug("Check exists ControlPoint by Id: '{Id}'", id);
-            bool result = _context.ControlPoints.Any(b => b.Id == id);
+            var result = _context.ControlPoints.Any(b => b.Id == id);
             if (!result) { throw new EntityNotFoundException($"ControlPoint with Id='{id}' not exist!"); }
         }
 
@@ -135,18 +135,18 @@ namespace TNE.Data.Implementations
                 : result;
         }
 
-        public async Task<ControlPointDto> GetDtoByIdAsync(Guid Id)
+        public async Task<ControlPointDto> GetDtoByIdAsync(Guid id)
         {
-            Log.Debug("Get ControlPointDto by Id: '{Id}'", Id);
+            Log.Debug("Get ControlPointDto by Id: '{id}'", id);
             var result = await _context.ControlPoints.AsNoTracking()
                 .Include(s => s.Provider)
                 .Include(s => s.CurrentTransformer)
                 .Include(s => s.VoltageTransformer)
                 .Include(s => s.ElectricityMeter)
-                .Where(s => s.Id == Id)
+                .Where(s => s.Id == id)
                 .Select(s => new ControlPointDto(s))
                 .SingleOrDefaultAsync();
-            if (result is null) throw new EntityNotFoundException($"ControlPoint with ID = '{Id}' not found!");
+            if (result is null) throw new EntityNotFoundException($"ControlPoint with ID = '{id}' not found!");
             return result;
         }
 

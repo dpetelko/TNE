@@ -2,7 +2,6 @@
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using TNE.Data.Exceptions;
@@ -28,13 +27,13 @@ namespace TNE.Data.Implementations
             return entity;
         }
 
-        public void CheckExistsById(Guid Id)
+        public void CheckExistsById(Guid id)
         {
-            Log.Debug("Check exists LeadDivision by Id: '{Id}'", Id);
-            bool result = _context.LeadDivisions.Any(b => b.Id == Id);
+            Log.Debug("Check exists LeadDivision by Id: '{id}'", id);
+            var result = _context.LeadDivisions.Any(b => b.Id == id);
             if (!result)
             {
-                throw new EntityNotFoundException($"LeadDivision with Id='{Id}' not exist!");
+                throw new EntityNotFoundException($"LeadDivision with Id='{id}' not exist!");
             }
         }
 
@@ -74,16 +73,16 @@ namespace TNE.Data.Implementations
                 : result;
         }
 
-        public async Task<LeadDivisionDto> GetDtoByIdAsync(Guid Id)
+        public async Task<LeadDivisionDto> GetDtoByIdAsync(Guid id)
         {
-            Log.Debug("Get LeadDivisionDto by Id: '{Id}'", Id);
+            Log.Debug("Get LeadDivisionDto by Id: '{Id}'", id);
             var result = await _context.LeadDivisions
                 .AsNoTracking()
                 .Include(s => s.Address)
-                .Where(s => s.Id == Id)
+                .Where(s => s.Id == id)
                 .Select(s => new LeadDivisionDto(s))
                 .SingleOrDefaultAsync();
-            if (result is null) throw new EntityNotFoundException($"LeadDivision with ID = '{Id}' not found!");
+            if (result is null) throw new EntityNotFoundException($"LeadDivision with ID = '{id}' not found!");
             return result;
         }
 
