@@ -1,19 +1,15 @@
-﻿@using TNEClient.Dtos
-@model List<CurrentTransformerDto>
+﻿@model List<CurrentTransformerDto>
 @{
     ViewData["Title"] = "ТрансНефтьЭнерго - Трансформаторы тока";
 }
 <div class="container-md">
-    <h3 align="center">Трансформаторы тока</h3>
-
-
-
+    <h3 class="text-center">Трансформаторы тока</h3>
     <div id="accordion">
         <div class="card">
             <div class="card-header" id="headingOne">
                 <a asp-action="Create" asp-controller="CurrentTransformers" class="btn btn-secondary btn-sm">Добавить новый трансформатор тока</a>
                 <button class="btn btn-warning btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Контроль поверки приборов </button>
-                <input type="button" class="btn btn-secondary btn-sm" value="Печать" onclick="window.print();" />
+                <input type="button" class="btn btn-secondary btn-sm" value="Печать" onclick="window.print();"/>
             </div>
 
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
@@ -32,32 +28,40 @@
                             <div class="col">
                                 <div class="form-group row">
                                     <label class="control-label">Контрольная дата</label>
-                                    <input type="date" name="CheckDate" class="form-control form-control-sm" />
+                                    <input type="date" name="CheckDate" class="form-control form-control-sm"/>
                                 </div>
                             </div>
                         </div>
-
-                        <input type="submit" value="Применить" class="btn btn-warning btn-sm" />
-
+                        <input type="submit" value="Применить" class="btn btn-warning btn-sm"/>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-
-
-
-
     <table class="table table-stripped table-hover">
         <tr>
-            <td><strong>Номер</strong></td>
-            <td><strong>Тип прибора</strong></td>
-            <td><strong>КТ</strong></td>
-            <td><strong>Последняя поверка</strong></td>
-            <td><strong>Очередная поверка</strong></td>
-            <td><strong>Точка измерения</strong></td>
-            <td><strong>Статус</strong></td>
+            <td>
+                <strong>Номер</strong>
+            </td>
+            <td>
+                <strong>Тип прибора</strong>
+            </td>
+            <td>
+                <strong>КТ</strong>
+            </td>
+            <td>
+                <strong>Последняя поверка</strong>
+            </td>
+            <td>
+                <strong>Очередная поверка</strong>
+            </td>
+            <td>
+                <strong>Точка измерения</strong>
+            </td>
+            <td>
+                <strong>Статус</strong>
+            </td>
             <td></td>
         </tr>
         @foreach (var item in Model)

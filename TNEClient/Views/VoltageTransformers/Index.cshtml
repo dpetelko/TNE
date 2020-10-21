@@ -1,13 +1,9 @@
-﻿@using TNEClient.Dtos
-@model List<VoltageTransformerDto>
+﻿@model List<VoltageTransformerDto>
 @{
     ViewData["Title"] = "ТрансНефтьЭнерго - Трансформаторы напряжения";
 }
 <div class="container-md">
-    <h3 align="center">Трансформаторы напряжения</h3>
-
-
-
+    <h3 class="text-center">Трансформаторы напряжения</h3>
     <div id="accordion">
         <div class="card">
             <div class="card-header" id="headingOne">
@@ -36,17 +32,13 @@
                                 </div>
                             </div>
                         </div>
-
                         <input type="submit" value="Применить" class="btn btn-warning btn-sm" />
-
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-
-    
     <table class="table table-stripped table-hover">
         <tr>
             <td><strong>Номер</strong></td>
