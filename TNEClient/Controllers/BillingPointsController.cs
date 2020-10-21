@@ -17,7 +17,7 @@ namespace TNEClient.Controllers
         private const string CreateSuccess = "Расчетный прибор учета успешно создан!";
         private const string UpdateSuccess = "Расчетный прибор учета успешно изменён!";
         private const string SuccessMessage = "SuccessMessage";
-        private readonly IBillingPointService _BillingPointService;
+        private readonly IBillingPointService _billingPointService;
         private readonly IControlPointService _controlPointService;
         private readonly IDeliveryPointService _deliveryPointService;
 
@@ -25,7 +25,7 @@ namespace TNEClient.Controllers
             IControlPointService controlPointService,
             IDeliveryPointService deliveryPointService)
         {
-            _BillingPointService = billingPointService;
+            _billingPointService = billingPointService;
             _controlPointService = controlPointService;
             _deliveryPointService = deliveryPointService;
         }
@@ -34,13 +34,13 @@ namespace TNEClient.Controllers
         public async Task<IActionResult> Index(BillingPointFilter filter)
         {
             await GetPointList();
-            return View(await _BillingPointService.GetAllDtoByFilterAsync(filter));
+            return View(await _billingPointService.GetAllDtoByFilterAsync(filter));
         }
 
         // GET: BillingPointsController/Details/5
         public async Task<ActionResult> Details(Guid id)
         {
-            return View(await _BillingPointService.GetAsync(id));
+            return View(await _billingPointService.GetAsync(id));
         }
 
         // GET: BillingPointsController/Create
@@ -55,13 +55,11 @@ namespace TNEClient.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(BillingPointDto form)
         {
-            var qq = JsonConvert.SerializeObject(form);
-            Log.Error("Incomming model is - {qq}", qq);
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await _BillingPointService.CreateAsync(form);
+                    await _billingPointService.CreateAsync(form);
                     TempData[SuccessMessage] = CreateSuccess;
                     return RedirectToAction(nameof(Index));
                 }
@@ -78,7 +76,7 @@ namespace TNEClient.Controllers
         public async Task<ActionResult> Edit(Guid id)
         {
             await GetPointList();
-            return View(await _BillingPointService.GetAsync(id));
+            return View(await _billingPointService.GetAsync(id));
         }
 
         // POST: BillingPointsController/Edit/5
@@ -90,7 +88,7 @@ namespace TNEClient.Controllers
             {
                 try
                 {
-                    await _BillingPointService.UpdateAsync(form);
+                    await _billingPointService.UpdateAsync(form);
                     TempData[SuccessMessage] = UpdateSuccess;
                     return RedirectToAction(nameof(Index));
                 }
