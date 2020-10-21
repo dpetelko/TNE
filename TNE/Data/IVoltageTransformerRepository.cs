@@ -13,6 +13,10 @@ namespace TNE.Data
     /// </summary>
     public interface IVoltageTransformerRepository : IRepository<VoltageTransformer>
     {
+
+
+        Task<VoltageTransformer> GetByIdAsyncWithTracking(Guid id);
+
         /// <summary>
         /// Set new status for VoltageTransformer by ID 
         /// Returns true if done

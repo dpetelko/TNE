@@ -13,16 +13,16 @@ namespace TNE.Services.Implementations
     {
         private readonly IControlPointRepository _repo;
         private readonly IProviderService _providerService;
-        private readonly ICurrentTransformerService _currentTransformerService;
-        private readonly IVoltageTransformerService _voltageTransformerService;
-        private readonly IElectricityMeterService _electricityMeterService;
+        private readonly ICurrentTransformerRepository _currentTransformerService;
+        private readonly IVoltageTransformerRepository _voltageTransformerService;
+        private readonly IElectricityMeterRepository _electricityMeterService;
 
         public ControlPointServiceImpl(
             IControlPointRepository repo,
             IProviderService providerService,
-            ICurrentTransformerService currentTransformerService,
-            IVoltageTransformerService voltageTransformerService,
-            IElectricityMeterService electricityMeterService)
+            ICurrentTransformerRepository currentTransformerService,
+            IVoltageTransformerRepository voltageTransformerService,
+            IElectricityMeterRepository electricityMeterService)
         {
             _repo = repo;
             _providerService = providerService;
@@ -37,6 +37,19 @@ namespace TNE.Services.Implementations
         {
             if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
             var entity = ConvertToEntity(dto);
+            var ttTask = _currentTransformerService.GetByIdAsyncWithTracking((Guid) dto.CurrentTransformerId);
+            var tnTask = _voltageTransformerService.GetByIdAsyncWithTracking((Guid) dto.VoltageTransformerId);
+            var emTask = _electricityMeterService.GetByIdAsyncWithTracking((Guid) dto.ElectricityMeterId);
+            await Task.WhenAll(ttTask, tnTask, emTask);
+            var currentTransformer = ttTask.Result;
+            var voltageTransformer = tnTask.Result;
+            var electricityMeter = emTask.Result;
+            currentTransformer.Status = Status.InWork;
+            voltageTransformer.Status = Status.InWork;
+            electricityMeter.Status = Status.InWork;
+            entity.CurrentTransformer = currentTransformer;
+            entity.VoltageTransformer = voltageTransformer;
+            entity.ElectricityMeter = electricityMeter;
             var result = await _repo.CreateAsync(entity);
             return new ControlPointDto(result);
         }

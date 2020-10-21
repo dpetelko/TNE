@@ -171,5 +171,16 @@ namespace TNE.Data.Implementations
         }
         
         private static bool IsNotEmptyOrNull(Guid? id) => id != null && id != Guid.Empty;
+        
+        public async Task<ElectricityMeter> GetByIdAsyncWithTracking(Guid id)
+        {
+            Log.Debug("Get ElectricityMeter by Id: '{id}'", id);
+            var result = await _context.ElectricityMeters
+                .Include(b => b.ControlPoint)
+                .SingleOrDefaultAsync(b => b.Id == id);
+            return (result is null)
+                ? throw new EntityNotFoundException($"CurrentTransformer with id='{id}' not found!")
+                : result;
+        }
     }
 }
