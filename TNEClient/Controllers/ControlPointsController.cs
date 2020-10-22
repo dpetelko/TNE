@@ -128,9 +128,9 @@ namespace TNEClient.Controllers
         private async Task GetDevicesListForCreate()
         {
             ViewBag.ProviderList = new SelectList(await _providerService.GetAllAsync(), "Id", "Name");
-            ViewBag.VoltageTransformerList = await _voltageTransformerService.GetAllAsync();
-            ViewBag.CurrentTransformerList = await _currentTransformerService.GetAllAsync();
-            ViewBag.ElectricityMeterList = await _electricityMeterService.GetAllAsync();
+            ViewBag.VoltageTransformerList = await _voltageTransformerService.GetAllByStatusAsync(Status.InStorage);
+            ViewBag.CurrentTransformerList = await _currentTransformerService.GetAllByStatusAsync(Status.InStorage);
+            ViewBag.ElectricityMeterList = await _electricityMeterService.GetAllByStatusAsync(Status.InStorage);
         }
         
         private async Task GetDevicesListForEdit(Guid controlPointId)
