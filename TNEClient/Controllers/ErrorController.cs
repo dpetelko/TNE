@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using System.Net.Http;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Refit;
@@ -16,7 +17,6 @@ namespace TNEClient.Controllers
             var message = exception.Message;
             var source = exception.GetType().Name;
             Log.Warning("Handling {source} - {message}...", source, message);
-
             if (exception is ApiException apiEx)
             {
                 ViewBag.StatusCode = apiEx.StatusCode switch
@@ -26,10 +26,13 @@ namespace TNEClient.Controllers
                     System.Net.HttpStatusCode.InternalServerError => "Внутренняя ошибка на сервере",
                     _ => "Неизвестная ошибка",
                 };
+            } else if (exception is HttpRequestException)
+            {
+                ViewBag.StatusCode = "Сервер не отвечает ;-)";
             }
             else
             {
-                ViewBag.StatusCode = "Неизвестная ошибка";
+                ViewBag.StatusCode = "Неизвестная ошибка!";
             }
             return View();
         }

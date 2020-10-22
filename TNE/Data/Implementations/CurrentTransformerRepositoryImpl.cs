@@ -95,7 +95,7 @@ namespace TNE.Data.Implementations
 
             var providerId = filter.ProviderId;
             if (IsNotEmptyOrNull(providerId))
-                predicate = predicate.And(s => s.ControlPoint.Provider.Id == filter.ProviderId);
+                predicate = predicate.And(s => s.ControlPoint.Provider.Id == providerId);
 
             var checkDate = filter.CheckDate;
             if (checkDate.HasValue)
@@ -172,7 +172,7 @@ namespace TNE.Data.Implementations
             var result = await _context.CurrentTransformers
                 .AsNoTracking()
                 .Include(b => b.ControlPoint)
-                .Where(s => s.ControlPointId == id)
+                .Where(s => s.ControlPoint.Id == id)
                 .Select(s => new CurrentTransformerDto(s))
                 .SingleOrDefaultAsync();
             if (result is null) throw new EntityNotFoundException($"CurrentTransformer with ControlPointId = '{id}' not found!");

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Refit;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TNEClient.Dtos;
@@ -52,7 +53,7 @@ namespace TNEClient.Controllers
         // GET: ControlPointsController/Create
         public async Task<ActionResult> Create()
         {
-            await GetDevicesList();
+            await GetDevicesListForCreate();
             return View();
         }
 
@@ -74,14 +75,14 @@ namespace TNEClient.Controllers
                     GetRestValidationErrors(ex);
                 }
             }
-            await GetDevicesList();
+            await GetDevicesListForCreate();
             return View();
         }
 
         // GET: ControlPointsController/Edit/5
         public async Task<ActionResult> Edit(Guid id)
         {
-            await GetDevicesList();
+            await GetDevicesListForEdit(id);
             return View(await _controlPointService.GetAsync(id));
         }
 
@@ -103,7 +104,7 @@ namespace TNEClient.Controllers
                     GetRestValidationErrors(ex);
                 }
             }
-            await GetDevicesList();
+            await GetDevicesListForEdit(form.Id);
             return View();
         }
 
@@ -124,12 +125,31 @@ namespace TNEClient.Controllers
 
         }
 
-        private async Task GetDevicesList()
+        private async Task GetDevicesListForCreate()
         {
             ViewBag.ProviderList = new SelectList(await _providerService.GetAllAsync(), "Id", "Name");
-            ViewBag.VoltageTransformerList = await _voltageTransformerService.GetAllByStatusAsync(Status.InStorage);
-            ViewBag.CurrentTransformerList = await _currentTransformerService.GetAllByStatusAsync(Status.InStorage);
-            ViewBag.ElectricityMeterList = await _electricityMeterService.GetAllByStatusAsync(Status.InStorage);
+            ViewBag.VoltageTransformerList = await _voltageTransformerService.GetAllAsync();
+            ViewBag.CurrentTransformerList = await _currentTransformerService.GetAllAsync();
+            ViewBag.ElectricityMeterList = await _electricityMeterService.GetAllAsync();
+        }
+        
+        private async Task GetDevicesListForEdit(Guid controlPointId)
+        {
+            ViewBag.ProviderList = new SelectList(await _providerService.GetAllAsync(), "Id", "Name");
+            var voltageTransformerList = new List<VoltageTransformerDto>();
+            voltageTransformerList.Add(await _voltageTransformerService.GetDtoByControlPointId(controlPointId));
+            voltageTransformerList.AddRange(await _voltageTransformerService.GetAllByStatusAsync(Status.InStorage));
+            ViewBag.VoltageTransformerList = voltageTransformerList;
+            
+            var currentTransformerList = new List<CurrentTransformerDto>();
+            currentTransformerList.Add(await _currentTransformerService.GetDtoByControlPointId(controlPointId));
+            currentTransformerList.AddRange(await _currentTransformerService.GetAllByStatusAsync(Status.InStorage));
+            ViewBag.CurrentTransformerList = currentTransformerList;
+            
+            var electricityMeterList = new List<ElectricityMeterDto>();
+            electricityMeterList.Add(await _electricityMeterService.GetDtoByControlPointId(controlPointId));
+            electricityMeterList.AddRange(await _electricityMeterService.GetAllByStatusAsync(Status.InStorage));
+            ViewBag.ElectricityMeterList = electricityMeterList;
         }
 
         private void GetRestValidationErrors(ValidationApiException ex)

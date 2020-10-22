@@ -36,7 +36,7 @@ namespace TNEClient.Controllers
         // GET: DeliveryPointsController/Details/5
         public async Task<ActionResult> Details(Guid id)
         {
-            //ViewBag.BillingPointList = await _billingPointService.GetAllDtoByDeliveryPointId(id);
+            ViewBag.BillingPointList = await _billingPointService.GetAllDtoByDeliveryPointIdAsync(id);
             return View(await _deliveryPointService.GetAsync(id));
         }
 

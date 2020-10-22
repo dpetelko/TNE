@@ -45,6 +45,20 @@ namespace TNE.Data.Implementations
             return entity;
         }
 
+        public async Task<ControlPoint> GetByIdAsyncWithTracking(Guid id)
+        {
+            Log.Debug("Get ControlPoint by Id: '{Id}'", id);
+            var result = await _context.ControlPoints
+                //.Include(s => s.Provider)
+                .Include(s => s.CurrentTransformer)
+                .Include(s => s.VoltageTransformer)
+                .Include(s => s.ElectricityMeter)
+                .SingleOrDefaultAsync(b => b.Id == id);
+            return (result is null)
+                ? throw new EntityNotFoundException($"ControlPoint with Id='{id}' not found!")
+                : result;
+        }
+
         public async Task<bool> DeleteAsync(Guid id)
         {
             Log.Debug("Deleting ControlPoint ID = {id}", id);
@@ -109,7 +123,8 @@ namespace TNE.Data.Implementations
         public ControlPoint GetById(Guid id)
         {
             Log.Debug("Get ControlPoint by Id: '{Id}'", id);
-            var result = _context.ControlPoints.AsNoTracking()
+            var result = _context.ControlPoints
+                .AsNoTracking()
                 .Include(s => s.Provider)
                 .Include(s => s.CurrentTransformer)
                 .Include(s => s.VoltageTransformer)
@@ -138,7 +153,8 @@ namespace TNE.Data.Implementations
         public async Task<ControlPointDto> GetDtoByIdAsync(Guid id)
         {
             Log.Debug("Get ControlPointDto by Id: '{id}'", id);
-            var result = await _context.ControlPoints.AsNoTracking()
+            var result = await _context.ControlPoints
+                .AsNoTracking()
                 .Include(s => s.Provider)
                 .Include(s => s.CurrentTransformer)
                 .Include(s => s.VoltageTransformer)
@@ -178,6 +194,7 @@ namespace TNE.Data.Implementations
             _context.Entry(entity)
                 .Reference(c => c.ElectricityMeter)
                 .Load();
+            Log.Debug("!!!!!!!!!!!!!!!!Updated ControlPoint: '{entity}'", entity);
             return entity;
         }
 
@@ -186,7 +203,8 @@ namespace TNE.Data.Implementations
         public async Task<List<ControlPointDto>> GetAllDtoByProviderIdAsync(Guid id)
         {
             Log.Debug("Get GetAllDtoByProviderIdAsync by Id: '{id}'", id);
-            var result = await _context.ControlPoints.AsNoTracking()
+            var result = await _context.ControlPoints
+                .AsNoTracking()
                 .Include(s => s.Provider)
                 .Include(s => s.CurrentTransformer)
                 .Include(s => s.VoltageTransformer)

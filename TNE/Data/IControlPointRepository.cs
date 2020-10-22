@@ -11,6 +11,9 @@ namespace TNE.Data
 {
     public interface IControlPointRepository : IRepository<ControlPoint>
     {
+        
+        Task<ControlPoint> GetByIdAsyncWithTracking(Guid id);
+        
         /// <summary>
         /// Deletes a specific ControlPoint by ID
         /// </summary>

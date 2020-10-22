@@ -131,7 +131,7 @@ namespace TNE.Data.Implementations
             var result = await _context.VoltageTransformers
                 .AsNoTracking()
                 .Include(b => b.ControlPoint)
-                .Where(s => s.ControlPointId == id)
+                .Where(s => s.ControlPoint.Id == id)
                 .Select(s => new VoltageTransformerDto(s))
                 .SingleOrDefaultAsync();
             if (result is null) throw new EntityNotFoundException($"VoltageTransformer with ControlPointId = '{id}' not found!");
@@ -176,7 +176,7 @@ namespace TNE.Data.Implementations
         {
             Log.Debug("Get VoltageTransformer by Id: '{id}'", id);
             var result = await _context.VoltageTransformers
-                .Include(b => b.ControlPoint)
+                //.Include(b => b.ControlPoint)
                 .SingleOrDefaultAsync(b => b.Id == id);
             return (result is null)
                 ? throw new EntityNotFoundException($"CurrentTransformer with id='{id}' not found!")

@@ -21,7 +21,7 @@ namespace TNEClient.Dtos
         public DateTime LastVerificationDate { get; set; }
 
         [Display(Name = "Межповерочный период")]
-        [Range(1, Int32.MaxValue, ErrorMessage = "Неверное значение поля")]
+        [Range(1, int.MaxValue, ErrorMessage = "Неверное значение поля")]
         [Required(ErrorMessage = "Введите значение")]
         public int InterTestingPeriodInDays { get; set; } = 365;
 

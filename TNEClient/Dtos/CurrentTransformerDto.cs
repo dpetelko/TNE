@@ -7,7 +7,7 @@ namespace TNEClient.Dtos
     {
         [Display(Name = "Коэффициент трансформации")]
         [Required(ErrorMessage = "Введите значение")]
-        [Range(1, Int32.MaxValue, ErrorMessage = "Неверное значение поля")]
+        [Range(1, int.MaxValue, ErrorMessage = "Неверное значение поля")]
         public int TransformationRate { get; set; }
         public CurrentTransformerDto() { }
 

@@ -36,7 +36,7 @@ namespace TNE.Controllers
         /// <returns>The requested CurrentTransformer</returns>
         /// <response code="200">Returns the requested CurrentTransformer</response>
         /// <response code="400">If no CurrentTransformers are found</response>       
-        [HttpGet("CurrentTransformer/{id}")]
+        [HttpGet("ControlPoint/{id}")]
         public async Task<CurrentTransformerDto> GetByControlPointId(Guid id) => await _service.GetDtoByControlPointId(id);
 
         /// <summary>

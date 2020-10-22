@@ -55,7 +55,7 @@ namespace TNE.Models
             return $"ControlPoint" +
                 $"[ Id:{Id}, " +
                 $"Name:{Name}, " +
-                $"ElectricityMeter:{ElectricityMeter}, " +
+                $"ElectricityMeter:{ElectricityMeterId}, " +
                 $"CurrentTransformer:{CurrentTransformer}, " +
                 $"VoltageTransformer:{VoltageTransformer}, " +
                 $"Provider:{Provider} " +
