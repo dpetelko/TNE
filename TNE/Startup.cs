@@ -32,7 +32,11 @@ namespace TNE
             services.AddSingleton(Log.Logger);
             services.Configure<KestrelServerOptions>(Configuration.GetSection("Kestrel"));
             services.AddLogging();
-            services.AddDbContextPool<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContextPool<DatabaseContext>(options =>
+            {
+                options.EnableSensitiveDataLogging();
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo

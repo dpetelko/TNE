@@ -14,7 +14,7 @@ namespace TNE.Data
     public interface IElectricityMeterRepository : IRepository<ElectricityMeter>
     {
         
-        Task<ElectricityMeter> GetByIdAsyncWithTracking(Guid id);
+        ElectricityMeter GetByIdWithTracking(Guid id);
         
         /// <summary>
         /// Set new status for ElectricityMeter by ID 

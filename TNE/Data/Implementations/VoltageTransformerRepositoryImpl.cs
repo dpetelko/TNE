@@ -172,12 +172,12 @@ namespace TNE.Data.Implementations
         
         private static bool IsNotEmptyOrNull(Guid? id) => id != null && id != Guid.Empty;
         
-        public async Task<VoltageTransformer> GetByIdAsyncWithTracking(Guid id)
+        public VoltageTransformer GetByIdWithTracking(Guid id)
         {
             Log.Debug("Get VoltageTransformer by Id: '{id}'", id);
-            var result = await _context.VoltageTransformers
-                //.Include(b => b.ControlPoint)
-                .SingleOrDefaultAsync(b => b.Id == id);
+            var result = _context.VoltageTransformers
+                .Include(b => b.ControlPoint)
+                .SingleOrDefault(b => b.Id == id);
             return (result is null)
                 ? throw new EntityNotFoundException($"CurrentTransformer with id='{id}' not found!")
                 : result;

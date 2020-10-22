@@ -15,7 +15,7 @@ namespace TNE.Data
     {
 
 
-        Task<VoltageTransformer> GetByIdAsyncWithTracking(Guid id);
+        VoltageTransformer GetByIdWithTracking(Guid id);
 
         /// <summary>
         /// Set new status for VoltageTransformer by ID 

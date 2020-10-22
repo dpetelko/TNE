@@ -13,7 +13,7 @@ namespace TNE.Data
     /// </summary>
     public interface ICurrentTransformerRepository : IRepository<CurrentTransformer>
     {
-        Task<CurrentTransformer> GetByIdAsyncWithTracking(Guid id);
+        CurrentTransformer GetByIdWithTracking(Guid id);
         
         /// <summary>
         /// Set new status for CurrentTransformer by ID 

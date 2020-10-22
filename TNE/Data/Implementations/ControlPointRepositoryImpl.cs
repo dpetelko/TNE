@@ -49,7 +49,7 @@ namespace TNE.Data.Implementations
         {
             Log.Debug("Get ControlPoint by Id: '{Id}'", id);
             var result = await _context.ControlPoints
-                //.Include(s => s.Provider)
+                .Include(s => s.Provider)
                 .Include(s => s.CurrentTransformer)
                 .Include(s => s.VoltageTransformer)
                 .Include(s => s.ElectricityMeter)
@@ -179,6 +179,8 @@ namespace TNE.Data.Implementations
 
         public async Task<ControlPoint> UpdateAsync(ControlPoint entity)
         {
+            Log.Debug("Updating ControlPoint: '{entity}'", entity);
+            
             Log.Debug("Updating ControlPoint: '{entity}'", entity);
             _context.ControlPoints.Update(entity);
             await _context.SaveChangesAsync();

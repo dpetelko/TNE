@@ -90,7 +90,7 @@ namespace TNE.Data.Implementations
 
         public async Task<List<ElectricityMeterDto>> GetAllDtoByStatusAsync(Status status)
         {
-            Log.Debug("GetAll ElectricityMeterDto");
+            Log.Debug("GetAll ElectricityMeterDto By Status {status}", status);
             var result = await _context.ElectricityMeters
                 .AsNoTracking()
                 .Include(s => s.ControlPoint)
@@ -172,12 +172,12 @@ namespace TNE.Data.Implementations
         
         private static bool IsNotEmptyOrNull(Guid? id) => id != null && id != Guid.Empty;
         
-        public async Task<ElectricityMeter> GetByIdAsyncWithTracking(Guid id)
+        public ElectricityMeter GetByIdWithTracking(Guid id)
         {
             Log.Debug("Get ElectricityMeter by Id: '{id}'", id);
-            var result = await _context.ElectricityMeters
-                //.Include(b => b.ControlPoint)
-                .SingleOrDefaultAsync(b => b.Id == id);
+            var result = _context.ElectricityMeters
+                .Include(b => b.ControlPoint)
+                .SingleOrDefault(b => b.Id == id);
             return (result is null)
                 ? throw new EntityNotFoundException($"CurrentTransformer with id='{id}' not found!")
                 : result;

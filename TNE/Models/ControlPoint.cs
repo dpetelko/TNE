@@ -26,6 +26,7 @@ namespace TNE.Models
         [ForeignKey("VoltageTransformerId")]
         public virtual VoltageTransformer VoltageTransformer { get; set; }
         public Guid? ProviderId { get; set; }
+        [ForeignKey("ProviderId")]
         public virtual Provider Provider { get; set; }
         //public List<BillingPoint> BillingPoints { get; set; }
         [DefaultValue(false)]
