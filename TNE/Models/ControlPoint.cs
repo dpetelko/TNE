@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TNE.Models
 {
@@ -16,16 +12,16 @@ namespace TNE.Models
         public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public Guid? ElectricityMeterId { get; set; }
-        [ForeignKey("ElectricityMeterId")]
-        public virtual ElectricityMeter ElectricityMeter { get; set; }
-        public Guid? CurrentTransformerId { get; set; }
-        [ForeignKey("CurrentTransformerId")]
-        public virtual CurrentTransformer CurrentTransformer { get; set; }
-        public Guid? VoltageTransformerId { get; set; }
-        [ForeignKey("VoltageTransformerId")]
-        public virtual VoltageTransformer VoltageTransformer { get; set; }
-        public Guid? ProviderId { get; set; }
+        public Guid ElectricityMeterId { get; set; }
+        // [ForeignKey("ElectricityMeterId")]
+        // public virtual ElectricityMeter ElectricityMeter { get; set; }
+        public Guid CurrentTransformerId { get; set; }
+        // [ForeignKey("CurrentTransformerId")]
+        // public virtual CurrentTransformer CurrentTransformer { get; set; }
+        public Guid VoltageTransformerId { get; set; }
+        // [ForeignKey("VoltageTransformerId")]
+        // public virtual VoltageTransformer VoltageTransformer { get; set; }
+        public Guid ProviderId { get; set; }
         [ForeignKey("ProviderId")]
         public virtual Provider Provider { get; set; }
         //public List<BillingPoint> BillingPoints { get; set; }
@@ -56,9 +52,9 @@ namespace TNE.Models
             return $"ControlPoint" +
                 $"[ Id:{Id}, " +
                 $"Name:{Name}, " +
-                $"ElectricityMeter:{ElectricityMeterId}, " +
-                $"CurrentTransformer:{CurrentTransformer}, " +
-                $"VoltageTransformer:{VoltageTransformer}, " +
+                $"ElectricityMeterId:{ElectricityMeterId}, " +
+                $"CurrentTransformerId:{CurrentTransformerId}, " +
+                $"VoltageTransformerId:{VoltageTransformerId}, " +
                 $"Provider:{Provider} " +
                 $"Deleted:{Deleted} ]";
         }

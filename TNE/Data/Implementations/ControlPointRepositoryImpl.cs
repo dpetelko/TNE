@@ -16,47 +16,104 @@ namespace TNE.Data.Implementations
     {
         private readonly DatabaseContext _context;
 
-        public ControlPointRepositoryImpl(DatabaseContext context) { _context = context; }
+        public ControlPointRepositoryImpl(DatabaseContext context)
+        {
+            _context = context;
+        }
 
         public void CheckExistsById(Guid id)
         {
             Log.Debug("Check exists ControlPoint by Id: '{Id}'", id);
             var result = _context.ControlPoints.Any(b => b.Id == id);
-            if (!result) { throw new EntityNotFoundException($"ControlPoint with Id='{id}' not exist!"); }
+            if (!result)
+            {
+                throw new EntityNotFoundException($"ControlPoint with Id='{id}' not exist!");
+            }
         }
 
         public async Task<ControlPoint> CreateAsync(ControlPoint entity)
         {
             Log.Debug("Creating ControlPoint: {entity}", entity);
-            _context.ControlPoints.Add(entity);
+
+            var currentTransformer =
+                await _context.CurrentTransformers.SingleOrDefaultAsync(b => b.Id == entity.CurrentTransformerId);
+            var voltageTransformer =
+                await _context.VoltageTransformers.SingleOrDefaultAsync(b => b.Id == entity.VoltageTransformerId);
+            var electricityMeter =
+                await _context.ElectricityMeters.SingleOrDefaultAsync(b => b.Id == entity.ElectricityMeterId);
+            if (currentTransformer != null && voltageTransformer != null && electricityMeter != null)
+            {
+                currentTransformer.Status = Status.InWork;
+                voltageTransformer.Status = Status.InWork;
+                electricityMeter.Status = Status.InWork;
+            }
+            else
+            {
+                throw new InvalidEntityException();
+            }
+
+            await _context.ControlPoints.AddAsync(entity);
             await _context.SaveChangesAsync();
-            _context.Entry(entity)
+            currentTransformer.ControlPointId = entity.Id;
+            voltageTransformer.ControlPointId = entity.Id;
+            electricityMeter.ControlPointId = entity.Id;
+            await _context.SaveChangesAsync();
+            await _context.Entry(entity)
                 .Reference(c => c.Provider)
-                .Load();
-            _context.Entry(entity)
-                .Reference(c => c.CurrentTransformer)
-                .Load();
-            _context.Entry(entity)
-                .Reference(c => c.VoltageTransformer)
-                .Load();
-            _context.Entry(entity)
-                .Reference(c => c.ElectricityMeter)
-                .Load();
+                .LoadAsync();
             return entity;
         }
 
-        public async Task<ControlPoint> GetByIdAsyncWithTracking(Guid id)
+        public async Task<ControlPoint> UpdateAsync(ControlPoint entity)
         {
-            Log.Debug("Get ControlPoint by Id: '{Id}'", id);
-            var result = await _context.ControlPoints
-                .Include(s => s.Provider)
-                .Include(s => s.CurrentTransformer)
-                .Include(s => s.VoltageTransformer)
-                .Include(s => s.ElectricityMeter)
-                .SingleOrDefaultAsync(b => b.Id == id);
-            return (result is null)
-                ? throw new EntityNotFoundException($"ControlPoint with Id='{id}' not found!")
-                : result;
+            Log.Debug("Updating ControlPoint '{entity}'", entity);
+            var oldEntity = await _context.ControlPoints.AsNoTracking().SingleOrDefaultAsync(b => b.Id == entity.Id);
+            var oldCurrentTransformer =
+                await _context.CurrentTransformers.SingleOrDefaultAsync(b => b.Id == oldEntity.CurrentTransformerId);
+            var oldVoltageTransformer =
+                await _context.VoltageTransformers.SingleOrDefaultAsync(b => b.Id == oldEntity.VoltageTransformerId);
+            var oldElectricityMeter =
+                await _context.ElectricityMeters.SingleOrDefaultAsync(b => b.Id == oldEntity.ElectricityMeterId);
+            if (oldCurrentTransformer != null && oldVoltageTransformer != null && oldElectricityMeter != null)
+            {
+                oldCurrentTransformer.Status = Status.InStorage;
+                oldVoltageTransformer.Status = Status.InStorage;
+                oldElectricityMeter.Status = Status.InStorage;
+                oldCurrentTransformer.ControlPointId = null;
+                oldVoltageTransformer.ControlPointId = null;
+                oldElectricityMeter.ControlPointId = null;
+            }
+            else
+            {
+                throw new InvalidEntityException();
+            }
+
+            var newCurrentTransformer =
+                await _context.CurrentTransformers.SingleOrDefaultAsync(b => b.Id == entity.CurrentTransformerId);
+            var newVoltageTransformer =
+                await _context.VoltageTransformers.SingleOrDefaultAsync(b => b.Id == entity.VoltageTransformerId);
+            var newElectricityMeter =
+                await _context.ElectricityMeters.SingleOrDefaultAsync(b => b.Id == entity.ElectricityMeterId);
+            if (newCurrentTransformer != null && newVoltageTransformer != null && newElectricityMeter != null)
+            {
+                newCurrentTransformer.Status = Status.InWork;
+                newVoltageTransformer.Status = Status.InWork;
+                newElectricityMeter.Status = Status.InWork;
+                newCurrentTransformer.ControlPointId = entity.Id;
+                newVoltageTransformer.ControlPointId = entity.Id;
+                newElectricityMeter.ControlPointId = entity.Id;
+            }
+            else
+            {
+                throw new InvalidEntityException();
+            }
+
+            _context.ControlPoints.Update(entity);
+            await _context.SaveChangesAsync();
+            await _context.Entry(entity)
+                .Reference(c => c.Provider)
+                .LoadAsync();
+            return entity;
         }
 
         public async Task<bool> DeleteAsync(Guid id)
@@ -72,7 +129,8 @@ namespace TNE.Data.Implementations
 
         public bool ExistsByField(string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByField ControlPoint: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
+            Log.Debug("ExistsByField ControlPoint: field name - '{fieldName}', value = '{fieldValue}' ", fieldName,
+                fieldValue);
             return _context.ControlPoints
                 .AsNoTracking()
                 .Select(x => x.GetType().GetProperty(fieldName).GetValue(x).Equals(fieldValue))
@@ -81,7 +139,9 @@ namespace TNE.Data.Implementations
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByFieldAndNotId ControlPoint: Id - '{id}', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
+            Log.Debug(
+                "ExistsByFieldAndNotId ControlPoint: Id - '{id}', field name - '{fieldName}', value = '{fieldValue}' ",
+                id, fieldName, fieldValue);
             return _context.ControlPoints
                 .AsNoTracking()
                 .Where(s => s.Id != id)
@@ -95,9 +155,6 @@ namespace TNE.Data.Implementations
             var result = await _context.ControlPoints
                 .AsNoTracking()
                 .Include(s => s.Provider)
-                .Include(s => s.CurrentTransformer)
-                .Include(s => s.VoltageTransformer)
-                .Include(s => s.ElectricityMeter)
                 .Where(s => s.Deleted == false)
                 .Select(s => new ControlPointDto(s))
                 .ToListAsync();
@@ -111,9 +168,6 @@ namespace TNE.Data.Implementations
             var result = await _context.ControlPoints
                 .AsNoTracking()
                 .Include(s => s.Provider)
-                .Include(s => s.CurrentTransformer)
-                .Include(s => s.VoltageTransformer)
-                .Include(s => s.ElectricityMeter)
                 .Select(s => new ControlPointDto(s))
                 .ToListAsync();
             result.TrimExcess();
@@ -126,9 +180,6 @@ namespace TNE.Data.Implementations
             var result = _context.ControlPoints
                 .AsNoTracking()
                 .Include(s => s.Provider)
-                .Include(s => s.CurrentTransformer)
-                .Include(s => s.VoltageTransformer)
-                .Include(s => s.ElectricityMeter)
                 .SingleOrDefault(b => b.Id == id);
             return (result is null)
                 ? throw new EntityNotFoundException($"ControlPoint with Id='{id}' not found!")
@@ -141,9 +192,6 @@ namespace TNE.Data.Implementations
             var result = await _context.ControlPoints
                 .AsNoTracking()
                 .Include(s => s.Provider)
-                .Include(s => s.CurrentTransformer)
-                .Include(s => s.VoltageTransformer)
-                .Include(s => s.ElectricityMeter)
                 .SingleOrDefaultAsync(b => b.Id == id);
             return (result is null)
                 ? throw new EntityNotFoundException($"ControlPoint with Id='{id}' not found!")
@@ -156,9 +204,6 @@ namespace TNE.Data.Implementations
             var result = await _context.ControlPoints
                 .AsNoTracking()
                 .Include(s => s.Provider)
-                .Include(s => s.CurrentTransformer)
-                .Include(s => s.VoltageTransformer)
-                .Include(s => s.ElectricityMeter)
                 .Where(s => s.Id == id)
                 .Select(s => new ControlPointDto(s))
                 .SingleOrDefaultAsync();
@@ -177,82 +222,17 @@ namespace TNE.Data.Implementations
             return true;
         }
 
-        public async Task<ControlPoint> UpdateAsync(ControlPoint entity)
-        {
-            Log.Debug("Updating ControlPoint: '{entity}'", entity);
-            
-            Log.Debug("Updating ControlPoint: '{entity}'", entity);
-            _context.ControlPoints.Update(entity);
-            await _context.SaveChangesAsync();
-            _context.Entry(entity)
-               .Reference(c => c.Provider)
-               .Load();
-            _context.Entry(entity)
-                .Reference(c => c.CurrentTransformer)
-                .Load();
-            _context.Entry(entity)
-                .Reference(c => c.VoltageTransformer)
-                .Load();
-            _context.Entry(entity)
-                .Reference(c => c.ElectricityMeter)
-                .Load();
-            Log.Debug("!!!!!!!!!!!!!!!!Updated ControlPoint: '{entity}'", entity);
-            return entity;
-        }
-
-        
-
         public async Task<List<ControlPointDto>> GetAllDtoByProviderIdAsync(Guid id)
         {
             Log.Debug("Get GetAllDtoByProviderIdAsync by Id: '{id}'", id);
             var result = await _context.ControlPoints
                 .AsNoTracking()
                 .Include(s => s.Provider)
-                .Include(s => s.CurrentTransformer)
-                .Include(s => s.VoltageTransformer)
-                .Include(s => s.ElectricityMeter)
                 .Where(s => s.ProviderId == id)
                 .Select(s => new ControlPointDto(s))
                 .ToListAsync();
             result.TrimExcess();
             return result;
         }
-
-        public async Task<List<ControlPointDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter)
-        {
-            Log.Debug("GetAllDtoByFilterAsync ControlPointDto by Filter: {searchFilter}", filter);
-
-            var predicate = PredicateBuilder.New<ControlPoint>();
-
-            Guid? providerId = filter.ProviderId;
-            if (IsNotEmptyOrNull(providerId))
-                predicate = predicate.And(s => s.Provider.Id == providerId);
-
-            //DateTime? electricityMeterCheckDate = filter.ElectricityMeterCheckDate;
-            //if (electricityMeterCheckDate.HasValue)
-            //    predicate = predicate.And(s => DateTime.Compare(s.ElectricityMeter.LastVerificationDate.AddDays(s.ElectricityMeter.InterTestingPeriodInDays), (DateTime)electricityMeterCheckDate) <= 0);
-
-            //DateTime? currentTransformerCheckDate = filter.CurrentTransformerCheckDate;
-            //if (currentTransformerCheckDate.HasValue)
-            //    predicate = predicate.And(s => DateTime.Compare(s.CurrentTransformer.LastVerificationDate.AddDays(s.CurrentTransformer.InterTestingPeriodInDays), (DateTime)currentTransformerCheckDate) <= 0);
-
-
-            //DateTime? voltageTransformerCheckDate = filter.VoltageTransformerCheckDate;
-            //if (voltageTransformerCheckDate.HasValue)
-            //    predicate = predicate.And(s => DateTime.Compare(s.VoltageTransformer.LastVerificationDate.AddDays(s.VoltageTransformer.InterTestingPeriodInDays), (DateTime)voltageTransformerCheckDate) <= 0);
-
-            var result = await _context.ControlPoints
-                .AsNoTracking()
-                .Include(s => s.Provider)
-                .Include(s => s.CurrentTransformer)
-                .Include(s => s.VoltageTransformer)
-                .Include(s => s.ElectricityMeter)
-                .Where(predicate)
-                .Select(s => new ControlPointDto(s))
-                .ToListAsync();
-            return result;
-        }
-
-        private static bool IsNotEmptyOrNull(Guid? id) => id != null && id != Guid.Empty;
     }
 }
