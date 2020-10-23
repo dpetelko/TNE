@@ -16,13 +16,19 @@ namespace TNE.Data.Implementations
     {
         private readonly DatabaseContext _context;
 
-        public ElectricityMeterRepositoryImpl(DatabaseContext context) { _context = context; }
+        public ElectricityMeterRepositoryImpl(DatabaseContext context)
+        {
+            _context = context;
+        }
 
         public void CheckExistsById(Guid id)
         {
             Log.Debug("Check exists ElectricityMeter by Id: '{Id}'", id);
             bool result = _context.ElectricityMeters.Any(b => b.Id == id);
-            if (!result) { throw new EntityNotFoundException($"ElectricityMeter with Id='{id}' not exist!"); }
+            if (!result)
+            {
+                throw new EntityNotFoundException($"ElectricityMeter with Id='{id}' not exist!");
+            }
         }
 
         public async Task<ElectricityMeter> CreateAsync(ElectricityMeter entity)
@@ -35,7 +41,8 @@ namespace TNE.Data.Implementations
 
         public bool ExistsByField(string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByField ElectricityMeter: field name - '{fieldName}', value = '{fieldValue}' ", fieldName, fieldValue);
+            Log.Debug("ExistsByField ElectricityMeter: field name - '{fieldName}', value = '{fieldValue}' ", fieldName,
+                fieldValue);
             return _context.ElectricityMeters
                 .AsNoTracking()
                 .Select(x => x.GetType().GetProperty(fieldName).GetValue(x).Equals(fieldValue))
@@ -44,7 +51,9 @@ namespace TNE.Data.Implementations
 
         public bool ExistsByFieldAndNotId(Guid id, string fieldName, object fieldValue)
         {
-            Log.Debug("ExistsByFieldAndNotId ElectricityMeter: Id - '{id}', field name - '{fieldName}', value = '{fieldValue}' ", id, fieldName, fieldValue);
+            Log.Debug(
+                "ExistsByFieldAndNotId ElectricityMeter: Id - '{id}', field name - '{fieldName}', value = '{fieldValue}' ",
+                id, fieldName, fieldValue);
             return _context.ElectricityMeters
                 .AsNoTracking()
                 .Where(s => s.Id != id)
@@ -63,7 +72,7 @@ namespace TNE.Data.Implementations
             result.TrimExcess();
             return result;
         }
-        
+
         public async Task<List<ElectricityMeterDto>> GetAllDtoByFilterAsync(DeviceCalibrationControlDto filter)
         {
             Log.Debug("GetAllDtoByFilterAsync ElectricityMeterDto by Filter: {filter}", filter);
@@ -76,7 +85,9 @@ namespace TNE.Data.Implementations
 
             var checkDate = filter.CheckDate;
             if (checkDate.HasValue)
-                predicate = predicate.And(s => (DateTime.Compare(s.LastVerificationDate.AddDays(s.InterTestingPeriodInDays), (DateTime)filter.CheckDate) < 0));
+                predicate = predicate.And(s =>
+                    (DateTime.Compare(s.LastVerificationDate.AddDays(s.InterTestingPeriodInDays),
+                        (DateTime) filter.CheckDate) < 0));
 
             var result = await _context.ElectricityMeters
                 .AsNoTracking()
@@ -134,7 +145,8 @@ namespace TNE.Data.Implementations
                 .Where(s => s.ControlPoint.Id == id)
                 .Select(s => new ElectricityMeterDto(s))
                 .SingleOrDefaultAsync();
-            if (result is null) throw new EntityNotFoundException($"ElectricityMeter with ControlPointId = '{id}' not found!");
+            if (result is null)
+                throw new EntityNotFoundException($"ElectricityMeter with ControlPointId = '{id}' not found!");
             return result;
         }
 
@@ -169,18 +181,7 @@ namespace TNE.Data.Implementations
             await _context.SaveChangesAsync();
             return entity;
         }
-        
+
         private static bool IsNotEmptyOrNull(Guid? id) => id != null && id != Guid.Empty;
-        
-        public ElectricityMeter GetByIdWithTracking(Guid id)
-        {
-            Log.Debug("Get ElectricityMeter by Id: '{id}'", id);
-            var result = _context.ElectricityMeters
-                .Include(b => b.ControlPoint)
-                .SingleOrDefault(b => b.Id == id);
-            return (result is null)
-                ? throw new EntityNotFoundException($"CurrentTransformer with id='{id}' not found!")
-                : result;
-        }
     }
 }

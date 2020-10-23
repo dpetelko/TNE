@@ -13,9 +13,6 @@ namespace TNE.Data
     /// </summary>
     public interface IElectricityMeterRepository : IRepository<ElectricityMeter>
     {
-        
-        ElectricityMeter GetByIdWithTracking(Guid id);
-        
         /// <summary>
         /// Set new status for ElectricityMeter by ID 
         /// Returns true if done

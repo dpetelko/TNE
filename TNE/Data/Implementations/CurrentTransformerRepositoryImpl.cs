@@ -180,16 +180,5 @@ namespace TNE.Data.Implementations
         }
         
         private static bool IsNotEmptyOrNull(Guid? id) => id != null && id != Guid.Empty;
-        
-        public CurrentTransformer GetByIdWithTracking(Guid id)
-        {
-            Log.Debug("Get CurrentTransformer by Id: '{id}'", id);
-            var result = _context.CurrentTransformers
-                .Include(b => b.ControlPoint)
-                .SingleOrDefault(b => b.Id == id);
-            return (result is null)
-                ? throw new EntityNotFoundException($"CurrentTransformer with id='{id}' not found!")
-                : result;
-        }
     }
 }

@@ -18,7 +18,10 @@ namespace TNE.Services.Implementations
         private readonly IVoltageTransformerRepository _voltageTransformerRepository;
         private readonly IElectricityMeterRepository _electricityMeterRepository;
 
-        public ControlPointServiceImpl(IControlPointRepository repo, IProviderService providerService, ICurrentTransformerRepository currentTransformerRepository, IVoltageTransformerRepository voltageTransformerRepository, IElectricityMeterRepository electricityMeterRepository)
+        public ControlPointServiceImpl(IControlPointRepository repo, IProviderService providerService,
+            ICurrentTransformerRepository currentTransformerRepository,
+            IVoltageTransformerRepository voltageTransformerRepository,
+            IElectricityMeterRepository electricityMeterRepository)
         {
             _repo = repo;
             _providerService = providerService;
@@ -27,148 +30,69 @@ namespace TNE.Services.Implementations
             _electricityMeterRepository = electricityMeterRepository;
         }
 
-        public void CheckExistsById(Guid id) { _repo.CheckExistsById(id); }
+        public void CheckExistsById(Guid id)
+        {
+            _repo.CheckExistsById(id);
+        }
 
-        // public async Task<ControlPointDto> CreateAsync(ControlPointDto dto)
-        // {
-        //     if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
-        //     var entity = ConvertToEntity(dto);
-        //     var result = await _repo.CreateAsync(entity);
-        //     return new ControlPointDto(result);
-        // }
-        
         public async Task<ControlPointDto> CreateAsync(ControlPointDto dto)
         {
             if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
             var entity = ConvertToEntity(dto);
-            var currentTransformer = _currentTransformerRepository.GetByIdWithTracking((Guid) dto.CurrentTransformerId);
-            var voltageTransformer = _voltageTransformerRepository.GetByIdWithTracking((Guid) dto.VoltageTransformerId);
-            var electricityMeter = _electricityMeterRepository.GetByIdWithTracking((Guid) dto.ElectricityMeterId);
-            currentTransformer.Status = Status.InWork;
-            voltageTransformer.Status = Status.InWork;
-            electricityMeter.Status = Status.InWork;
-            entity.CurrentTransformer = currentTransformer;
-            entity.VoltageTransformer = voltageTransformer;
-            entity.ElectricityMeter = electricityMeter;
             var result = await _repo.CreateAsync(entity);
-            return new ControlPointDto(result);
+            return await ConvertToDto(result);
         }
-        
+
         public async Task<ControlPointDto> UpdateAsync(ControlPointDto dto)
         {
-            if (dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must can't be empty for UPDATE!");
-            CheckExistsById(dto.Id);
-            var entity = await _repo.GetByIdAsyncWithTracking(dto.Id);
-            var oldCurrentTransformer = _currentTransformerRepository.GetByIdWithTracking((Guid) entity.CurrentTransformerId);
-            Log.Error("68 - OK...");
-            var oldVoltageTransformer = _voltageTransformerRepository.GetByIdWithTracking((Guid) entity.VoltageTransformerId);
-            Log.Error("70 - OK...");
-            var oldElectricityMeter = _electricityMeterRepository.GetByIdWithTracking((Guid) entity.ElectricityMeterId);
-            
-            oldCurrentTransformer.Status = Status.InStorage;
-            oldVoltageTransformer.Status = Status.InStorage;
-            oldElectricityMeter.Status = Status.InStorage;
-            
-            
-            
-            //var entity = new ControlPoint();
-            //entity.Id = dto.Id;
-            entity.Name = dto.Name;
-            entity.Deleted = dto.Deleted;
-            entity.ProviderId = dto.ProviderId;
-            entity.CurrentTransformerId = dto.CurrentTransformerId;
-            entity.VoltageTransformerId = dto.VoltageTransformerId;
-            entity.ElectricityMeterId = dto.ElectricityMeterId;
-            var newCurrentTransformer = _currentTransformerRepository.GetByIdWithTracking((Guid) dto.CurrentTransformerId);
-            Log.Error("68 - OK...");
-            var newVoltageTransformer = _voltageTransformerRepository.GetByIdWithTracking((Guid) dto.VoltageTransformerId);
-            Log.Error("70 - OK...");
-            var newElectricityMeter = _electricityMeterRepository.GetByIdWithTracking((Guid) dto.ElectricityMeterId);
-            
-            newCurrentTransformer.Status = Status.InWork;
-            newVoltageTransformer.Status = Status.InWork;
-            newElectricityMeter.Status = Status.InWork;
-            
-            entity.CurrentTransformer = newCurrentTransformer;
-            entity.VoltageTransformer = newVoltageTransformer;
-            entity.ElectricityMeter = newElectricityMeter;
-            
-            Log.Error("72 - OK...");
-            Log.Error("Ready for saving...");
-            var qq = await _repo.UpdateAsync(entity);
-            Log.Error("Ready for return...");
-            return new ControlPointDto(qq);
+            var entity = ConvertToEntity(dto);
+            var result = await _repo.UpdateAsync(entity);
+            return await ConvertToDto(result);
         }
-        
-        // public async Task<ControlPointDto> UpdateAsync(ControlPointDto dto)
-        // {
-        //     
-        //     //TODO Need to Refactoring...
-        //     
-        //     if (dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must can't be empty for UPDATE!");
-        //     CheckExistsById(dto.Id);
-        //     var oldDto = await _repo.GetDtoByIdAsync(dto.Id);
-        //     var entity = new ControlPoint();//_repo.GetById(dto.Id);
-        //     Log.Error("Entity is ... {entity}", entity);
-        //     Log.Error("Start matching...");
-        //     entity.CurrentTransformerId = dto.CurrentTransformerId;
-        //     entity.VoltageTransformerId = dto.VoltageTransformerId;
-        //     entity.ElectricityMeterId = dto.ElectricityMeterId;
-        //     if (oldDto.CurrentTransformerId != dto.CurrentTransformerId)
-        //     {
-        //         Log.Error("Changing CurrentTransformer");
-        //         var newCurrentTransformer = await _currentTransformerRepository.GetByIdAsyncWithTracking((Guid) dto.CurrentTransformerId);
-        //         newCurrentTransformer.Status = Status.InWork;
-        //         var oldCurrentTransformer = await _currentTransformerRepository.GetByIdAsyncWithTracking((Guid) oldDto.CurrentTransformerId);
-        //         oldCurrentTransformer.Status = Status.InStorage;
-        //         entity.CurrentTransformerId = dto.CurrentTransformerId;
-        //         //entity.CurrentTransformer = newCurrentTransformer;
-        //     }
-        //
-        //     if (oldDto.VoltageTransformerId != dto.VoltageTransformerId)
-        //     {
-        //         Log.Error("Changing VoltageTransformer");
-        //         var newVoltageTransformer = await _voltageTransformerRepository.GetByIdAsyncWithTracking((Guid) dto.VoltageTransformerId);
-        //         newVoltageTransformer.Status = Status.InWork;
-        //         var oldVoltageTransformer = await _voltageTransformerRepository.GetByIdAsyncWithTracking((Guid) oldDto.VoltageTransformerId);
-        //         oldVoltageTransformer.Status = Status.InStorage;
-        //         entity.VoltageTransformerId = dto.VoltageTransformerId;
-        //         //entity.VoltageTransformer = newVoltageTransformer;
-        //     }
-        //
-        //     if (oldDto.ElectricityMeterId != dto.ElectricityMeterId)
-        //     {
-        //         Log.Error("Changing ElectricityTransformer");
-        //         var newElectricityMeter = await _electricityMeterRepository.GetByIdAsyncWithTracking((Guid) dto.ElectricityMeterId);
-        //         newElectricityMeter.Status = Status.InWork;
-        //         var oldElectricityMeter = await _electricityMeterRepository.GetByIdAsyncWithTracking((Guid) oldDto.ElectricityMeterId);
-        //         oldElectricityMeter.Status = Status.InStorage;
-        //         entity.ElectricityMeterId = dto.ElectricityMeterId;
-        //         //entity.ElectricityMeter = newElectricityMeter;
-        //     }
-        //
-        //     entity.Id = dto.Id;
-        //     entity.Name = dto.Name;
-        //     entity.Deleted = dto.Deleted;
-        //     entity.ProviderId = dto.ProviderId;
-        //     
-        //     return new ControlPointDto(await _repo.UpdateAsync(entity));
-        //     //return new ControlPointDto();
-        //}
 
         public async Task<bool> DeleteAsync(Guid id) => await _repo.DeleteAsync(id);
 
-        public async Task<List<ControlPointDto>> GetAllActiveDtoAsync() => await _repo.GetAllActiveDtoAsync();
+        public async Task<List<ControlPointDto>> GetAllActiveDtoAsync()
+        {
+            var list = await _repo.GetAllActiveDtoAsync();
+            var newList = new List<ControlPointDto>();
+            foreach (var item in list)
+            {
+                newList.Add(await AddDevices(item));
+            }
+            return newList;
+        }
 
-        public async Task<List<ControlPointDto>> GetAllDtoAsync() => await _repo.GetAllDtoAsync();
+        public async Task<List<ControlPointDto>> GetAllDtoAsync()
+        {
+            var list = await _repo.GetAllDtoAsync();
+            var newList = new List<ControlPointDto>();
+            foreach (var item in list)
+            {
+                newList.Add(await AddDevices(item));
+            }
+            return newList;
+        }
 
-        public async Task<List<ControlPointDto>> GetAllDtoByProviderIdAsync(Guid id) => await _repo.GetAllDtoByProviderIdAsync(id);
+        public async Task<List<ControlPointDto>> GetAllDtoByProviderIdAsync(Guid id)
+        {
+            var list = await _repo.GetAllDtoByProviderIdAsync(id);
+            var newList = new List<ControlPointDto>();
+            foreach (var item in list)
+            {
+                newList.Add(await AddDevices(item));
+            }
+            return newList;
+        }
 
         public ControlPoint GetById(Guid id) => _repo.GetById(id);
 
         public async Task<ControlPoint> GetByIdAsync(Guid id) => await _repo.GetByIdAsync(id);
 
-        public async Task<ControlPointDto> GetDtoByIdAsync(Guid id) => await _repo.GetDtoByIdAsync(id);
+        public async Task<ControlPointDto> GetDtoByIdAsync(Guid id)
+        {
+            return await AddDevices(await _repo.GetDtoByIdAsync(id));
+        }
 
         public bool IsFieldUnique(Guid id, string fieldName, object fieldValue)
         {
@@ -191,6 +115,64 @@ namespace TNE.Services.Implementations
                 VoltageTransformerId = dto.VoltageTransformerId,
                 ElectricityMeterId = dto.ElectricityMeterId
             };
+        }
+
+        private async Task<ControlPointDto> ConvertToDto(ControlPoint entity)
+        {
+            var currentTransformer = await _currentTransformerRepository.GetDtoByControlPointId(entity.Id);
+            var voltageTransformer = await _voltageTransformerRepository.GetDtoByControlPointId(entity.Id);
+            var electricityMeter = await _electricityMeterRepository.GetDtoByControlPointId(entity.Id);
+            return new ControlPointDto
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Deleted = entity.Deleted,
+
+                ProviderId = entity.ProviderId,
+                ProviderName = entity.Provider.Name,
+
+                ElectricityMeterId = electricityMeter.Id,
+                ElectricityMeterNumber = electricityMeter.Number,
+                ElectricityMeterType = electricityMeter.Type,
+                ElectricityMeterLastVerificationDate = electricityMeter.LastVerificationDate,
+
+                CurrentTransformerId = currentTransformer.Id,
+                CurrentTransformerNumber = currentTransformer.Number,
+                CurrentTransformerType = currentTransformer.Type,
+                CurrentTransformerTransformationRate = currentTransformer.TransformationRate,
+                CurrentTransformerLastVerificationDate = currentTransformer.LastVerificationDate,
+
+                VoltageTransformerId = voltageTransformer.Id,
+                VoltageTransformerNumber = voltageTransformer.Number,
+                VoltageTransformerType = voltageTransformer.Type,
+                VoltageTransformerTransformationRate = voltageTransformer.TransformationRate,
+                VoltageTransformerLastVerificationDate = voltageTransformer.LastVerificationDate
+            };
+        }
+
+        private async Task<ControlPointDto> AddDevices(ControlPointDto entity)
+        {
+            var currentTransformer = await _currentTransformerRepository.GetDtoByControlPointId(entity.Id);
+            var voltageTransformer = await _voltageTransformerRepository.GetDtoByControlPointId(entity.Id);
+            var electricityMeter = await _electricityMeterRepository.GetDtoByControlPointId(entity.Id);
+
+            entity.ElectricityMeterId = electricityMeter.Id;
+            entity.ElectricityMeterNumber = electricityMeter.Number;
+            entity.ElectricityMeterType = electricityMeter.Type;
+            entity.ElectricityMeterLastVerificationDate = electricityMeter.LastVerificationDate;
+
+            entity.CurrentTransformerId = currentTransformer.Id;
+            entity.CurrentTransformerNumber = currentTransformer.Number;
+            entity.CurrentTransformerType = currentTransformer.Type;
+            entity.CurrentTransformerTransformationRate = currentTransformer.TransformationRate;
+            entity.CurrentTransformerLastVerificationDate = currentTransformer.LastVerificationDate;
+
+            entity.VoltageTransformerId = voltageTransformer.Id;
+            entity.VoltageTransformerNumber = voltageTransformer.Number;
+            entity.VoltageTransformerType = voltageTransformer.Type;
+            entity.VoltageTransformerTransformationRate = voltageTransformer.TransformationRate;
+            entity.VoltageTransformerLastVerificationDate = voltageTransformer.LastVerificationDate;
+            return entity;
         }
     }
 }
