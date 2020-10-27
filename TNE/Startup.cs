@@ -29,6 +29,11 @@ namespace TNE
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder => builder.AllowAnyOrigin());
+            });
             services.AddSingleton(Log.Logger);
             services.Configure<KestrelServerOptions>(Configuration.GetSection("Kestrel"));
             services.AddLogging();
@@ -85,6 +90,7 @@ namespace TNE
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -94,6 +100,7 @@ namespace TNE
             app.UseExceptionHandler("/error");
             app.UseSerilogRequestLogging();
             app.UseRouting();
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

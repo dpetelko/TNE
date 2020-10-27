@@ -7,7 +7,7 @@ using TNE.Services;
 
 namespace TNE.Controllers
 {
-    //[Produces("application/json")]
+    [Produces("application/json")]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class LeadDivisionsController : ControllerBase
@@ -22,7 +22,7 @@ namespace TNE.Controllers
         /// <response code="200">Returns list of LeadDivisions or EMPTY List, if no LeadDivisions are found</response>
         //[Produces("application/json", Type = typeof(List<LeadDivisionDto>))]
         [HttpGet]
-        public async Task<List<LeadDivisionDto>> GetAll() { return await _service.GetAllDtoAsync(); }
+        public async Task<List<LeadDivisionDto>> GetAll() => await _service.GetAllDtoAsync();
 
         /// <summary>
         /// Get all active LeadDivisions
@@ -30,7 +30,7 @@ namespace TNE.Controllers
         /// /// <returns>Returns list of active LeadDivisions or EMPTY List, if no LeadDivisions are found</returns>
         /// <response code="200">Returns list of LeadDivisions or EMPTY List, if no LeadDivisions are found</response>
         [HttpGet("active")]
-        public async Task<List<LeadDivisionDto>> GetAllActive() { return await _service.GetAllActiveDtoAsync(); }
+        public async Task<List<LeadDivisionDto>> GetAllActive() => await _service.GetAllActiveDtoAsync();
 
         /// <summary>
         /// Get specific LeadDivision by ID 
@@ -40,7 +40,7 @@ namespace TNE.Controllers
         /// <response code="200">Returns the requested LeadDivision</response>
         /// <response code="404">If no LeadDivisions are found</response>         
         [HttpGet("{id}")]
-        public async Task<ActionResult<LeadDivisionDto>> GetById(Guid id) { return Ok(await _service.GetDtoByIdAsync(id)); }
+        public async Task<ActionResult<LeadDivisionDto>> GetById(Guid id) => Ok(await _service.GetDtoByIdAsync(id));
 
         /// <summary>
         /// Deletes specific LeadDivision by ID 
@@ -50,7 +50,7 @@ namespace TNE.Controllers
         /// <response code="200">If deleting is done</response>
         /// <response code="404">If no LeadDivisions are found</response>       
         [HttpDelete("{id}")]
-        public async Task<ActionResult<LeadDivisionDto>> DeleteById(Guid id) { return Ok(await _service.DeleteAsync(id)); }
+        public async Task<ActionResult<LeadDivisionDto>> DeleteById(Guid id) => Ok(await _service.DeleteAsync(id));
 
         /// <summary>
         /// Restores specific LeadDivision by ID 
@@ -60,7 +60,7 @@ namespace TNE.Controllers
         /// <response code="200">If restoring is done</response>
         /// <response code="404">If no LeadDivisions are found</response>         
         [HttpDelete("undelete/{id}")]
-        public async Task<ActionResult<LeadDivisionDto>> UndeleteById(Guid id) { return Ok(await _service.UndeleteAsync(id)); }
+        public async Task<ActionResult<LeadDivisionDto>> UndeleteById(Guid id) => Ok(await _service.UndeleteAsync(id));
 
         /// <summary>
         /// Creates a LeadDivision
