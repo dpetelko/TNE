@@ -29,11 +29,6 @@ namespace TNE
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAllOrigins",
-                    builder => builder.AllowAnyOrigin());
-            });
             services.AddSingleton(Log.Logger);
             services.Configure<KestrelServerOptions>(Configuration.GetSection("Kestrel"));
             services.AddLogging();
