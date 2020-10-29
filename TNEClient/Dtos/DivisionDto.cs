@@ -12,7 +12,7 @@ namespace TNEClient.Dtos
         public string Name { get; set; }
         public Guid AddressId { get; set; }
         [Display(Name = "Индекс")]
-        public int PostCode { get; set; }
+        public string PostCode { get; set; }
         [Required(ErrorMessage = "Введите значение")]
         [Display(Name = "Страна")]
         public string Country { get; set; }
