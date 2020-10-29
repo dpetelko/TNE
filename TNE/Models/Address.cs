@@ -10,7 +10,7 @@ namespace TNE.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public int PostCode { get; set; }
+        public string PostCode { get; set; }
         public string Country { get; set; }
         public string Region { get; set; }
         public string City { get; set; }

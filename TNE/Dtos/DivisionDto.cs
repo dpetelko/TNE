@@ -12,7 +12,7 @@ namespace TNE.Dto
         //[UniqueField]
         public string Name { get; set; }
         public Guid AddressId { get; set; }
-        public int PostCode { get; set; }
+        public string PostCode { get; set; }
         [Required]
         public string Country { get; set; }
         [Required]

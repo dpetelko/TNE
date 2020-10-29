@@ -75,7 +75,7 @@ namespace TNE.Services.Utils
                     Name = "ТГК-1",
                     Address = new Address
                     {
-                        PostCode = 197198,
+                        PostCode = "197198",
                         Country = "РФ",
                         Region = "Санкт-Петербург",
                         City = "Санкт-Петербург",
@@ -88,7 +88,7 @@ namespace TNE.Services.Utils
                     Name = "ТГК-2",
                     Address = new Address
                     {
-                        PostCode = 150003,
+                        PostCode = "150003",
                         Country = "РФ",
                         Region = "Ярославская область",
                         City = "Ярославль",
@@ -110,7 +110,7 @@ namespace TNE.Services.Utils
                     Name = "Филиал Выборг",
                     Address = new Address()
                     {
-                        PostCode = 188800,
+                        PostCode = "188800",
                         Country = "РФ",
                         Region = "Ленинградская область",
                         City = "Выборг",
@@ -124,7 +124,7 @@ namespace TNE.Services.Utils
                     Name = "Филиал Усть-Луга",
                     Address = new Address()
                     {
-                        PostCode = 188471,
+                        PostCode = "188471",
                         Country = "РФ",
                         Region = "Ленинградская область",
                         City = "Усть-Луга",
@@ -138,7 +138,7 @@ namespace TNE.Services.Utils
                     Name = "Филиал Рыбинск",
                     Address = new Address()
                     {
-                        PostCode = 152934,
+                        PostCode = "152934",
                         Country = "РФ",
                         Region = "Ярославская область",
                         City = "Рыбинск",
@@ -152,7 +152,7 @@ namespace TNE.Services.Utils
                     Name = "Филиал Гаврилов-Ям",
                     Address = new Address()
                     {
-                        PostCode = 152240,
+                        PostCode = "152240",
                         Country = "РФ",
                         Region = "Ярославская область",
                         City = "Гаврилов-Ям",
@@ -175,7 +175,7 @@ namespace TNE.Services.Utils
                     Name = "ПС110/10 Выборгская",
                     Address = new Address()
                     {
-                        PostCode = 188800,
+                        PostCode = "188800",
                         Country = "РФ",
                         Region = "Ленинградская область",
                         City = "Выборг",
@@ -189,7 +189,7 @@ namespace TNE.Services.Utils
                     Name = "ПС110/6 Автозавод",
                     Address = new Address()
                     {
-                        PostCode = 188471,
+                        PostCode = "188471",
                         Country = "РФ",
                         Region = "Ленинградская область",
                         City = "Выборг",
@@ -203,7 +203,7 @@ namespace TNE.Services.Utils
                     Name = "ПС220/10 Центральная",
                     Address = new Address()
                     {
-                        PostCode = 188471,
+                        PostCode = "188471",
                         Country = "РФ",
                         Region = "Ленинградская область",
                         City = "Усть-Луга",
@@ -217,7 +217,7 @@ namespace TNE.Services.Utils
                     Name = "ПС110/6 Западная",
                     Address = new Address()
                     {
-                        PostCode = 152240,
+                        PostCode = "152240",
                         Country = "РФ",
                         Region = "Ленинградская область",
                         City = "Усть-Луга",
@@ -231,7 +231,7 @@ namespace TNE.Services.Utils
                     Name = "ПС220/6 Рыбинск-1",
                     Address = new Address()
                     {
-                        PostCode = 152934,
+                        PostCode = "152934",
                         Country = "РФ",
                         Region = "Ярославская область",
                         City = "Рыбинск",
@@ -245,7 +245,7 @@ namespace TNE.Services.Utils
                     Name = "ПС110/10 Судоремонтный завод",
                     Address = new Address()
                     {
-                        PostCode = 152934,
+                        PostCode = "152934",
                         Country = "РФ",
                         Region = "Ярославская область",
                         City = "Рыбинск",
@@ -259,7 +259,7 @@ namespace TNE.Services.Utils
                     Name = "ПС110/6 Южная",
                     Address = new Address()
                     {
-                        PostCode = 152934,
+                        PostCode = "152934",
                         Country = "РФ",
                         Region = "Ярославская область",
                         City = "Гаврилов-Ям",
@@ -273,7 +273,7 @@ namespace TNE.Services.Utils
                     Name = "ПС220/110/6 Михайловская",
                     Address = new Address()
                     {
-                        PostCode = 152240,
+                        PostCode = "152240",
                         Country = "РФ",
                         Region = "Ярославская область",
                         City = "Гаврилов-Ям",
