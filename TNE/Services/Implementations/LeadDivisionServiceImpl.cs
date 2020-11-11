@@ -17,8 +17,7 @@ namespace TNE.Services.Implementations
         public async Task<LeadDivisionDto> CreateAsync(LeadDivisionDto dto)
         {
             if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
-            var entity = ConvertToEntity(dto);
-            var result = await _repo.CreateAsync(entity);
+            var result = await _repo.CreateAsync(new LeadDivision(dto));
             return new LeadDivisionDto(result);
         }
 
@@ -36,8 +35,8 @@ namespace TNE.Services.Implementations
         {
             if (dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must can't be empty for UPDATE!");
             CheckExistsById(dto.Id);
-            var entity = ConvertToEntity(dto);
-            return new LeadDivisionDto(await _repo.UpdateAsync(entity));
+            var result = await _repo.UpdateAsync(new LeadDivision(dto));
+            return new LeadDivisionDto(result);
         }
 
         public LeadDivision GetById(Guid id)
@@ -72,21 +71,5 @@ namespace TNE.Services.Implementations
         }
 
         public async Task<List<LeadDivisionDto>> GetAllActiveDtoAsync() => await _repo.GetAllActiveDtoAsync();
-
-        private LeadDivision ConvertToEntity(LeadDivisionDto dto)
-        {
-            var entity = new LeadDivision();
-            entity.Id = dto.Id;
-            entity.Name = dto.Name;
-            entity.AddressId = dto.AddressId;
-            entity.Address.PostCode = dto.PostCode;
-            entity.Address.Country = dto.Country;
-            entity.Address.Region = dto.Region;
-            entity.Address.City = dto.City;
-            entity.Address.Street = dto.Street;
-            entity.Address.Building = dto.Building;
-            entity.Deleted = dto.Deleted;
-            return entity;
-        }
     }
 }

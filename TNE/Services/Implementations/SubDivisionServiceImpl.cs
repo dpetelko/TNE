@@ -20,8 +20,7 @@ namespace TNE.Services.Implementations
         public async Task<SubDivisionDto> CreateAsync(SubDivisionDto dto)
         {
             if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
-            var entity = ConvertToEntity(dto);
-            var result = await _repo.CreateAsync(entity);
+            var result = await _repo.CreateAsync(new SubDivision(dto));
             return new SubDivisionDto(result);
         }
 
@@ -72,25 +71,7 @@ namespace TNE.Services.Implementations
         {
             if (dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must can't be empty for UPDATE!");
             CheckExistsById(dto.Id);
-            var entity = ConvertToEntity(dto);
-            return new SubDivisionDto(await _repo.UpdateAsync(entity));
-        }
-
-        private SubDivision ConvertToEntity(SubDivisionDto dto)
-        {
-            var entity = new SubDivision();
-            entity.Id = dto.Id;
-            entity.Name = dto.Name;
-            entity.AddressId = dto.AddressId;
-            entity.Address.PostCode = dto.PostCode;
-            entity.Address.Country = dto.Country;
-            entity.Address.Region = dto.Region;
-            entity.Address.City = dto.City;
-            entity.Address.Street = dto.Street;
-            entity.Address.Building = dto.Building;
-            entity.Deleted = dto.Deleted;
-            entity.LeadDivisionId = dto.LeadDivisionId;
-            return entity;
+            return new SubDivisionDto(await _repo.UpdateAsync(new SubDivision(dto)));
         }
     }
 }

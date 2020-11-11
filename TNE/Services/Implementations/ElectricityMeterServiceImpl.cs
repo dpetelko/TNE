@@ -20,8 +20,7 @@ namespace TNE.Services.Implementations
         public async Task<ElectricityMeterDto> CreateAsync(ElectricityMeterDto dto)
         {
             if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
-            var entity = ConvertToEntity(dto);
-            var result = await _repo.CreateAsync(entity);
+            var result = await _repo.CreateAsync(new ElectricityMeter(dto));
             return new ElectricityMeterDto(result);
         }
 
@@ -52,23 +51,7 @@ namespace TNE.Services.Implementations
         {
             if (dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must can't be empty for UPDATE!");
             CheckExistsById(dto.Id);
-            var entity = ConvertToEntity(dto);
-            return new ElectricityMeterDto(await _repo.UpdateAsync(entity));
-        }
-
-        private ElectricityMeter ConvertToEntity(ElectricityMeterDto dto)
-        {
-            var entity = new ElectricityMeter
-            {
-                Id = dto.Id,
-                Number = dto.Number,
-                Type = dto.Type,
-                LastVerificationDate = dto.LastVerificationDate,
-                InterTestingPeriodInDays = dto.InterTestingPeriodInDays,
-                Status = dto.Status,
-                ControlPointId = dto.ControlPointId
-            };
-            return entity;
+            return new ElectricityMeterDto(await _repo.UpdateAsync(new ElectricityMeter(dto)));
         }
     }
 }

@@ -19,8 +19,7 @@ namespace TNE.Services.Implementations
         public async Task<DeliveryPointDto> CreateAsync(DeliveryPointDto dto)
         {
             if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
-            var entity = ConvertToEntity(dto);
-            var result = await _repo.CreateAsync(entity);
+            var result = await _repo.CreateAsync(new DeliveryPoint(dto));
             return new DeliveryPointDto(result);
         }
 
@@ -71,20 +70,8 @@ namespace TNE.Services.Implementations
         {
             if (dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must can't be empty for UPDATE!");
             CheckExistsById(dto.Id);
-            var entity = ConvertToEntity(dto);
-            return new DeliveryPointDto(await _repo.UpdateAsync(entity));
-        }
-
-        private DeliveryPoint ConvertToEntity(DeliveryPointDto dto)
-        {
-            return new DeliveryPoint
-            {
-                Id = dto.Id,
-                Name = dto.Name,
-                MaxPower = dto.MaxPower,
-                Deleted = dto.Deleted,
-                ProviderId = dto.ProviderId
-            };
+            var result = await _repo.UpdateAsync(new DeliveryPoint(dto));
+            return new DeliveryPointDto(result);
         }
     }
 }

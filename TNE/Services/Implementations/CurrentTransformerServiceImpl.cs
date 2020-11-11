@@ -20,8 +20,7 @@ namespace TNE.Services.Implementations
         public async Task<CurrentTransformerDto> CreateAsync(CurrentTransformerDto dto)
         {
             if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
-            var entity = ConvertToEntity(dto);
-            var result = await _repo.CreateAsync(entity);
+            var result = await _repo.CreateAsync(new CurrentTransformer(dto));
             return new CurrentTransformerDto(result);
         }
 
@@ -52,24 +51,7 @@ namespace TNE.Services.Implementations
         {
             if (dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must can't be empty for UPDATE!");
             CheckExistsById(dto.Id);
-            var entity = ConvertToEntity(dto);
-            return new CurrentTransformerDto(await _repo.UpdateAsync(entity));
-        }
-
-        private CurrentTransformer ConvertToEntity(CurrentTransformerDto dto)
-        {
-            var entity = new CurrentTransformer
-            {
-                Id = dto.Id,
-                Number = dto.Number,
-                Type = dto.Type,
-                LastVerificationDate = dto.LastVerificationDate,
-                InterTestingPeriodInDays = dto.InterTestingPeriodInDays,
-                Status = dto.Status,
-                TransformationRate = dto.TransformationRate,
-                ControlPointId = dto.ControlPointId
-            };
-            return entity;
+            return new CurrentTransformerDto(await _repo.UpdateAsync(new CurrentTransformer(dto)));
         }
     }
 }

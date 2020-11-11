@@ -20,8 +20,7 @@ namespace TNE.Services.Implementations
         public async Task<ProviderDto> CreateAsync(ProviderDto dto)
         {
             if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
-            var entity = ConvertToEntity(dto);
-            var result = await _repo.CreateAsync(entity);
+            var result = await _repo.CreateAsync(new Provider(dto));
             return new ProviderDto(result);
         }
 
@@ -72,25 +71,7 @@ namespace TNE.Services.Implementations
         {
             if (dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must can't be empty for UPDATE!");
             CheckExistsById(dto.Id);
-            var entity = ConvertToEntity(dto);
-            return new ProviderDto(await _repo.UpdateAsync(entity));
-        }
-
-        private Provider ConvertToEntity(ProviderDto dto)
-        {
-            var entity = new Provider();
-            entity.Id = dto.Id;
-            entity.Name = dto.Name;
-            entity.AddressId = dto.AddressId;
-            entity.Address.PostCode = dto.PostCode;
-            entity.Address.Country = dto.Country;
-            entity.Address.Region = dto.Region;
-            entity.Address.City = dto.City;
-            entity.Address.Street = dto.Street;
-            entity.Address.Building = dto.Building;
-            entity.Deleted = dto.Deleted;
-            entity.SubDivisionId = dto.SubDivisionId;
-            return entity;
+            return new ProviderDto(await _repo.UpdateAsync(new Provider(dto)));
         }
     }
 }

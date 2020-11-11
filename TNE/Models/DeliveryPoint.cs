@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TNE.Dtos;
 
 namespace TNE.Models
 {
@@ -21,6 +22,15 @@ namespace TNE.Models
         public bool Deleted { get; set; }
 
         public DeliveryPoint() { }
+
+        public DeliveryPoint(DeliveryPointDto dto)
+        {
+            Id = dto.Id;
+            Name = dto.Name;
+            MaxPower = dto.MaxPower;
+            Deleted = dto.Deleted;
+            ProviderId = dto.ProviderId;
+        }
 
         public override bool Equals(object obj)
         {

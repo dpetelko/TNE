@@ -21,8 +21,7 @@ namespace TNE.Services.Implementations
         public async Task<VoltageTransformerDto> CreateAsync(VoltageTransformerDto dto)
         {
             if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
-            var entity = ConvertToEntity(dto);
-            var result = await _repo.CreateAsync(entity);
+            var result = await _repo.CreateAsync(new VoltageTransformer(dto));
             return new VoltageTransformerDto(result);
         }
 
@@ -54,23 +53,7 @@ namespace TNE.Services.Implementations
         {
             if (dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must can't be empty for UPDATE!");
             CheckExistsById(dto.Id);
-            var entity = ConvertToEntity(dto);
-            return new VoltageTransformerDto(await _repo.UpdateAsync(entity));
-        }
-
-        private VoltageTransformer ConvertToEntity(VoltageTransformerDto dto)
-        {
-            return new VoltageTransformer
-            {
-                Id = dto.Id,
-                Number = dto.Number,
-                Type = dto.Type,
-                LastVerificationDate = dto.LastVerificationDate,
-                InterTestingPeriodInDays = dto.InterTestingPeriodInDays,
-                Status = dto.Status,
-                TransformationRate = dto.TransformationRate,
-                ControlPointId = dto.ControlPointId
-            };
+            return new VoltageTransformerDto(await _repo.UpdateAsync(new VoltageTransformer(dto)));
         }
     }
 }

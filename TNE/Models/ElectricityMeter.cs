@@ -1,10 +1,22 @@
 ﻿using System;
+using TNE.Dtos;
 
 namespace TNE.Models
 {
     public class ElectricityMeter : Device, IEquatable<ElectricityMeter>
     {
         public ElectricityMeter() { }
+
+        public ElectricityMeter(ElectricityMeterDto dto)
+        {
+            Id = dto.Id;
+            Number = dto.Number;
+            Type = dto.Type;
+            LastVerificationDate = dto.LastVerificationDate;
+            InterTestingPeriodInDays = dto.InterTestingPeriodInDays;
+            Status = dto.Status;
+            ControlPointId = dto.ControlPointId;
+        }
 
         public override bool Equals(object obj)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using TNE.Dto.LeadDivisions;
 
 namespace TNE.Models
 {
@@ -7,6 +8,20 @@ namespace TNE.Models
         //public List<SubDivision> SubDivisions { get; set; }
 
         public LeadDivision() { }
+
+        public LeadDivision(LeadDivisionDto dto)
+        {
+            Id = dto.Id;
+            Name = dto.Name;
+            AddressId = dto.AddressId;
+            Address.PostCode = dto.PostCode;
+            Address.Country = dto.Country;
+            Address.Region = dto.Region;
+            Address.City = dto.City;
+            Address.Street = dto.Street;
+            Address.Building = dto.Building;
+            Deleted = dto.Deleted;
+        }
 
         public override bool Equals(object obj)
         {

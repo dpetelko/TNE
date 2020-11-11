@@ -1,4 +1,5 @@
 ﻿using System;
+using TNE.Dtos;
 
 namespace TNE.Models
 {
@@ -8,6 +9,17 @@ namespace TNE.Models
 
         public CurrentTransformer() { }
 
+        public CurrentTransformer(CurrentTransformerDto dto)
+        {
+            Id = dto.Id;
+            Number = dto.Number;
+            Type = dto.Type;
+            LastVerificationDate = dto.LastVerificationDate;
+            InterTestingPeriodInDays = dto.InterTestingPeriodInDays;
+            Status = dto.Status;
+            TransformationRate = dto.TransformationRate;
+            ControlPointId = dto.ControlPointId;
+        }
         public override bool Equals(object obj)
         {
             return Equals(obj as CurrentTransformer);
