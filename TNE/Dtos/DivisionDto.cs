@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TNE.Services.Validators;
 
 namespace TNE.Dto
 {

@@ -19,29 +19,29 @@ namespace TNE.Data
         /// </summary>
         /// <exception cref="EntityNotFoundException">If no VoltageTransformers are found</exception>
         Task<bool> SetStatus(Guid id, Status newStatus);
-        
+
         /// <summary>
         /// Returns a specific VoltageTransformer by ID
         /// </summary>
         /// <exception cref="EntityNotFoundException">If no VoltageTransformers are found</exception>
         Task<VoltageTransformerDto> GetDtoByIdAsync(Guid id);
-        
+
         /// <summary>
         /// Get all VoltageTransformersDto. 
         /// Returns list of VoltageTransformers or EMPTY List, if no VoltageTransformers are found
         /// </summary>
         Task<List<VoltageTransformerDto>> GetAllDtoAsync();
-        
+
         /// <summary>
         /// Returns list of VoltageTransformers by Status or EMPTY List, if no VoltageTransformers are found
         /// </summary>
         Task<List<VoltageTransformerDto>> GetAllDtoByStatusAsync(Status status);
-        
+
         /// <summary>
         /// Returns list of VoltageTransformers by ControlPoint ID or EMPTY List, if no VoltageTransformers are found
         /// </summary>
         Task<VoltageTransformerDto> GetDtoByControlPointId(Guid id);
-        
+
         /// <summary>
         /// Returns list of VoltageTransformers by DeviceCalibrationControlDto or EMPTY List, if no VoltageTransformers are found
         /// </summary>

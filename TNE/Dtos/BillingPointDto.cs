@@ -20,7 +20,7 @@ namespace TNE.Dtos
 
         public BillingPointDto() { }
 
-        public BillingPointDto(BillingPoint entity) 
+        public BillingPointDto(BillingPoint entity)
         {
             Id = entity.Id;
             StartTime = entity.StartTime;

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Serilog;
 using TNE.Data;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
-using TNE.Dtos.SearchFilters;
 using TNE.Models;
 
 namespace TNE.Services.Implementations
@@ -13,18 +11,16 @@ namespace TNE.Services.Implementations
     public class ControlPointServiceImpl : IControlPointService
     {
         private readonly IControlPointRepository _repo;
-        private readonly IProviderService _providerService;
         private readonly ICurrentTransformerRepository _currentTransformerRepository;
         private readonly IVoltageTransformerRepository _voltageTransformerRepository;
         private readonly IElectricityMeterRepository _electricityMeterRepository;
 
-        public ControlPointServiceImpl(IControlPointRepository repo, IProviderService providerService,
+        public ControlPointServiceImpl(IControlPointRepository repo,
             ICurrentTransformerRepository currentTransformerRepository,
             IVoltageTransformerRepository voltageTransformerRepository,
             IElectricityMeterRepository electricityMeterRepository)
         {
             _repo = repo;
-            _providerService = providerService;
             _currentTransformerRepository = currentTransformerRepository;
             _voltageTransformerRepository = voltageTransformerRepository;
             _electricityMeterRepository = electricityMeterRepository;

@@ -11,13 +11,8 @@ namespace TNE.Services.Implementations
     public class DeliveryPointServiceImpl : IDeliveryPointService
     {
         private readonly IDeliveryPointRepository _repo;
-        private readonly IProviderService _providerService;
 
-        public DeliveryPointServiceImpl(IDeliveryPointRepository repo, IProviderService providerService)
-        {
-            _repo = repo;
-            _providerService = providerService;
-        }
+        public DeliveryPointServiceImpl(IDeliveryPointRepository repo) => _repo = repo;
 
         public void CheckExistsById(Guid id) => _repo.CheckExistsById(id);
 

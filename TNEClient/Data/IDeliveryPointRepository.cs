@@ -19,7 +19,7 @@ namespace TNEClient.Data
         /// <exception cref="ApiException">If Response HttpStatus not equal 200</exception>
         [Get("/api/v1/DeliveryPoints")]
         Task<List<DeliveryPointDto>> GetAllAsync();
-        
+
         /// <summary>
         /// Get all not deleted DeliveryPointsDto. 
         /// Returns list of DeliveryPoints or EMPTY List, if no DeliveryPoints are found

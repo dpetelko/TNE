@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Refit;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using TNEClient.Dtos;
 using TNEClient.Dtos.SearchFilters;
 using TNEClient.Services;
@@ -105,7 +105,7 @@ namespace TNEClient.Controllers
                 ModelState.AddModelError(key, value);
             }
         }
-        
+
         private async Task GetProviderList() => ViewBag.ProviderList = new SelectList(await _providerService.GetAllAsync(), "Id", "Name");
     }
 }

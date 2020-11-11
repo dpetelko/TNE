@@ -132,7 +132,7 @@ namespace TNEClient.Controllers
             ViewBag.CurrentTransformerList = await _currentTransformerService.GetAllByStatusAsync(Status.InStorage);
             ViewBag.ElectricityMeterList = await _electricityMeterService.GetAllByStatusAsync(Status.InStorage);
         }
-        
+
         private async Task GetDevicesListForEdit(Guid controlPointId)
         {
             ViewBag.ProviderList = new SelectList(await _providerService.GetAllAsync(), "Id", "Name");
@@ -140,12 +140,12 @@ namespace TNEClient.Controllers
             voltageTransformerList.Add(await _voltageTransformerService.GetDtoByControlPointId(controlPointId));
             voltageTransformerList.AddRange(await _voltageTransformerService.GetAllByStatusAsync(Status.InStorage));
             ViewBag.VoltageTransformerList = voltageTransformerList;
-            
+
             var currentTransformerList = new List<CurrentTransformerDto>();
             currentTransformerList.Add(await _currentTransformerService.GetDtoByControlPointId(controlPointId));
             currentTransformerList.AddRange(await _currentTransformerService.GetAllByStatusAsync(Status.InStorage));
             ViewBag.CurrentTransformerList = currentTransformerList;
-            
+
             var electricityMeterList = new List<ElectricityMeterDto>();
             electricityMeterList.Add(await _electricityMeterService.GetDtoByControlPointId(controlPointId));
             electricityMeterList.AddRange(await _electricityMeterService.GetAllByStatusAsync(Status.InStorage));

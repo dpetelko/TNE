@@ -1,6 +1,6 @@
-﻿using Refit;
+﻿using Microsoft.AspNetCore.Http;
+using Refit;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace TNEClient.Data
 {

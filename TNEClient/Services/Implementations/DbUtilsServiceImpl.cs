@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 using TNEClient.Data;
 
 namespace TNEClient.Services.Implementations

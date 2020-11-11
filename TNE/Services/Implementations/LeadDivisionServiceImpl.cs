@@ -12,7 +12,7 @@ namespace TNE.Services.Implementations
     {
         private readonly ILeadDivisionRepository _repo;
 
-        public LeadDivisionServiceImpl(ILeadDivisionRepository repo) { _repo = repo; }
+        public LeadDivisionServiceImpl(ILeadDivisionRepository repo) => _repo = repo;
 
         public async Task<LeadDivisionDto> CreateAsync(LeadDivisionDto dto)
         {
@@ -22,9 +22,9 @@ namespace TNE.Services.Implementations
             return new LeadDivisionDto(result);
         }
 
-        public void CheckExistsById(Guid id) { _repo.CheckExistsById(id); }
+        public void CheckExistsById(Guid id) => _repo.CheckExistsById(id);
 
-        public async Task<List<LeadDivisionDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
+        public async Task<List<LeadDivisionDto>> GetAllDtoAsync() => await _repo.GetAllDtoAsync();
 
         public async Task<LeadDivisionDto> GetDtoByIdAsync(Guid id)
         {
@@ -71,10 +71,7 @@ namespace TNE.Services.Implementations
             return await _repo.UndeleteAsync(id);
         }
 
-        public async Task<List<LeadDivisionDto>> GetAllActiveDtoAsync()
-        {
-            return await _repo.GetAllActiveDtoAsync();
-        }
+        public async Task<List<LeadDivisionDto>> GetAllActiveDtoAsync() => await _repo.GetAllActiveDtoAsync();
 
         private LeadDivision ConvertToEntity(LeadDivisionDto dto)
         {

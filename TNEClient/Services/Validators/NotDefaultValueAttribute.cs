@@ -3,6 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TNEClient.Dtos
 {
+    [AttributeUsage(
+    AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter,
+    AllowMultiple = true)]
+    /// <summary>
+    /// This is analogous to annotation [Required] for DateTime
+    /// </summary>
     internal class NotDefaultValueAttribute : ValidationAttribute
     {
         public const string DefaultErrorMessage = "The {0} field must not have the default value";

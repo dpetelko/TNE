@@ -1,9 +1,9 @@
-﻿using System.Net.Http;
-using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Refit;
 using Serilog;
+using System.Net.Http;
 
 namespace TNEClient.Controllers
 {
@@ -26,7 +26,8 @@ namespace TNEClient.Controllers
                     System.Net.HttpStatusCode.InternalServerError => "Внутренняя ошибка на сервере",
                     _ => "Неизвестная ошибка",
                 };
-            } else if (exception is HttpRequestException)
+            }
+            else if (exception is HttpRequestException)
             {
                 ViewBag.StatusCode = "Сервер не отвечает ;-)";
             }

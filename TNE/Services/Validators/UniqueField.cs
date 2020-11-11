@@ -33,21 +33,13 @@ namespace TNE.Services.Validators
 
         private bool Validate(Guid id, string fieldName, object fieldValue)
         {
-            bool result;
-            switch (_validationContext.ObjectInstance.GetType().Name)
+            var result = _validationContext.ObjectInstance.GetType().Name switch
             {
-                case "LeadDivisionDto":
-                    result = _validationContext.GetService<ILeadDivisionService>().IsFieldUnique(id, fieldName, fieldValue);
-                    break;
-                case "SubDivisionDto":
-                    result = _validationContext.GetService<ISubDivisionService>().IsFieldUnique(id, fieldName, fieldValue);
-                    break;
-                case "ProviderDto":
-                    result = _validationContext.GetService<IProviderService>().IsFieldUnique(id, fieldName, fieldValue);
-                    break;
-                default:
-                    throw new InvalidOperationException("Unknown object for validation");
-            }
+                "LeadDivisionDto" => _validationContext.GetService<ILeadDivisionService>().IsFieldUnique(id, fieldName, fieldValue),
+                "SubDivisionDto" => _validationContext.GetService<ISubDivisionService>().IsFieldUnique(id, fieldName, fieldValue),
+                "ProviderDto" => _validationContext.GetService<IProviderService>().IsFieldUnique(id, fieldName, fieldValue),
+                _ => throw new InvalidOperationException("Unknown object for validation"),
+            };
             return result;
         }
 

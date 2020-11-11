@@ -20,7 +20,7 @@ namespace TNEClient.Data
         /// <exception cref="ApiException">If Response HttpStatus not equal 200</exception>
         [Get("/api/v1/CurrentTransformers")]
         Task<List<CurrentTransformerDto>> GetAllAsync();
-        
+
         /// <summary>
         /// Returns list of CurrentTransformers by Status or EMPTY List, if no CurrentTransformers are found
         /// </summary>

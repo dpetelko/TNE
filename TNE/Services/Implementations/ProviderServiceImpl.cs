@@ -13,7 +13,7 @@ namespace TNE.Services.Implementations
     {
         private readonly IProviderRepository _repo;
 
-        public ProviderServiceImpl(IProviderRepository repo) { _repo = repo; }
+        public ProviderServiceImpl(IProviderRepository repo) => _repo = repo;
 
         public void CheckExistsById(Guid id) => _repo.CheckExistsById(id);
 

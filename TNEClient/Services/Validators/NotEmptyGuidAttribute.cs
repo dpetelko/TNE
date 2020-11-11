@@ -6,6 +6,9 @@ namespace TNEClient.Dtos
     [AttributeUsage(
     AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter,
     AllowMultiple = true)]
+    /// <summary>
+    /// This is analogous to annotation [Required] for GUID
+    /// </summary>
     public class NotEmptyGuidAttribute : ValidationAttribute
     {
         public const string DefaultErrorMessage = "The {0} field must not be empty";

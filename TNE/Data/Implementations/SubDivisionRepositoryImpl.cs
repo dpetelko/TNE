@@ -14,7 +14,7 @@ namespace TNE.Data.Implementations
     {
         private readonly DatabaseContext _context;
 
-        public SubDivisionRepositoryImpl(DatabaseContext context) {  _context = context; }
+        public SubDivisionRepositoryImpl(DatabaseContext context) { _context = context; }
 
         public void CheckExistsById(Guid id)
         {

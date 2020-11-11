@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
 using Refit;
-using Serilog;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

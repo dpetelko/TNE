@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using System;
 using System.IO;
 using System.Reflection;
-using Microsoft.OpenApi.Models;
 using TNE.Data;
 using TNE.Data.Implementations;
 using TNE.Services;
@@ -79,13 +79,13 @@ namespace TNE
             services.AddScoped<IElectricityMeterRepository, ElectricityMeterRepositoryImpl>();
             services.AddScoped<IDbUtils, DbUtilsImpl>();
 
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

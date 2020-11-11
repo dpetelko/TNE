@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TNE.Data;
 using TNE.Data.Exceptions;
@@ -25,8 +24,8 @@ namespace TNE.Services.Implementations
             var result = await _repo.CreateAsync(entity);
             return new BillingPointDto(result);
         }
-        
-        
+
+
         public async Task<List<BillingPointDto>> GetAllDtoAsync() => await _repo.GetAllDtoAsync();
 
         public async Task<List<BillingPointDto>> GetAllDtoByControlPointIdAsync(Guid id) => await _repo.GetAllDtoByControlPointIdAsync(id);

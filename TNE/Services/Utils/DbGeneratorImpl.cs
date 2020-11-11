@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Serilog;
 using TNE.Data;
 using TNE.Models;
 
@@ -9,7 +9,7 @@ namespace TNE.Services.Utils
 {
     public class DbGeneratorImpl : IDbGenerator
     {
-        private static Random random = new Random();
+        private static readonly Random random = new Random();
         private readonly ILeadDivisionRepository _leadDivisionRepository;
         private readonly ISubDivisionRepository _subDivisionRepository;
         private readonly IProviderRepository _providerRepository;
@@ -33,7 +33,7 @@ namespace TNE.Services.Utils
         {
             Log.Debug("Drop Database...");
             _dbUtils.DropDb();
-            
+
             Log.Debug("Add Lead Divisions...");
             foreach (var item in GenerateLeadDivisions())
             {
@@ -161,9 +161,9 @@ namespace TNE.Services.Utils
                     }
                 }
             };
-            
+
         }
-        
+
         private List<Provider> GenerateProviders()
         {
             var subDivisionsList = _subDivisionRepository.GetAllDtoAsync().Result;
@@ -282,9 +282,9 @@ namespace TNE.Services.Utils
                     }
                 }
             };
-            
+
         }
-        
+
         private static List<CurrentTransformer> GenerateCurrentTransformers()
         {
             return new List<CurrentTransformer>
@@ -369,10 +369,10 @@ namespace TNE.Services.Utils
                     InterTestingPeriodInDays = 365,
                     TransformationRate = 1600
                 },
-                
+
             };
         }
-        
+
         private static List<VoltageTransformer> GenerateVoltageTransformers()
         {
             return new List<VoltageTransformer>
@@ -457,10 +457,10 @@ namespace TNE.Services.Utils
                     InterTestingPeriodInDays = 365,
                     TransformationRate = 1600
                 },
-                
+
             };
         }
-        
+
         private static List<ElectricityMeter> GenerateElectricityMeters()
         {
             return new List<ElectricityMeter>
@@ -537,11 +537,11 @@ namespace TNE.Services.Utils
                 }
             };
         }
-        
+
         private static DateTime RandomDay()
         {
             var start = new DateTime(2019, 1, 1);
-            var range = (DateTime.Today - start).Days;           
+            var range = (DateTime.Today - start).Days;
             return start.AddDays(random.Next(range));
         }
     }

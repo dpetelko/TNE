@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LinqKit;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LinqKit;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
 using TNE.Dtos.SearchFilters;
@@ -88,7 +88,7 @@ namespace TNE.Data.Implementations
             //     .Select(s => new CurrentTransformerDto(s))
             //     .ToListAsync();
             // result.TrimExcess();
-            
+
             Log.Debug("GetAllDtoByFilterAsync CurrentTransformerDto by Filter: {filter}", filter);
 
             var predicate = PredicateBuilder.New<CurrentTransformer>(true);
@@ -178,7 +178,7 @@ namespace TNE.Data.Implementations
             if (result is null) throw new EntityNotFoundException($"CurrentTransformer with ControlPointId = '{id}' not found!");
             return result;
         }
-        
+
         private static bool IsNotEmptyOrNull(Guid? id) => id != null && id != Guid.Empty;
     }
 }

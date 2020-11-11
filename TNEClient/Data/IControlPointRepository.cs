@@ -27,7 +27,7 @@ namespace TNEClient.Data
         /// <exception cref="ApiException">If Response HttpStatus not equal 200</exception>
         [Get("/api/v1/ControlPoints/active")]
         Task<List<ControlPointDto>> GetAllActiveAsync();
-        
+
         /// <summary>
         /// Returns a specific ControlPoint by ID
         /// </summary>

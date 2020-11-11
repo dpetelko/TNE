@@ -1,7 +1,5 @@
-﻿using Serilog;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using TNEClient.Data;
 using TNEClient.Dtos;
@@ -13,7 +11,7 @@ namespace TNEClient.Services.Implementations
     {
         private readonly IElectricityMeterRepository _repo;
 
-        public ElectricityMeterServiceImpl(IElectricityMeterRepository repo) => _repo = repo; 
+        public ElectricityMeterServiceImpl(IElectricityMeterRepository repo) => _repo = repo;
 
         public async Task<ElectricityMeterDto> CreateAsync(ElectricityMeterDto dto) => await _repo.CreateAsync(dto);
 

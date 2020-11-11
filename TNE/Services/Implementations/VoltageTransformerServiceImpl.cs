@@ -13,13 +13,8 @@ namespace TNE.Services.Implementations
     public class VoltageTransformerServiceImpl : IVoltageTransformerService
     {
         private readonly IVoltageTransformerRepository _repo;
-        private readonly IControlPointRepository _controlPointRepository;
 
-        public VoltageTransformerServiceImpl(IVoltageTransformerRepository repo, IControlPointRepository controlPointRepository)
-        {
-            _repo = repo;
-            _controlPointRepository = controlPointRepository;
-        }
+        public VoltageTransformerServiceImpl(IVoltageTransformerRepository repo) => _repo = repo;
 
         public void CheckExistsById(Guid id) => _repo.CheckExistsById(id);
 
@@ -65,7 +60,7 @@ namespace TNE.Services.Implementations
 
         private VoltageTransformer ConvertToEntity(VoltageTransformerDto dto)
         {
-            var entity = new VoltageTransformer
+            return new VoltageTransformer
             {
                 Id = dto.Id,
                 Number = dto.Number,
@@ -76,7 +71,6 @@ namespace TNE.Services.Implementations
                 TransformationRate = dto.TransformationRate,
                 ControlPointId = dto.ControlPointId
             };
-            return entity;
         }
     }
 }

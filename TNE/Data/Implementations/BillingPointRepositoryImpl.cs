@@ -178,11 +178,11 @@ namespace TNE.Data.Implementations
 
             var startTime = searchFilter.StartTime;
             if (startTime.HasValue)
-                predicate = predicate.And(s => DateTime.Compare(s.StartTime, (DateTime) startTime) >= 0);
+                predicate = predicate.And(s => DateTime.Compare(s.StartTime, (DateTime)startTime) >= 0);
 
             var endTime = searchFilter.EndTime;
             if (endTime.HasValue)
-                predicate = predicate.And(s => DateTime.Compare(s.EndTime, (DateTime) endTime) <= 0);
+                predicate = predicate.And(s => DateTime.Compare(s.EndTime, (DateTime)endTime) <= 0);
 
             var result = await _context.BillingPoints
                 .AsNoTracking()

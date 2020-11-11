@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using TNE.Models;
 
 namespace TNE.Dtos
@@ -8,7 +7,7 @@ namespace TNE.Dtos
     {
         public ElectricityMeterDto() { }
 
-        public ElectricityMeterDto(ElectricityMeter entity) 
+        public ElectricityMeterDto(ElectricityMeter entity)
         {
             if (entity is null) throw new ArgumentNullException(nameof(entity));
             Id = entity.Id;

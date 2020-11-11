@@ -13,9 +13,9 @@ namespace TNE.Services.Implementations
     {
         private readonly ISubDivisionRepository _repo;
 
-        public SubDivisionServiceImpl(ISubDivisionRepository repo) {  _repo = repo; }
+        public SubDivisionServiceImpl(ISubDivisionRepository repo) => _repo = repo;
 
-        public void CheckExistsById(Guid id) { _repo.CheckExistsById(id); }
+        public void CheckExistsById(Guid id) => _repo.CheckExistsById(id);
 
         public async Task<SubDivisionDto> CreateAsync(SubDivisionDto dto)
         {
@@ -31,14 +31,11 @@ namespace TNE.Services.Implementations
             return await _repo.DeleteAsync(id);
         }
 
-        public async Task<List<SubDivisionDto>> GetAllActiveDtoAsync() { return await _repo.GetAllActiveDtoAsync(); }
+        public async Task<List<SubDivisionDto>> GetAllActiveDtoAsync() => await _repo.GetAllActiveDtoAsync();
 
-        public async Task<List<SubDivisionDto>> GetAllDtoAsync() { return await _repo.GetAllDtoAsync(); }
+        public async Task<List<SubDivisionDto>> GetAllDtoAsync() => await _repo.GetAllDtoAsync();
 
-        public async Task<List<SubDivisionDto>> GetAllDtoByLeadDivisionIdAsync(Guid id)
-        {
-            return await _repo.GetAllDtoByLeadDivisionIdAsync(id);
-        }
+        public async Task<List<SubDivisionDto>> GetAllDtoByLeadDivisionIdAsync(Guid id) => await _repo.GetAllDtoByLeadDivisionIdAsync(id);
 
         public SubDivision GetById(Guid id) 
         {

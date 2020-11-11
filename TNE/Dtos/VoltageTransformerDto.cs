@@ -21,7 +21,7 @@ namespace TNE.Dtos
             {
                 ControlPointName = entity.ControlPoint.Name;
             }
-            
+
             Status = entity.Status;
         }
 

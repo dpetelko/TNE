@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TNE.Data;
 using TNE.Data.Exceptions;
@@ -13,13 +12,8 @@ namespace TNE.Services.Implementations
     public class ElectricityMeterServiceImpl : IElectricityMeterService
     {
         private readonly IElectricityMeterRepository _repo;
-        private readonly IControlPointRepository _controlPointRepository;
 
-        public ElectricityMeterServiceImpl(IElectricityMeterRepository repo, IControlPointRepository controlPointRepository)
-        {
-            _repo = repo;
-            _controlPointRepository = controlPointRepository;
-        }
+        public ElectricityMeterServiceImpl(IElectricityMeterRepository repo) => _repo = repo;
 
         public void CheckExistsById(Guid id) => _repo.CheckExistsById(id);
 

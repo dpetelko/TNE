@@ -1,7 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using TNE.Models;
-using TNE.Services.Validators;
 
 namespace TNE.Dtos.SearchFilters
 {

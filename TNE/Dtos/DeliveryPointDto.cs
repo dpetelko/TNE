@@ -1,8 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using TNE.Models;
-using TNE.Services.Validators;
 
 namespace TNE.Dtos
 {

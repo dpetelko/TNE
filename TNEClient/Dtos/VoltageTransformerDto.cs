@@ -6,11 +6,11 @@ namespace TNEClient.Dtos
     public class VoltageTransformerDto : DeviceDto
     {
         [Display(Name = "Коэффициент трансформации")]
-        [Required (ErrorMessage = "Введите значение")]
+        [Required(ErrorMessage = "Введите значение")]
         [Range(1, int.MaxValue, ErrorMessage = "Неверное значение поля")]
         public int TransformationRate { get; set; }
         public VoltageTransformerDto() { }
-        
+
 
         public override string ToString()
         {

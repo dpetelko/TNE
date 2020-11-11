@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using TNE.Models;
 
 namespace TNE.Dtos

@@ -9,14 +9,14 @@ namespace TNEClient.Dtos.SearchFilters
         public Guid? ProviderId { get; set; }
         [Required]
         public DateTime? CheckDate { get; set; }
-        
+
 
         public DeviceCalibrationControlDto() { }
 
         public bool IsEmpty()
         {
             return (IsEmptyOrNull(this.ProviderId)) &&
-                (this.CheckDate is null) ;
+                (this.CheckDate is null);
         }
 
         public override string ToString()

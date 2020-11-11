@@ -19,7 +19,7 @@ namespace TNEClient.Data
         /// <exception cref="ApiException">If Response HttpStatus not equal 200</exception>
         [Get("/api/v1/LeadDivisions")]
         Task<List<LeadDivisionDto>> GetAllAsync();
-        
+
         /// <summary>
         /// Get all not deleted LeadDivisionsDto. 
         /// Returns list of LeadDivisions or EMPTY List, if no LeadDivisions are found

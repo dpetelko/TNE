@@ -12,13 +12,8 @@ namespace TNE.Services.Implementations
     public class CurrentTransformerServiceImpl : ICurrentTransformerService
     {
         private readonly ICurrentTransformerRepository _repo;
-        private readonly IControlPointRepository _controlPointRepository;
 
-        public CurrentTransformerServiceImpl(ICurrentTransformerRepository repo, IControlPointRepository controlPointRepository)
-        {
-            _repo = repo;
-            _controlPointRepository = controlPointRepository;
-        }
+        public CurrentTransformerServiceImpl(ICurrentTransformerRepository repo) => _repo = repo;
 
         public void CheckExistsById(Guid id) => _repo.CheckExistsById(id);
 

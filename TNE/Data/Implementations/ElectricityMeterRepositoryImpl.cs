@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LinqKit;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LinqKit;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
 using TNE.Dtos.SearchFilters;
@@ -87,7 +87,7 @@ namespace TNE.Data.Implementations
             if (checkDate.HasValue)
                 predicate = predicate.And(s =>
                     (DateTime.Compare(s.LastVerificationDate.AddDays(s.InterTestingPeriodInDays),
-                        (DateTime) filter.CheckDate) < 0));
+                        (DateTime)filter.CheckDate) < 0));
 
             var result = await _context.ElectricityMeters
                 .AsNoTracking()

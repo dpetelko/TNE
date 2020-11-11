@@ -19,29 +19,29 @@ namespace TNE.Data
         /// </summary>
         /// <exception cref="EntityNotFoundException">If no ElectricityMeters are found</exception>
         Task<bool> SetStatus(Guid id, Status newStatus);
-        
+
         /// <summary>
         /// Returns a specific ElectricityMeter by ID
         /// </summary>
         /// <exception cref="EntityNotFoundException">If no ElectricityMeters are found</exception>
         Task<ElectricityMeterDto> GetDtoByIdAsync(Guid id);
-        
+
         /// <summary>
         /// Get all ElectricityMetersDto. 
         /// Returns list of ElectricityMeters or EMPTY List, if no ElectricityMeters are found
         /// </summary>
         Task<List<ElectricityMeterDto>> GetAllDtoAsync();
-        
+
         /// <summary>
         /// Returns list of ElectricityMeters by Status or EMPTY List, if no ElectricityMeters are found
         /// </summary>
         Task<List<ElectricityMeterDto>> GetAllDtoByStatusAsync(Status status);
-        
+
         /// <summary>
         /// Returns list of ElectricityMeters by ControlPoint ID or EMPTY List, if no ElectricityMeters are found
         /// </summary>
         Task<ElectricityMeterDto> GetDtoByControlPointId(Guid id);
-        
+
         /// <summary>
         /// Returns list of ElectricityMeters by DeviceCalibrationControlDto or EMPTY List, if no ElectricityMeters are found
         /// </summary>

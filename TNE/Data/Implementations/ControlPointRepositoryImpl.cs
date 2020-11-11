@@ -1,5 +1,4 @@
-﻿using LinqKit;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using TNE.Data.Exceptions;
 using TNE.Dtos;
-using TNE.Dtos.SearchFilters;
 using TNE.Models;
 
 namespace TNE.Data.Implementations

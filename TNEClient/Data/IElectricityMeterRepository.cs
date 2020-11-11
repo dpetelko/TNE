@@ -7,7 +7,7 @@ using TNEClient.Dtos.SearchFilters;
 
 namespace TNEClient.Data
 {
-    
+
     [Headers("Accept: application/json")]
     public interface IElectricityMeterRepository
     {
@@ -37,7 +37,7 @@ namespace TNEClient.Data
         /// <exception cref="ApiException">If Response HttpStatus not equal 200</exception>
         [Get("/api/v1/ElectricityMeters/ControlPoint/{id}")]
         Task<ElectricityMeterDto> GetByControlPointIdAsync(Guid id);
-        
+
         /// <summary>
         /// Returns list list of ElectricityMeters by DeviceCalibrationControlDto or EMPTY List, if no ElectricityMeters are found
         /// </summary>
