@@ -7,6 +7,9 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Refit;
 using System;
+using System.Net.Http;
+using Polly;
+using Polly.Timeout;
 using TNEClient.Data;
 using TNEClient.Services;
 using TNEClient.Services.Implementations;
@@ -27,34 +30,34 @@ namespace TNEClient
             services.AddMvc();
             
             services.AddRefitClient<ILeadDivisionRepository>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+            .ConfigureHttpClient(c => c.BaseAddress = GetBaseAddress());
 
-            services.AddRefitClient<ISubDivisionRepository>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+            services.AddRefitClient<ISubDivisionRepository>(new RefitSettings())
+                .ConfigureHttpClient(c => c.BaseAddress = GetBaseAddress());
 
             services.AddRefitClient<IProviderRepository>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+            .ConfigureHttpClient(c => c.BaseAddress = GetBaseAddress());
 
             services.AddRefitClient<IControlPointRepository>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+            .ConfigureHttpClient(c => c.BaseAddress = GetBaseAddress());
 
             services.AddRefitClient<IDeliveryPointRepository>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+            .ConfigureHttpClient(c => c.BaseAddress = GetBaseAddress());
 
             services.AddRefitClient<IBillingPointRepository>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+            .ConfigureHttpClient(c => c.BaseAddress = GetBaseAddress());
 
             services.AddRefitClient<IVoltageTransformerRepository>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+            .ConfigureHttpClient(c => c.BaseAddress = GetBaseAddress());
 
             services.AddRefitClient<ICurrentTransformerRepository>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+            .ConfigureHttpClient(c => c.BaseAddress = GetBaseAddress());
 
             services.AddRefitClient<IElectricityMeterRepository>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+            .ConfigureHttpClient(c => c.BaseAddress = GetBaseAddress());
             
             services.AddRefitClient<IDbUtilsRepository>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(Configuration.GetSection("TNERestApi.Url").Value));
+                .ConfigureHttpClient(c => c.BaseAddress = GetBaseAddress());
 
             services.AddScoped<ILeadDivisionService, LeadDivisionServiceImpl>();
             services.AddScoped<ISubDivisionService, SubDivisionServiceImpl>();
@@ -88,6 +91,11 @@ namespace TNEClient
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id:Guid?}");
             });
+        }
+
+        private Uri GetBaseAddress()
+        {
+            return new Uri(Configuration.GetSection("TNERestApi.Url").Value);
         }
     }
 }

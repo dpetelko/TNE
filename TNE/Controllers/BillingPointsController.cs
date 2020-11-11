@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using TNE.Dtos;
 using TNE.Dtos.SearchFilters;
 using TNE.Services;
@@ -15,7 +15,7 @@ namespace TNE.Controllers
     {
         private readonly IBillingPointService _service;
 
-        public BillingPointsController(IBillingPointService service) =>  _service = service;
+        public BillingPointsController(IBillingPointService service) => _service = service;
 
         /// <summary>
         /// Get all BillingPoints
@@ -78,7 +78,7 @@ namespace TNE.Controllers
             var result = await _service.CreateAsync(dto);
             return CreatedAtAction(nameof(Create), new { id = result.Id }, result);
         }
-        
+
         /// <summary>
         /// Updates a BillingPoint
         /// </summary>

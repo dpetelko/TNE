@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TNE.Dtos;
-using TNE.Dtos.SearchFilters;
 using TNE.Services;
 
 namespace TNE.Controllers
@@ -23,7 +22,7 @@ namespace TNE.Controllers
         /// <response code="200">Returns list of ControlPoints or EMPTY List, if no ControlPoints are found</response>
         [HttpGet]
         public async Task<List<ControlPointDto>> GetAll() => await _service.GetAllDtoAsync();
-        
+
         /// <summary>
         /// Get all active ControlPoints
         /// </summary>
