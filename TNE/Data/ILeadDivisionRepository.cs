@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TNE.Data.Exceptions;
-using TNE.Dto.LeadDivisions;
+using TNE.Dto;
 using TNE.Models;
 
 namespace TNE.Data

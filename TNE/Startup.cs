@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +15,7 @@ using TNE.Data;
 using TNE.Data.Implementations;
 using TNE.Services;
 using TNE.Services.Implementations;
+using TNE.Services.Mappings;
 using TNE.Services.Utils;
 
 namespace TNE
@@ -29,6 +31,7 @@ namespace TNE
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(MappingProfile));
             services.AddSingleton(Log.Logger);
             services.Configure<KestrelServerOptions>(Configuration.GetSection("Kestrel"));
             services.AddLogging();

@@ -1,5 +1,5 @@
 ﻿using System;
-using TNE.Dto.LeadDivisions;
+using TNE.Dto;
 
 namespace TNE.Models
 {

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TNE.Dto.LeadDivisions;
+using TNE.Dto;
 using TNE.Services;
 
 namespace TNE.Controllers

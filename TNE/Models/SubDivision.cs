@@ -49,6 +49,7 @@ namespace TNE.Models
                 $"[ Id:{Id}, " +
                 $"Name:{Name}, " +
                 $"Address:{Address}, " +
+                $"LeadDivisionId:{LeadDivisionId}, " +
                 $"LeadDivision:{LeadDivision} " +
                 $"Deleted:{Deleted} ]";
         }

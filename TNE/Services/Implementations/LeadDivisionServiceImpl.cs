@@ -1,9 +1,10 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TNE.Data;
 using TNE.Data.Exceptions;
-using TNE.Dto.LeadDivisions;
+using TNE.Dto;
 using TNE.Models;
 
 namespace TNE.Services.Implementations
@@ -11,14 +12,20 @@ namespace TNE.Services.Implementations
     public class LeadDivisionServiceImpl : ILeadDivisionService
     {
         private readonly ILeadDivisionRepository _repo;
+        private readonly IMapper _mapper;
 
-        public LeadDivisionServiceImpl(ILeadDivisionRepository repo) => _repo = repo;
+        public LeadDivisionServiceImpl(ILeadDivisionRepository repo, IMapper mapper)
+        {
+            _repo = repo;
+            _mapper = mapper;
+        }
 
         public async Task<LeadDivisionDto> CreateAsync(LeadDivisionDto dto)
         {
             if (!dto.Id.Equals(Guid.Empty)) throw new InvalidEntityException("ID must be empty for CREATE!");
-            var result = await _repo.CreateAsync(new LeadDivision(dto));
-            return new LeadDivisionDto(result);
+            var entity = _mapper.Map<LeadDivision>(dto);
+            var result = await _repo.CreateAsync(entity);
+            return _mapper.Map<LeadDivisionDto>(result);
         }
 
         public void CheckExistsById(Guid id) => _repo.CheckExistsById(id);

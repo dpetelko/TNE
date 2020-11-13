@@ -1,7 +1,7 @@
 ﻿using System;
 using TNE.Models;
 
-namespace TNE.Dto.LeadDivisions
+namespace TNE.Dto
 {
     public class LeadDivisionDto : DivisionDto, IEquatable<LeadDivisionDto>
     {
