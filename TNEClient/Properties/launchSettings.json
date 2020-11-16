@@ -19,6 +19,7 @@
     "TNEClient": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "home/index.cshtml",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
