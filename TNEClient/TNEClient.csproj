@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <StartupObject>TNEClient.Program</StartupObject>
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <UserSecretsId>bc4a7400-0c25-4cdd-8299-1ba436827f1d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
