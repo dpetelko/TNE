@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/TNEClientapi2/apis/TNEClient",
+      "type": "apis.azure",
+      "apiEndpoint": "https://tneclientapi2.azure-api.net/"
+    }
+  }
+}
