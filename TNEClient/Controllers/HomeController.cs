@@ -10,7 +10,7 @@ namespace TNEClient.Controllers
 
         public HomeController(IDbUtilsService service) => _service = service;
 
-        [Route("")]
+        [Route("/")]
         public IActionResult Index() => View();
 
         public async Task<IActionResult> DropAndRefillDb()
